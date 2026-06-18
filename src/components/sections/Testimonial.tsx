@@ -23,7 +23,7 @@ export function Testimonial() {
 
         <FadeUp delay={0.2}>
           <p className="font-sans text-sm text-text-sec tracking-wide">
-            - Placeholder client, London
+            - Spranki (Medical education), London
           </p>
         </FadeUp>
       </div>

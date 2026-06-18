@@ -3,8 +3,8 @@ import { FadeUp, Stagger, StaggerItem } from "@/components/ui/FadeUp";
 const packages = [
   {
     name: "Landing",
-    price: "£300 – £600",
-    deposit: "50% deposit",
+    price: "£500",
+    deposit: "50% deposit — £250 today",
     description: "A single, focused page that tells people who you are and what to do next.",
     features: [
       "1–2 pages",
@@ -16,8 +16,8 @@ const packages = [
   },
   {
     name: "Standard",
-    price: "£800 – £1,500",
-    deposit: "40% deposit",
+    price: "£1,200",
+    deposit: "50% deposit — £600 today",
     description: "A complete site with the space to say everything that needs to be said.",
     features: [
       "3–5 pages",
@@ -30,8 +30,8 @@ const packages = [
   },
   {
     name: "Premium",
-    price: "£2,000 – £4,000",
-    deposit: "30% deposit",
+    price: "£2,500",
+    deposit: "50% deposit — £1,250 today",
     description: "The full build. For businesses that want a site that does serious work.",
     features: [
       "6+ pages",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PACKAGES, type PackageKey } from "@/lib/stripe";
+import { PACKAGES, type PackageKey } from "@/lib/packages";
 import { Nav } from "@/components/sections/Nav";
 import { Footer } from "@/components/sections/Footer";
 
@@ -11,34 +11,29 @@ export default function PackagesPage() {
   const [selected, setSelected] = useState<PackageKey | null>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [business, setBusiness] = useState("");
+  const [details, setDetails] = useState("");
   const [error, setError] = useState("");
 
-  async function handleCheckout() {
+  function handleSubmit() {
     if (!selected || !name.trim() || !email.trim()) {
       setError("Please fill in your name, email, and choose a package.");
       return;
     }
-    setError("");
-    setLoading(true);
-    try {
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ package: selected, name: name.trim(), email: email.trim() }),
-      });
-      const data = await res.json() as { url?: string; error?: string };
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        setError(data.error ?? "Something went wrong. Please try again.");
-        setLoading(false);
-      }
-    } catch {
-      setError("Something went wrong. Please try again.");
-      setLoading(false);
-    }
+    const pkg = PACKAGES[selected];
+    const subject = `New build enquiry — ${pkg.name} (£${pkg.price.toLocaleString()})`;
+    const body = [
+      `Package: ${pkg.name} — £${pkg.price.toLocaleString()} (£${pkg.deposit.toLocaleString()} deposit)`,
+      `Name: ${name.trim()}`,
+      `Email: ${email.trim()}`,
+      `Business: ${business.trim() || "—"}`,
+      ``,
+      `Project details:`,
+      details.trim() || "—",
+    ].join("\n");
+    window.location.href = `mailto:sam@webflowoutreach.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
+
 
   return (
     <>
@@ -46,7 +41,6 @@ export default function PackagesPage() {
       <main className="min-h-svh bg-bg pt-32 pb-24 px-8">
         <div className="max-w-5xl mx-auto">
 
-          {/* Header */}
           <div className="mb-20">
             <p className="font-display text-xs font-medium tracking-[0.2em] text-text-sec uppercase mb-6">
               Begin your build
@@ -55,8 +49,8 @@ export default function PackagesPage() {
               Choose your package.
             </h1>
             <p className="font-sans text-text-sec text-base leading-relaxed max-w-md mt-6">
-              Pay a 50% deposit now to get started. The remaining balance is charged
-              automatically once you&apos;ve approved the finished site - no second card entry needed.
+              Select your package, tell us about your business, and we&apos;ll be in touch within 24 hours.
+              A 50% deposit secures your spot — the rest is due when you approve the finished site.
             </p>
           </div>
 
@@ -78,10 +72,10 @@ export default function PackagesPage() {
                       {pkg.name}
                     </p>
                     <p className="font-display font-light text-2xl text-text mb-1">
-                      from £{pkg.price.toLocaleString()}
+                      £{pkg.price.toLocaleString()}
                     </p>
                     <p className="font-sans text-xs text-accent font-medium">
-                      £{pkg.deposit.toLocaleString()} deposit today
+                      £{pkg.deposit.toLocaleString()} deposit to start
                     </p>
                   </div>
 
@@ -110,7 +104,7 @@ export default function PackagesPage() {
             })}
           </div>
 
-          {/* Checkout form */}
+          {/* Form */}
           <div className="max-w-md border-t border-border pt-12">
             <p className="font-display text-sm font-medium text-text mb-8">
               Your details
@@ -142,6 +136,32 @@ export default function PackagesPage() {
                   className="w-full bg-surface border border-border px-4 py-3 font-sans text-sm text-text placeholder:text-text-muted focus:outline-none focus:border-accent transition-colors duration-200"
                 />
               </div>
+
+              <div>
+                <label className="font-sans text-xs tracking-wide text-text-sec uppercase block mb-2">
+                  Business name
+                </label>
+                <input
+                  type="text"
+                  value={business}
+                  onChange={(e) => setBusiness(e.target.value)}
+                  placeholder="Acme Ltd"
+                  className="w-full bg-surface border border-border px-4 py-3 font-sans text-sm text-text placeholder:text-text-muted focus:outline-none focus:border-accent transition-colors duration-200"
+                />
+              </div>
+
+              <div>
+                <label className="font-sans text-xs tracking-wide text-text-sec uppercase block mb-2">
+                  Tell us about your project
+                </label>
+                <textarea
+                  value={details}
+                  onChange={(e) => setDetails(e.target.value)}
+                  placeholder="What does your business do, what do you need, and when do you need it?"
+                  rows={4}
+                  className="w-full bg-surface border border-border px-4 py-3 font-sans text-sm text-text placeholder:text-text-muted focus:outline-none focus:border-accent transition-colors duration-200 resize-none"
+                />
+              </div>
             </div>
 
             {error && (
@@ -149,18 +169,15 @@ export default function PackagesPage() {
             )}
 
             <button
-              onClick={handleCheckout}
-              disabled={loading}
-              className="w-full font-display text-sm font-medium tracking-wide uppercase px-8 py-4 bg-accent text-bg hover:bg-accent-hover disabled:opacity-40 disabled:cursor-not-allowed transition-colors duration-200"
+              onClick={handleSubmit}
+              className="w-full font-display text-sm font-medium tracking-wide uppercase px-8 py-4 bg-accent text-bg hover:bg-accent-hover transition-colors duration-200"
               style={{ borderRadius: 0 }}
             >
-              {loading ? "Redirecting to payment..." : `Pay deposit${selected ? ` — £${PACKAGES[selected].deposit.toLocaleString()}` : ""}`}
+              {`Commit to your build${selected ? ` — ${PACKAGES[selected].name} (£${PACKAGES[selected].price.toLocaleString()})` : ""}`}
             </button>
 
             <p className="font-sans text-xs text-text-muted mt-4 leading-relaxed">
-              Payments are processed securely by Stripe. Your card is saved to charge
-              the remaining 50% when your site is complete and approved. You can cancel
-              any time before the build begins.
+              This opens your email client with everything pre-filled. We&apos;ll reply within 24 hours with next steps.
             </p>
           </div>
 
