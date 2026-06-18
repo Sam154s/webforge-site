@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { PACKAGES, type PackageKey } from "@/lib/packages";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const VALID_PACKAGES: PackageKey[] = ["landing", "standard", "premium"];
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -12,6 +10,7 @@ function esc(s: string) {
 }
 
 export async function POST(req: NextRequest) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const body = await req.json() as {
     package?: string;
     name?: string;
