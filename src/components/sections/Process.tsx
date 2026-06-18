@@ -1,4 +1,8 @@
-import { FadeUp, Stagger, StaggerItem } from "@/components/ui/FadeUp";
+"use client";
+
+import { FadeUp } from "@/components/ui/FadeUp";
+import { TextReveal } from "@/components/ui/TextReveal";
+import { motion } from "framer-motion";
 
 const steps = [
   {
@@ -25,39 +29,75 @@ const steps = [
 
 export function Process() {
   return (
-    <section className="px-8 py-32 border-t border-border bg-surface">
+    <section className="relative px-8 py-32 border-t border-border bg-surface overflow-hidden">
+
+      {/* Ghost number */}
+      <span
+        className="absolute right-0 top-0 font-display font-light text-text select-none pointer-events-none leading-none"
+        style={{ fontSize: "clamp(8rem, 22vw, 20rem)", opacity: 0.03 }}
+        aria-hidden="true"
+      >
+        02
+      </span>
+
       <div className="max-w-5xl mx-auto">
 
-        <div className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-8 md:gap-16 items-start mb-20">
-          <FadeUp>
-            <span className="font-display font-light text-5xl text-text-muted select-none">
-              02
-            </span>
-          </FadeUp>
-          <FadeUp delay={0.1}>
-            <h2 className="font-display font-light text-3xl md:text-4xl text-text leading-tight">
-              How it works.
-            </h2>
-          </FadeUp>
-        </div>
+        <FadeUp>
+          <span className="inline-block font-sans text-xs text-text-muted tracking-[0.18em] uppercase border border-border px-3 py-1 mb-6">
+            Section 02
+          </span>
+        </FadeUp>
 
-        <Stagger className="divide-y divide-border" delay={0.1}>
-          {steps.map((step) => (
-            <StaggerItem key={step.number}>
-              <div className="grid grid-cols-1 md:grid-cols-[80px_200px_1fr] gap-4 md:gap-16 py-10 items-start">
-                <span className="font-display font-light text-2xl text-text-muted select-none">
-                  {step.number}
-                </span>
-                <h3 className="font-display font-medium text-lg text-text">
-                  {step.title}
-                </h3>
+        <TextReveal delay={0.1} className="mb-20">
+          <h2 className="font-display font-light text-3xl md:text-4xl text-text leading-tight">
+            How it works.
+          </h2>
+        </TextReveal>
+
+        {/* Timeline */}
+        <div className="relative">
+
+          {/* Animated vertical line */}
+          <motion.div
+            className="absolute hidden md:block w-px bg-accent top-0 bottom-0"
+            style={{ left: "40px", transformOrigin: "top" }}
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 1.8, ease: [0.76, 0, 0.24, 1] }}
+          />
+
+          {steps.map((step, i) => (
+            <div
+              key={step.number}
+              className="relative grid grid-cols-1 md:grid-cols-[80px_220px_1fr] gap-4 md:gap-12 py-12 border-b border-border items-start"
+            >
+              {/* Dot on timeline */}
+              <motion.div
+                className="absolute hidden md:block w-2.5 h-2.5 rounded-full bg-accent ring-4 ring-surface"
+                style={{ left: "35px", top: "52px" }}
+                initial={{ scale: 0, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: 0.4 + i * 0.12, ease: "backOut" }}
+              />
+
+              <span className="font-display font-light text-2xl text-text-muted select-none">
+                {step.number}
+              </span>
+
+              <h3 className="font-display font-medium text-lg text-text leading-snug">
+                {step.title}
+              </h3>
+
+              <FadeUp delay={0.1 + i * 0.05}>
                 <p className="font-sans text-text-sec text-base leading-relaxed max-w-lg">
                   {step.body}
                 </p>
-              </div>
-            </StaggerItem>
+              </FadeUp>
+            </div>
           ))}
-        </Stagger>
+        </div>
 
       </div>
     </section>

@@ -2,7 +2,6 @@ import { Nav } from "@/components/sections/Nav";
 import { Hero } from "@/components/sections/Hero";
 import { Problem } from "@/components/sections/Problem";
 import { Process } from "@/components/sections/Process";
-import { Work } from "@/components/sections/Work";
 import { Testimonial } from "@/components/sections/Testimonial";
 import { Packages } from "@/components/sections/Packages";
 import { CTA } from "@/components/sections/CTA";
@@ -16,8 +15,7 @@ export default function Home() {
         <Hero />
         <Problem />
         <Process />
-        <Work />
-        <Testimonial />
+<Testimonial />
         <Packages />
         <CTA />
       </main>

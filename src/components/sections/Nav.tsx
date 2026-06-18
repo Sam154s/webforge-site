@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { MagneticButton } from "@/components/ui/MagneticButton";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -17,15 +18,20 @@ export function Nav() {
         scrolled ? "bg-bg/90 backdrop-blur-sm border-b border-border" : "bg-transparent"
       }`}
     >
-      <span className="font-display text-sm font-medium tracking-[0.2em] text-text uppercase">
-        WebForge
-      </span>
       <a
-        href="/packages"
-        className="font-display text-sm font-medium tracking-wide text-accent hover:text-accent-hover transition-colors duration-200 uppercase"
+        href="/"
+        className="font-display text-sm font-medium tracking-[0.2em] text-text uppercase transition-[letter-spacing] duration-500 hover:tracking-[0.35em]"
       >
-        Begin your build
+        WebForge
       </a>
+      <MagneticButton strength={0.4}>
+        <a
+          href="/packages#form"
+          className="font-display text-sm font-medium tracking-wide text-accent hover:text-accent-hover transition-colors duration-200 uppercase"
+        >
+          Begin your build
+        </a>
+      </MagneticButton>
     </header>
   );
 }

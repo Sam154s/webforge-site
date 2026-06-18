@@ -105,7 +105,7 @@ export default function PackagesPage() {
           </div>
 
           {/* Form */}
-          <div className="max-w-md border-t border-border pt-12">
+          <div id="form" className="max-w-md border-t border-border pt-12">
             <p className="font-display text-sm font-medium text-text mb-8">
               Your details
             </p>
