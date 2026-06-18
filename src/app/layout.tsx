@@ -31,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${GeistSans.variable}`}>
       <body className="font-sans bg-bg text-text antialiased">
+        <div className="grain-overlay" aria-hidden="true" />
         <SmoothScroll>
           <CustomCursor />
           {children}

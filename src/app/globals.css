@@ -33,9 +33,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Grain overlay — CSS only, zero JS */
-body::before {
-  content: '';
+/* .grain-overlay is rendered as a real DOM element in layout.tsx */
+.grain-overlay {
   position: fixed;
   top: -50%;
   left: -50%;
