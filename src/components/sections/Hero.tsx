@@ -1,21 +1,12 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 
 const CHARS = "WEBFORGE".split("");
 
 export function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-  const wordmarkY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
-
   return (
     <section
-      ref={sectionRef}
       className="relative min-h-svh flex flex-col justify-between px-8 pt-32 pb-16 overflow-hidden"
       style={{
         backgroundImage: "radial-gradient(circle, var(--border) 1px, transparent 1px)",
@@ -43,17 +34,17 @@ export function Hero() {
       {/* Drawing rule */}
       <motion.div
         className="h-px bg-border mb-8"
-        initial={{ scaleX: 0, originX: "left" }}
-        animate={{ scaleX: 1 }}
         style={{ transformOrigin: "left" }}
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
         transition={{ duration: 1.4, delay: 0.15, ease: [0.76, 0, 0.24, 1] }}
       />
 
-      {/* Brand name + scroll indicator row */}
+      {/* Brand name + scroll indicator */}
       <div className="relative">
-        <motion.h1
+        <h1
           className="font-display font-light leading-none text-text select-none"
-          style={{ fontSize: "clamp(4rem, 14vw, 12rem)", y: wordmarkY }}
+          style={{ fontSize: "clamp(4rem, 14vw, 12rem)" }}
         >
           {CHARS.map((char, i) => (
             <span
@@ -74,7 +65,7 @@ export function Hero() {
               </motion.span>
             </span>
           ))}
-        </motion.h1>
+        </h1>
 
         {/* Scroll indicator */}
         <motion.div

@@ -1,18 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
-import Lenis from "lenis";
-
+// ponytail: Lenis removed — it sets overflow:hidden on <html> and freezes scroll if RAF misfires.
+// CSS scroll-behavior: smooth in globals.css covers the use case.
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-    return () => lenis.destroy();
-  }, []);
-
   return <>{children}</>;
 }

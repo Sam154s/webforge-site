@@ -4,19 +4,21 @@ import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export function CustomCursor() {
+  const [mounted, setMounted] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   const x = useSpring(cursorX, { stiffness: 500, damping: 45 });
   const y = useSpring(cursorY, { stiffness: 500, damping: 45 });
-  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const move = (e: MouseEvent) => { cursorX.set(e.clientX); cursorY.set(e.clientY); };
     const over = (e: MouseEvent) => {
-      if ((e.target as Element).closest("a, button, [role='button']")) setHovered(true);
+      if ((e.target as Element).closest?.("a, button, [role='button']")) setHovered(true);
     };
     const out = (e: MouseEvent) => {
-      if (!(e.target as Element).closest("a, button, [role='button']")) setHovered(false);
+      if (!(e.target as Element).closest?.("a, button, [role='button']")) setHovered(false);
     };
     window.addEventListener("mousemove", move);
     document.addEventListener("mouseover", over);
@@ -27,6 +29,8 @@ export function CustomCursor() {
       document.removeEventListener("mouseout", out);
     };
   }, [cursorX, cursorY]);
+
+  if (!mounted) return null;
 
   return (
     <motion.div
