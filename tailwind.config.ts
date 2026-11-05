@@ -20,7 +20,7 @@ const config: Config = {
         "accent-hover": "var(--accent-hover)",
       },
       fontFamily: {
-        sans: ["var(--font-geist)", "system-ui", "sans-serif"],
+        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
       },
       letterSpacing: {

@@ -21,11 +21,11 @@ export function Hero() {
           animate={{ y: "0%" }}
           transition={{ duration: 0.9, delay: 0.6, ease: [0.76, 0, 0.24, 1] }}
         >
-          Bespoke websites built for businesses
+          We find the problem costing your business
           <br />
-          that mean it. No templates. No clutter.
+          the most. Then we build the system that fixes it,
           <br />
-          Just a site that does its job.
+          and show you what it&apos;s worth every month.
         </motion.p>
       </div>
 

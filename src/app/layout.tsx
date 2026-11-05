@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
-import { CustomCursor } from "@/components/ui/CustomCursor";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -13,12 +12,12 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "WebForge - Bespoke Websites for Businesses That Mean It",
+  title: "WebForge: find the bottleneck, build the fix",
   description:
-    "We build clean, bespoke websites that convert. No templates. No AI slop. A system that takes care of everything.",
+    "We find the problem costing your business the most, build the AI system that fixes it on your own accounts, and report what it's worth every month.",
   openGraph: {
     title: "WebForge",
-    description: "Bespoke websites. Built for businesses that mean it.",
+    description: "Find the bottleneck. Build the fix. Measure it every month.",
     type: "website",
   },
 };
@@ -29,11 +28,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${GeistSans.variable}`}>
+    <html lang="en-GB" className={`${spaceGrotesk.variable} ${GeistSans.variable}`}>
       <body className="font-sans bg-bg text-text antialiased">
         <div className="grain-overlay" aria-hidden="true" />
         <SmoothScroll>
-          <CustomCursor />
           {children}
         </SmoothScroll>
       </body>

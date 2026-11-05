@@ -1,60 +1,40 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-import { PACKAGES, type PackageKey } from "@/lib/packages";
 
-const VALID_PACKAGES: PackageKey[] = ["landing", "standard", "premium"];
+// Enquiries go to the ops database (shows in Sales and "Needs you") and, if Resend is set up, to the inbox.
+// The ops RPC validates and rate-limits, so this route holds no database secret: the key is the public one.
+const OPS_URL = process.env.OPS_SUPABASE_URL ?? "https://qqqdjtjqizawgkzznxvm.supabase.co";
+const OPS_KEY = process.env.OPS_SUPABASE_KEY ?? "sb_publishable_f0kovNXdeLq1qZziijFi8g_YemeRMi5";
+const NOTIFY = process.env.CONTACT_EMAIL && !process.env.CONTACT_EMAIL.endsWith("webforge.build")
+  ? process.env.CONTACT_EMAIL : "sam@webflowoutreach.com";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function esc(s: string) {
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-}
+const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 export async function POST(req: NextRequest) {
-  const resend = new Resend(process.env.RESEND_API_KEY);
-  const body = await req.json() as {
-    package?: string;
-    name?: string;
-    email?: string;
-    business?: string;
-    details?: string;
-  };
+  const b = (await req.json().catch(() => ({}))) as Record<string, string | undefined>;
+  if (b.website) return NextResponse.json({ ok: true }); // honeypot: bots fill hidden fields
+  const name = b.name?.trim() ?? "", email = b.email?.trim() ?? "", business = b.business?.trim() ?? "", message = b.message?.trim() ?? "";
+  if (!name || !EMAIL_RE.test(email)) return NextResponse.json({ error: "Add your name and a valid email." }, { status: 400 });
 
-  const { package: pkg, name, email, business, details } = body;
-
-  if (!pkg || !name?.trim() || !email?.trim()) {
-    return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
-  }
-
-  if (!VALID_PACKAGES.includes(pkg as PackageKey)) {
-    return NextResponse.json({ error: "Invalid package." }, { status: 400 });
-  }
-
-  if (!EMAIL_RE.test(email.trim())) {
-    return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
-  }
-
-  const packageInfo = PACKAGES[pkg as PackageKey];
-
-  const { error } = await resend.emails.send({
-    from: "WebForge <onboarding@resend.dev>",
-    to: "sam@webflowoutreach.com",
-    replyTo: email.trim(),
-    subject: `New build enquiry — ${packageInfo.name} (£${packageInfo.price.toLocaleString()})`,
-    html: `
-      <h2>New Build Enquiry</h2>
-      <p><strong>Package:</strong> ${esc(packageInfo.name)} — £${packageInfo.price.toLocaleString()} (£${packageInfo.deposit.toLocaleString()} deposit)</p>
-      <p><strong>Name:</strong> ${esc(name.trim())}</p>
-      <p><strong>Email:</strong> ${esc(email.trim())}</p>
-      <p><strong>Business:</strong> ${esc(business?.trim() || "—")}</p>
-      <p><strong>Project details:</strong></p>
-      <p>${esc(details?.trim() || "—").replace(/\n/g, "<br>")}</p>
-    `,
+  const res = await fetch(`${OPS_URL}/rest/v1/rpc/submit_enquiry`, {
+    method: "POST",
+    headers: { apikey: OPS_KEY, Authorization: `Bearer ${OPS_KEY}`, "content-type": "application/json" },
+    body: JSON.stringify({ p_name: name, p_email: email, p_business: business, p_message: message }),
   });
-
-  if (error) {
-    console.error("Resend error:", error);
-    return NextResponse.json({ error: "Failed to send email." }, { status: 500 });
+  if (!res.ok) {
+    const limited = (await res.text()).includes("rate limited");
+    return NextResponse.json({ error: limited ? "We've already got your message. We'll be in touch." : "Something went wrong. Email us instead." }, { status: limited ? 429 : 502 });
   }
 
+  if (process.env.RESEND_API_KEY) {
+    await new Resend(process.env.RESEND_API_KEY).emails.send({
+      from: "WebForge <onboarding@resend.dev>",
+      to: NOTIFY,
+      replyTo: email,
+      subject: `New enquiry: ${business || name}`,
+      html: `<p><strong>${esc(name)}</strong> (${esc(email)})${business ? `, ${esc(business)}` : ""}</p><p>${esc(message || "No message").replace(/\n/g, "<br>")}</p>`,
+    }).catch((e) => console.error("Resend failed", e));
+  }
   return NextResponse.json({ ok: true });
 }
