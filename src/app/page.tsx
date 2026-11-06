@@ -1,247 +1,213 @@
+import { BuilderScene } from "./builder-scene";
 import { ContactForm } from "./contact-form";
+import { Reveal } from "./reveal";
 
-const RUNS = [9, 8.5, 9, 9.5, 8, 9, 9, 8.5, 9, 9.5];
-const mean = (RUNS.reduce((a, b) => a + b, 0) / RUNS.length).toFixed(1);
-
-const CONTRAST = [
-  ["Everyone prompts it their own way.", "One way of doing the job, written down and built in."],
-  ["The output changes from one go to the next.", "Tested on your real examples until it comes out right every time."],
-  ["The know-how leaves when the person does.", "It lives in the tool, so a new starter gets the same result on day one."],
-  ["A consultant builds one automation and leaves.", "You get the framework too, so your team can build the next tool."],
+const BUILDER = [
+  ["Your rules and examples", "How your business does things, taken from real documents you already have."],
+  ["A kit of ordinary tools", "Read and write spreadsheets, make PDFs, send email, talk to the software you use."],
+  ["A tester", "Every new workflow runs against your examples before it's switched on."],
+  ["A one-page guide", "So anyone on the team can ask it for the next workflow."],
 ];
-
-const TOOLS = [
-  { sector: "Architects", name: "Concept visualiser", input: "Hand sketch, site photos, client brief", output: "Three design directions drawn in your practice's style", check: "Partner picks one" },
-  { sector: "Estate agents", name: "Listing and photo-tour builder", input: "Photos, floor plan, viewing notes", output: "Listing copy and a captioned room-by-room tour in house style", check: "Branch manager approves" },
-  { sector: "Trades", name: "Quote writer", input: "Site notes, measurements, photos", output: "Itemised quote in your format, priced from your rates", check: "Owner signs it off" },
-  { sector: "Clinics and practices", name: "Letter drafter", input: "Appointment notes, template letters", output: "Correctly formatted letters ready to check and send", check: "Clinician reviews" },
-  { sector: "Any office", name: "Inbox sorter", input: "Shared inbox", output: "Every email labelled, routed and drafted a reply", check: "Team clears the drafts" },
+const WORKFLOWS = [
+  ["Run without AI", "Plain code. Nothing guesses, nothing drifts."],
+  ["Same input, same output", "Run it once or ten thousand times."],
+  ["Nothing per run", "Hosting costs pennies. There's no AI bill per use."],
+  ["Yours to read and keep", "Ordinary files in your accounts, not a black box."],
 ];
-
-const STEPS = [
-  ["Map the work", "A 30-minute call, then a short look at how the work really gets done. We list the jobs that repeat every week and pick the ones worth a tool."],
-  ["Build on your examples", "Each tool is built in Claude around your documents, your templates and your past work, so it sounds like you and follows your rules."],
-  ["Test it to a standard", "We run every tool ten times against real examples and score each run. It has to average 8 out of 10 before your team relies on it."],
-  ["Hand it over", "Your team gets the tools, a one-page guide for each, and the framework we use to make them. We train whoever will run them."],
-  ["Measure and extend", "A results page shows how each tool is being used and what it saves. When a new job comes up, you build the tool, or we do."],
+const WEEKS = [
+  ["Week 1", "We map the work", "A call and a look at real examples. We list the jobs that repeat and pick the first ones."],
+  ["Weeks 2 to 3", "We set up your builder", "In your Claude account, with your rules, your tools and a tester. We build your first workflows with it."],
+  ["Week 4", "You take the wheel", "Your team builds a workflow themselves while we watch. Then it's yours."],
+  ["After that", "We stay if you want", "Monthly checks, new tools for the kit, and workflows we build for you when you'd rather not."],
 ];
-
 const PRICES = [
-  ["First call", "Free", "30 minutes. We look at your work and tell you honestly whether tools would help."],
-  ["First toolkit", "£900 to £3,000", "Fixed price, agreed in writing before we start. Usually two to four tools, plus training."],
-  ["Support, if you want it", "£300 to £500 a month", "Re-testing, improvements and new tools. Rolling monthly."],
-  ["AI usage", "At cost", "Runs on your own Claude account, so you see every penny."],
+  ["Discovery call", "Free", "30 minutes. If a builder won't help, we'll tell you."],
+  ["Builder and first two workflows", "£1,500", "Fixed price, four weeks, training included."],
+  ["Extra workflow, built by us", "£350", "Each. Agreed before we start."],
+  ["Support", "£300 a month", "Optional. Re-testing, new tools, small changes. Rolling monthly."],
+  ["Workflows your team builds", "£0", "That's the point."],
+  ["Running costs", "At cost", "Hosting, usually under £10 a month, plus the Claude plan the builder lives in. Both on your accounts."],
 ];
-
-const FAQ = [
-  ["Do we need Claude?", "We build on Claude because it's the most dependable for this kind of work. A Claude Team plan is usually enough. The method works with other AI models if you already use one."],
-  ["Who owns the tools?", "You do. They live in your accounts, written in plain files your team can read and change."],
-  ["What if the person who runs them leaves?", "That's the point of building it this way. The method is in the tool, not in someone's head, and the guide shows the next person how to use it."],
-  ["Is this just automation?", "No. Automation moves data from A to B. These tools do the skilled part of a job, in your style, with a person checking the result where it matters."],
-  ["What happens to our data?", "It stays in your systems and your AI account. We only see what you choose to share while we build."],
-];
-
-function Rule({ n, title }: { n: string; title: string }) {
-  return (
-    <div className="flex items-baseline gap-4 border-t border-ink pt-3 mb-12">
-      <span className="font-mono text-xs text-oxide">{n}</span>
-      <span className="font-mono text-xs text-graphite">{title}</span>
-    </div>
-  );
-}
 
 export default function Home() {
   return (
     <>
-      <header className="max-w-page mx-auto px-5 md:px-8 py-6 flex items-center justify-between">
-        <a href="/" className="font-serif text-2xl tracking-tight">WebForge</a>
-        <nav className="flex items-center gap-6 text-sm">
-          <a href="#how" className="hidden md:inline text-graphite hover:text-ink">How it works</a>
-          <a href="#tools" className="hidden md:inline text-graphite hover:text-ink">Tools</a>
-          <a href="#pricing" className="hidden md:inline text-graphite hover:text-ink">Pricing</a>
-          <a href="#contact" className="bg-ink text-sheet px-4 py-2 hover:bg-oxide transition-colors">Book a call</a>
-        </nav>
+      <Reveal />
+      <header className="fixed top-0 inset-x-0 z-40 bg-stone/85 backdrop-blur-md">
+        <div className="max-w-page mx-auto px-5 md:px-10 h-16 flex items-center justify-between">
+          <a href="/" className="font-display font-bold text-lg tracking-[-0.02em]">webforge<sup className="text-[.55em] font-normal align-super">®</sup></a>
+          <nav className="flex items-center gap-7 text-sm">
+            <a href="#builder" className="hidden md:inline text-dim hover:text-ink transition-colors">The builder</a>
+            <a href="#how" className="hidden md:inline text-dim hover:text-ink transition-colors">How it works</a>
+            <a href="#pricing" className="hidden md:inline text-dim hover:text-ink transition-colors">Pricing</a>
+            <a href="#contact" className="group flex items-center gap-2 bg-ink text-stone rounded-full pl-4 pr-1.5 py-1.5">
+              Book a call <span className="grid place-items-center w-6 h-6 rounded-full bg-lime text-ink transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+            </a>
+          </nav>
+        </div>
       </header>
 
       <main>
-        {/* Hero: the claim on the left, the evidence on the right */}
-        <section className="max-w-page mx-auto px-5 md:px-8 pt-10 md:pt-20 pb-20 md:pb-28 grid md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] gap-12 md:gap-16 items-end">
-          <div>
-            <h1 className="rise font-serif text-[2.6rem] leading-[1.04] md:text-[4.4rem] tracking-[-0.02em]" style={{ animationDelay: "60ms" }}>
-              AI tools your team owns, that do the job <em className="text-oxide">the same way</em> every time.
+        {/* HERO */}
+        <section className="relative min-h-[100svh] overflow-hidden pt-16">
+          <span aria-hidden className="drift absolute left-[-2vw] bottom-[-4vw] font-display font-black narrow leading-none tracking-[-0.06em] text-[38vw] md:text-[30vw] text-ink/[0.06] select-none pointer-events-none">
+            forge
+          </span>
+          <div className="relative max-w-page mx-auto px-5 md:px-10 pt-10 md:pt-14 grid md:grid-cols-12 gap-8">
+            <p className="fade md:col-start-9 md:col-span-4 text-sm leading-relaxed text-dim md:text-right" style={{ animationDelay: ".9s" }}>
+              For UK businesses that want AI to do real work, reliably, without a consultant on speed dial.
+            </p>
+            <h1 className="md:col-start-4 md:col-span-9 font-display font-extrabold tracking-[-0.045em] leading-[0.9] text-[15vw] md:text-[8.6vw] md:text-right">
+              <span className="mask"><span style={{ animationDelay: ".05s" }}>AI builds it</span></span>
+              <span className="mask"><span style={{ animationDelay: ".17s" }}>once.</span></span>
+              <span className="mask"><span style={{ animationDelay: ".29s" }} className="font-medium">Plain code</span></span>
+              <span className="mask"><span style={{ animationDelay: ".41s" }} className="font-medium">runs it forever.</span></span>
             </h1>
-            <p className="rise mt-8 text-lg md:text-xl leading-relaxed text-graphite max-w-xl" style={{ animationDelay: "220ms" }}>
-              We design custom tools and workflows for Claude, built on your own examples and tested until they&apos;re
-              consistent. Your team runs them. When you need a new one, you can build it yourselves.
+          </div>
+
+          <div className="relative max-w-page mx-auto px-5 md:px-10 mt-10 md:-mt-[17vw] pb-14 grid md:grid-cols-12 gap-6 items-end">
+            <div className="pop md:col-span-4 lg:col-span-3 bg-lime rounded-[20px] p-6 flex flex-col gap-5 min-h-[19rem]" style={{ animationDelay: ".6s" }}>
+              <p className="font-display font-bold text-lg tracking-[-0.01em]">webforge</p>
+              <p className="text-[15px] leading-snug">
+                We set up an AI workflow builder inside your business. Describe a problem and it builds a workflow in
+                ordinary code, which then runs on its own.
+              </p>
+              <p className="text-[15px] font-semibold leading-snug">Same result every time. Nothing per run. Code you own.</p>
+              <a href="#contact" className="mt-auto inline-flex items-center gap-2 font-semibold">Book a free call <span aria-hidden>→</span></a>
+            </div>
+            <div className="fade md:col-start-9 md:col-span-4 flex md:justify-end items-end gap-10 text-sm" style={{ animationDelay: "1.1s" }}>
+              <a href="#builder" className="flex items-center gap-3 group">
+                <span className="grid place-items-center w-11 h-11 rounded-full bg-ink text-stone transition-transform duration-500 ease-out group-hover:translate-y-1">↓</span>
+                See how it works
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* THE SCROLL STORY */}
+        <BuilderScene />
+
+        {/* WHAT WE PROVIDE: the builder makes the workflows */}
+        <section className="max-w-page mx-auto px-5 md:px-10 py-24 md:py-40">
+          <h2 className="reveal font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[11vw] md:text-[6.4vw] max-w-[14ch]">
+            One builder. <span className="font-medium text-dim">Every workflow after that.</span>
+          </h2>
+          <div className="mt-16 md:mt-24 grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-6 md:gap-10 items-stretch">
+            <div className="reveal rounded-[24px] bg-ink text-stone p-7 md:p-10">
+              <p className="font-mono text-xs text-lime">what we set up</p>
+              <h3 className="font-display font-bold text-4xl md:text-5xl tracking-[-0.03em] mt-3 mb-10">The builder</h3>
+              <dl className="space-y-6">
+                {BUILDER.map(([t, d]) => (
+                  <div key={t} className="border-t border-white/15 pt-4">
+                    <dt className="font-semibold text-lg">{t}</dt>
+                    <dd className="text-stone/65 mt-1">{d}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+            <div className="reveal flex md:flex-col items-center justify-center gap-3 font-mono text-xs text-dim" style={{ transitionDelay: ".15s" }}>
+              <span className="hidden md:block w-px h-24 bg-line" />
+              <span className="grid place-items-center w-16 h-16 rounded-full bg-lime text-ink text-xl rotate-90 md:rotate-0">→</span>
+              makes
+              <span className="hidden md:block w-px h-24 bg-line" />
+            </div>
+            <div className="reveal rounded-[24px] border border-ink p-7 md:p-10" style={{ transitionDelay: ".3s" }}>
+              <p className="font-mono text-xs text-dim">what you get, again and again</p>
+              <h3 className="font-display font-bold text-4xl md:text-5xl tracking-[-0.03em] mt-3 mb-10">Workflows</h3>
+              <dl className="space-y-6">
+                {WORKFLOWS.map(([t, d]) => (
+                  <div key={t} className="border-t border-line pt-4">
+                    <dt className="font-semibold text-lg">{t}</dt>
+                    <dd className="text-dim mt-1">{d}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+          <p className="reveal mt-10 max-w-2xl text-lg text-dim leading-relaxed">
+            To start, we build the workflows for you. The difference is that every one we build makes your builder
+            better, and your team can make the next one without us.
+          </p>
+        </section>
+
+        {/* WHY NO AI AT RUN TIME */}
+        <section className="max-w-page mx-auto px-5 md:px-10 pb-24 md:pb-40 grid md:grid-cols-12 gap-10">
+          <p className="reveal md:col-span-5 font-display font-bold tracking-[-0.035em] leading-[0.95] text-5xl md:text-7xl">
+            Why keep AI out of the running?
+          </p>
+          <div className="md:col-span-6 md:col-start-7 space-y-8 text-lg md:text-xl leading-relaxed">
+            <p className="reveal">
+              AI is brilliant at working out <em>what</em> needs doing. It&apos;s a poor thing to rely on for doing the
+              same job identically ten thousand times. It can phrase things differently, miss a step, or cost money every run.
             </p>
-            <div className="rise mt-10 flex flex-wrap items-center gap-6" style={{ animationDelay: "360ms" }}>
-              <a href="#contact" className="bg-oxide text-sheet px-6 py-3.5 hover:bg-oxide-deep transition-colors">Book a 30-minute call</a>
-              <a href="#how" className="underline underline-offset-4 decoration-rule hover:decoration-ink">See how it works</a>
-            </div>
-          </div>
-
-          <figure className="rise bg-sheet border border-rule p-5 md:p-6" style={{ animationDelay: "420ms" }} aria-label={`Example: one tool run ten times, average ${mean} out of 10`}>
-            <div className="flex justify-between font-mono text-[11px] text-graphite">
-              <span>TOOL / quote-writer v3</span><span>example</span>
-            </div>
-            <p className="mt-3 font-serif text-xl">Same site notes. Ten runs.</p>
-            <ol className="mt-5 space-y-1.5">
-              {RUNS.map((s, i) => (
-                <li key={i} className="grid grid-cols-[2.2rem_1fr_2.4rem] items-center gap-3 font-mono text-xs num">
-                  <span className="text-graphite">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="h-1.5 bg-paper relative">
-                    <span className={`bar-fill absolute inset-y-0 left-0 ${s >= 8 ? "bg-ink" : "bg-oxide"}`} style={{ width: `${s * 10}%`, animationDelay: `${700 + i * 70}ms` }} />
-                    <span className="absolute inset-y-[-3px] w-0.5 -ml-px bg-oxide" style={{ left: "80%" }} aria-hidden />
-                  </span>
-                  <span className="text-right">{s.toFixed(1)}</span>
-                </li>
-              ))}
-            </ol>
-            <figcaption className="mt-5 pt-4 border-t border-rule flex justify-between font-mono text-xs num">
-              <span>average {mean} / 10</span><span className="text-oxide">orange line = pass mark 8</span>
-            </figcaption>
-          </figure>
-        </section>
-
-        {/* Why: prompting is not a system */}
-        <section className="bg-sheet border-y border-rule">
-          <div className="max-w-page mx-auto px-5 md:px-8 py-20 md:py-28">
-            <Rule n="01" title="Why" />
-            <div className="grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-12">
-              <h2 className="font-serif text-3xl md:text-5xl leading-[1.08] tracking-[-0.015em]">
-                A chat window isn&apos;t a system.
-              </h2>
-              <div>
-                <p className="text-lg leading-relaxed text-graphite mb-10 max-w-xl">
-                  Most teams have tried AI. Results depend on who&apos;s typing and how they feel that day, so nobody quite
-                  trusts it with real work. The fix isn&apos;t a cleverer prompt. It&apos;s a proper tool.
-                </p>
-                <div className="grid grid-cols-2 text-sm md:text-base">
-                  <div className="font-mono text-xs text-graphite pb-3">AI as most teams use it</div>
-                  <div className="font-mono text-xs text-oxide pb-3 pl-5">A WebForge tool</div>
-                  {CONTRAST.map(([before, after]) => (
-                    <div key={before} className="contents">
-                      <p className="border-t border-rule py-4 pr-5 text-graphite">{before}</p>
-                      <p className="border-t border-l border-rule py-4 pl-5">{after}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* What we build: catalogue entries */}
-        <section id="tools" className="max-w-page mx-auto px-5 md:px-8 py-20 md:py-28">
-          <Rule n="02" title="What we build" />
-          <div className="grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-12 mb-14">
-            <h2 className="font-serif text-3xl md:text-5xl leading-[1.08] tracking-[-0.015em]">Tools for the work only your business does.</h2>
-            <p className="text-lg leading-relaxed text-graphite max-w-xl md:pt-2">
-              Each tool takes something your team already has, and turns it into something they&apos;d otherwise spend an
-              hour making. A person checks the result where it matters. These are examples; yours are built around your work.
+            <p className="reveal">
+              So we use it where it&apos;s strongest: designing the workflow, once, checked against your examples. What
+              runs every day is ordinary code. <span className="bg-lime px-1">Predictable, cheap, and yours.</span>
             </p>
           </div>
-          <div className="border-t border-ink">
-            {TOOLS.map((t, i) => (
-              <article key={t.name} className="grid md:grid-cols-[3rem_minmax(0,3fr)_minmax(0,4fr)_minmax(0,4fr)_minmax(0,2fr)] gap-x-6 gap-y-2 py-6 border-b border-rule items-baseline">
-                <span className="font-mono text-xs text-oxide num">{String(i + 1).padStart(2, "0")}</span>
-                <div>
-                  <p className="font-serif text-xl">{t.name}</p>
-                  <p className="font-mono text-[11px] text-graphite mt-1">{t.sector}</p>
-                </div>
-                <p className="text-sm"><span className="font-mono text-[11px] text-graphite block mb-1">In</span>{t.input}</p>
-                <p className="text-sm"><span className="font-mono text-[11px] text-graphite block mb-1">Out</span>{t.output}</p>
-                <p className="text-sm"><span className="font-mono text-[11px] text-graphite block mb-1">Checked by</span>{t.check}</p>
-              </article>
-            ))}
-          </div>
-          <p className="mt-6 font-mono text-xs text-graphite">Built on Claude first. Works with any capable AI model.</p>
         </section>
 
-        {/* How it works */}
-        <section id="how" className="bg-ink text-sheet">
-          <div className="max-w-page mx-auto px-5 md:px-8 py-20 md:py-28">
-            <div className="flex items-baseline gap-4 border-t border-sheet/40 pt-3 mb-12">
-              <span className="font-mono text-xs text-[#E07A4F]">03</span>
-              <span className="font-mono text-xs text-sheet/60">How it works</span>
-            </div>
-            <h2 className="font-serif text-3xl md:text-5xl leading-[1.08] tracking-[-0.015em] max-w-3xl mb-16">
-              We build the first tools with you. Then you have the means to make your own.
+        {/* HOW WE PROVIDE IT */}
+        <section id="how" className="bg-ink text-stone rounded-t-[36px] md:rounded-t-[56px]">
+          <div className="max-w-page mx-auto px-5 md:px-10 py-24 md:py-36">
+            <h2 className="reveal font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[11vw] md:text-[6vw] max-w-[16ch]">
+              Four weeks to your own builder.
             </h2>
-            <ol className="grid md:grid-cols-5 gap-px bg-sheet/15">
-              {STEPS.map(([title, body], i) => (
-                <li key={title} className="bg-ink p-0 md:pr-6 pb-10 md:pb-0">
-                  <span className="font-mono text-xs text-[#E07A4F] num">{String(i + 1).padStart(2, "0")}</span>
-                  <h3 className="font-serif text-xl mt-3 mb-3">{title}</h3>
-                  <p className="text-sm leading-relaxed text-sheet/70">{body}</p>
+            <ol className="mt-16 md:mt-24 grid md:grid-cols-4 border-t border-white/15">
+              {WEEKS.map(([when, what, detail], i) => (
+                <li key={when} className={`reveal border-b md:border-b-0 border-white/15 py-8 md:pt-8 md:pb-0 md:pr-8 ${i ? "md:pl-8 md:border-l" : ""}`} style={{ transitionDelay: `${i * 0.12}s` }}>
+                  <p className="font-mono text-xs text-lime">{when}</p>
+                  <h3 className="font-display font-bold text-2xl md:text-3xl tracking-[-0.02em] mt-4 mb-4">{what}</h3>
+                  <p className="text-stone/65 leading-relaxed">{detail}</p>
                 </li>
               ))}
             </ol>
           </div>
-        </section>
 
-        {/* Results page */}
-        <section className="max-w-page mx-auto px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] gap-12 items-start">
-          <div>
-            <Rule n="04" title="Proof, not promises" />
-            <h2 className="font-serif text-3xl md:text-4xl leading-[1.1] tracking-[-0.015em] mb-6">You can see it working.</h2>
-            <p className="text-graphite leading-relaxed mb-5">
-              Every client gets a results page: what each tool does, its latest test scores, how often it&apos;s used and
-              what it&apos;s worth, shown as a range so nobody is overselling.
-            </p>
-            <p className="text-graphite leading-relaxed">Built by the team behind Vernus, AI admin software for NHS general practice.</p>
-          </div>
-          <figure>
-            <img src="/dashboard-example.png" alt="Example results page for a fictional plumbing business, showing value added by each tool" className="w-full border border-ink" loading="lazy" />
-            <figcaption className="mt-3 font-mono text-[11px] text-graphite">Example page for a fictional business. Figures are illustrative.</figcaption>
-          </figure>
-        </section>
-
-        {/* Pricing + FAQ */}
-        <section id="pricing" className="bg-sheet border-y border-rule">
-          <div className="max-w-page mx-auto px-5 md:px-8 py-20 md:py-28">
-            <Rule n="05" title="Pricing" />
-            <h2 className="font-serif text-3xl md:text-5xl leading-[1.08] tracking-[-0.015em] mb-12">Fixed prices. No day rates.</h2>
-            <div className="border-t border-ink mb-20">
-              {PRICES.map(([what, price, note]) => (
-                <div key={what} className="grid md:grid-cols-[minmax(0,3fr)_minmax(0,3fr)_minmax(0,6fr)] gap-x-8 gap-y-1 py-5 border-b border-rule items-baseline">
-                  <p className="text-sm text-graphite">{what}</p>
-                  <p className="font-serif text-2xl num">{price}</p>
-                  <p className="text-sm text-graphite leading-relaxed">{note}</p>
-                </div>
-              ))}
+          {/* PRICING */}
+          <div id="pricing" className="max-w-page mx-auto px-5 md:px-10 pb-24 md:pb-36">
+            <div className="grid md:grid-cols-12 gap-10 items-end mb-14">
+              <h2 className="reveal md:col-span-7 font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[11vw] md:text-[6vw]">
+                What it costs.
+              </h2>
+              <p className="reveal md:col-span-4 md:col-start-9 text-stone/65 leading-relaxed">
+                Fixed prices, agreed in writing before any work starts. No day rates, no surprises.
+              </p>
             </div>
-            <div className="grid md:grid-cols-2 gap-x-16 gap-y-10">
-              {FAQ.map(([q, a]) => (
-                <div key={q}>
-                  <h3 className="font-serif text-xl mb-2">{q}</h3>
-                  <p className="text-graphite leading-relaxed">{a}</p>
+            <div className="border-t border-white/15">
+              {PRICES.map(([what, price, note], i) => (
+                <div key={what} className="reveal grid grid-cols-[1fr_auto] md:grid-cols-12 gap-x-6 gap-y-1 py-6 border-b border-white/15 items-baseline" style={{ transitionDelay: `${i * 0.06}s` }}>
+                  <p className="md:col-span-4 text-lg">{what}</p>
+                  <p className={`md:col-span-3 font-display font-bold text-3xl md:text-4xl tracking-[-0.02em] num ${price === "£0" ? "text-lime" : ""}`}>{price}</p>
+                  <p className="col-span-2 md:col-span-5 text-stone/60 leading-relaxed">{note}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Contact */}
-        <section id="contact" className="max-w-page mx-auto px-5 md:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-14">
-          <div>
-            <Rule n="06" title="Contact" />
-            <h2 className="font-serif text-4xl md:text-6xl leading-[1.02] tracking-[-0.02em] mb-6">What do you do every week that you wish you didn&apos;t?</h2>
-            <p className="text-graphite leading-relaxed max-w-md">
-              Tell us in a few lines. We&apos;ll reply within two working days to book a 30-minute call, and if tools
-              won&apos;t help, we&apos;ll say so.
-            </p>
+        {/* CONTACT */}
+        <section id="contact" className="bg-ink text-stone">
+          <div className="max-w-page mx-auto px-5 md:px-10 pb-20 md:pb-32 grid md:grid-cols-12 gap-12">
+            <div className="md:col-span-6">
+              <h2 className="reveal font-display font-extrabold tracking-[-0.045em] leading-[0.9] text-[13vw] md:text-[6.4vw]">
+                What do you do every week <span className="text-lime">that a workflow could?</span>
+              </h2>
+            </div>
+            <div className="reveal md:col-span-5 md:col-start-8 md:pt-4">
+              <p className="text-stone/65 leading-relaxed mb-8">
+                A few lines is plenty. We reply within two working days to book a free 30-minute call. Built by the team
+                behind Vernus, AI admin software for NHS general practice.
+              </p>
+              <ContactForm />
+            </div>
           </div>
-          <ContactForm />
+          <footer className="max-w-page mx-auto px-5 md:px-10 py-8 border-t border-white/15 flex flex-wrap justify-between gap-4 text-sm text-stone/50">
+            <span>© WebForge 2026</span>
+            <a href="mailto:sam@webflowoutreach.com" className="hover:text-stone">sam@webflowoutreach.com</a>
+          </footer>
         </section>
       </main>
-
-      <footer className="border-t border-rule">
-        <div className="max-w-page mx-auto px-5 md:px-8 py-8 flex flex-wrap gap-4 justify-between font-mono text-xs text-graphite">
-          <span>© WebForge 2026</span>
-          <a href="mailto:sam@webflowoutreach.com" className="hover:text-ink">sam@webflowoutreach.com</a>
-        </div>
-      </footer>
     </>
   );
 }

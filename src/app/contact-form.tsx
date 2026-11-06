@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const field = "w-full bg-transparent border-b border-rule focus:border-ink outline-none py-3 text-base placeholder:text-graphite/70 transition-colors";
+const field = "w-full bg-transparent border-b border-white/20 focus:border-lime outline-none py-3 text-base text-stone placeholder:text-stone/40 transition-colors";
 
 export function ContactForm() {
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
@@ -22,25 +22,26 @@ export function ContactForm() {
   }
 
   if (state === "sent") {
-    return <p className="font-serif text-2xl leading-snug md:pt-16">Thanks. We&apos;ll be in touch within two working days.</p>;
+    return <p className="font-display font-bold text-3xl tracking-[-0.02em]">Thanks. We&apos;ll be in touch within two working days.</p>;
   }
 
   return (
-    <form onSubmit={submit} className="space-y-6 md:pt-16">
+    <form onSubmit={submit} className="space-y-5">
       <label className="block"><span className="sr-only">Your name</span>
         <input name="name" required maxLength={200} autoComplete="name" placeholder="Your name" className={field} /></label>
       <label className="block"><span className="sr-only">Email</span>
         <input name="email" type="email" required maxLength={254} autoComplete="email" placeholder="Email" className={field} /></label>
       <label className="block"><span className="sr-only">Business</span>
         <input name="business" maxLength={200} autoComplete="organization" placeholder="Business" className={field} /></label>
-      <label className="block"><span className="sr-only">What would you like a tool to do?</span>
-        <textarea name="message" rows={3} maxLength={4000} placeholder="What would you like a tool to do?" className={`${field} resize-none`} /></label>
+      <label className="block"><span className="sr-only">What job do you repeat every week?</span>
+        <textarea name="message" rows={3} maxLength={4000} placeholder="What job do you repeat every week?" className={`${field} resize-none`} /></label>
       <input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-      <div className="flex items-center gap-6 pt-2">
-        <button type="submit" disabled={state === "sending"} className="bg-ink text-sheet px-8 py-3.5 hover:bg-oxide transition-colors disabled:opacity-60">
+      <div className="flex items-center gap-6 pt-3">
+        <button type="submit" disabled={state === "sending"} className="group inline-flex items-center gap-3 rounded-full bg-lime text-ink font-semibold pl-6 pr-2 py-2 disabled:opacity-60">
           {state === "sending" ? "Sending" : "Send"}
+          <span className="grid place-items-center w-8 h-8 rounded-full bg-ink text-lime transition-transform duration-300 group-hover:translate-x-0.5">→</span>
         </button>
-        {state === "error" && <p className="text-sm text-oxide-deep" role="alert">{error}</p>}
+        {state === "error" && <p className="text-sm text-lime" role="alert">{error}</p>}
       </div>
     </form>
   );

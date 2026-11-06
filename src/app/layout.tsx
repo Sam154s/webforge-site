@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
-import { Newsreader, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Archivo, Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const serif = Newsreader({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-serif", display: "swap", adjustFontFallback: false });
-const sans = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-sans", display: "swap" });
-const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
+// Three faces only: Archivo (display, uses its width axis), Hanken Grotesk (body), JetBrains Mono (code).
+const display = Archivo({ subsets: ["latin"], axes: ["wdth"], variable: "--font-display", display: "swap" });
+const sans = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "WebForge: AI tools your team owns",
+  title: "WebForge: AI builds it once. Plain code runs it forever.",
   description:
-    "Custom AI tools and workflows for Claude, built on your own examples and tested until they give the same quality result every time. Your team runs them, and can build the next ones.",
-  openGraph: { title: "WebForge", description: "AI tools your team owns, that do the job the same way every time.", type: "website" },
+    "We set up an AI workflow builder inside your business. Describe a problem in plain English and it builds a plain-code workflow that runs without AI: same result every time, nothing per run, code you own.",
+  openGraph: { title: "WebForge", description: "AI builds it once. Plain code runs it forever.", type: "website" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-GB" className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
+    <html lang="en-GB" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
       <body className="font-sans">{children}</body>
     </html>
   );

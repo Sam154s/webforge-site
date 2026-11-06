@@ -1,25 +1,25 @@
 import type { Config } from "tailwindcss";
 
-// Palette: printed-catalogue paper and ink, one accent. Iron oxide = the colour of worked metal at a forge.
+// One background (warm grey), one ink, one accent (chartreuse), one signal (electric blue, live data only).
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        paper: "#F3EFE6",
-        sheet: "#FBF9F4",
-        ink: "#1C1A17",
-        graphite: "#5C574F",
-        rule: "#D9D2C3",
-        oxide: "#B2471B",
-        "oxide-deep": "#8F3612",
+        stone: "#E8E6E1",
+        ink: "#111111",
+        dim: "#5E5B55",
+        line: "#CFCBC3",
+        lime: "#D9F24A",
+        signal: "#2B59FF",
       },
       fontFamily: {
-        serif: ["var(--font-serif)", "Georgia", "serif"],
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
-      maxWidth: { page: "72rem" },
+      maxWidth: { page: "86rem" },
+      transitionTimingFunction: { apple: "cubic-bezier(.25,.1,.25,1)", out: "cubic-bezier(.16,1,.3,1)" },
     },
   },
   plugins: [],
