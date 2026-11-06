@@ -1,40 +1,22 @@
 import type { Metadata } from "next";
-import { Space_Grotesk } from "next/font/google";
-import { GeistSans } from "geist/font/sans";
-import { SmoothScroll } from "@/components/ui/SmoothScroll";
+import { Newsreader, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
-  variable: "--font-space-grotesk",
-  display: "swap",
-});
+const serif = Newsreader({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-serif", display: "swap", adjustFontFallback: false });
+const sans = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-sans", display: "swap" });
+const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "WebForge: find the bottleneck, build the fix",
+  title: "WebForge: AI tools your team owns",
   description:
-    "We find the problem costing your business the most, build the AI system that fixes it on your own accounts, and report what it's worth every month.",
-  openGraph: {
-    title: "WebForge",
-    description: "Find the bottleneck. Build the fix. Measure it every month.",
-    type: "website",
-  },
+    "Custom AI tools and workflows for Claude, built on your own examples and tested until they give the same quality result every time. Your team runs them, and can build the next ones.",
+  openGraph: { title: "WebForge", description: "AI tools your team owns, that do the job the same way every time.", type: "website" },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-GB" className={`${spaceGrotesk.variable} ${GeistSans.variable}`}>
-      <body className="font-sans bg-bg text-text antialiased">
-        <div className="grain-overlay" aria-hidden="true" />
-        <SmoothScroll>
-          {children}
-        </SmoothScroll>
-      </body>
+    <html lang="en-GB" className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
+      <body className="font-sans">{children}</body>
     </html>
   );
 }

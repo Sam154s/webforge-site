@@ -1,31 +1,25 @@
 import type { Config } from "tailwindcss";
 
+// Palette: printed-catalogue paper and ink, one accent. Iron oxide = the colour of worked metal at a forge.
 const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        bg:         "var(--bg)",
-        surface:    "var(--surface)",
-        "surface-el": "var(--surface-el)",
-        border:     "var(--border)",
-        text:       "var(--text)",
-        "text-sec": "var(--text-sec)",
-        "text-muted": "var(--text-muted)",
-        accent:     "var(--accent)",
-        "accent-hover": "var(--accent-hover)",
+        paper: "#F3EFE6",
+        sheet: "#FBF9F4",
+        ink: "#1C1A17",
+        graphite: "#5C574F",
+        rule: "#D9D2C3",
+        oxide: "#B2471B",
+        "oxide-deep": "#8F3612",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
+        serif: ["var(--font-serif)", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
-      letterSpacing: {
-        widest: "0.2em",
-      },
+      maxWidth: { page: "72rem" },
     },
   },
   plugins: [],

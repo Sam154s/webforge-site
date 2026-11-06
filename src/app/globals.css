@@ -2,83 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg:           #0D0D0D;
-  --surface:      #161616;
-  --surface-el:   #1F1F1F;
-  --border:       #2A2A2A;
-  --text:         #F2F2F2;
-  --text-sec:     #707070;
-  --text-muted:   #3D3D3D;
-  --accent:       #3556FF;
-  --accent-hover: #2238E8;
+html { scroll-behavior: smooth; }
+body { background: #F3EFE6; color: #1C1A17; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+::selection { background: #B2471B; color: #FBF9F4; }
+
+/* Paper tooth: a faint fixed grain so large areas don't read as flat screen colour. */
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50; opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-* {
-  box-sizing: border-box;
-}
+/* One orchestrated load: hero lines rise in sequence, score bars fill like a test run completing. */
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.rise { opacity: 0; animation: rise .7s cubic-bezier(.2,.7,.2,1) forwards; }
+.bar-fill { transform-origin: left; transform: scaleX(0); animation: fill .5s cubic-bezier(.3,.7,.2,1) forwards; }
+@media (prefers-reduced-motion: reduce) { .rise, .bar-fill { animation: none; opacity: 1; transform: none; } }
 
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Grain overlay — viewport-sized, background-position animation (no giant element rasterisation) */
-.grain-overlay {
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
-  animation: grain 8s steps(10) infinite;
-  opacity: 0.045;
-  pointer-events: none;
-  z-index: 9999;
-}
-
-@keyframes grain {
-  0%, 100% { background-position: 0 0 }
-  10%       { background-position: -20px -30px }
-  20%       { background-position: 30px 20px }
-  30%       { background-position: -30px 40px }
-  40%       { background-position: 20px -20px }
-  50%       { background-position: -10px 30px }
-  60%       { background-position: 40px -10px }
-  70%       { background-position: -20px 20px }
-  80%       { background-position: 30px -30px }
-  90%       { background-position: -40px 10px }
-}
-
-/* Hide default cursor on desktop — custom cursor takes over */
-@media (hover: hover) and (pointer: fine) {
-  body, a, button, [role="button"] { cursor: none; }
-}
-
-::selection {
-  background: var(--accent);
-  color: var(--bg);
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 3px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-}
+.num { font-variant-numeric: tabular-nums; }
