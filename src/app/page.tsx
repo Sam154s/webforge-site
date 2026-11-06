@@ -22,11 +22,11 @@ const WEEKS = [
 ];
 const PRICES = [
   ["Discovery call", "Free", "30 minutes. If a builder won't help, we'll tell you."],
-  ["Builder and first two workflows", "£1,500", "Fixed price, four weeks, training included."],
-  ["Extra workflow, built by us", "£350", "Each. Agreed before we start."],
-  ["Support", "£300 a month", "Optional. Re-testing, new tools, small changes. Rolling monthly."],
+  ["Your builder and first two workflows", "£5,000", "Fixed price, four weeks, training included."],
+  ["Extra workflow, built by us", "£1,000", "Each. Scoped and agreed before we start."],
+  ["Support and AI consulting", "From £1,000 a month", "Depends on the work: re-testing, new tools, advice on where AI fits next. Rolling monthly."],
   ["Workflows your team builds", "£0", "That's the point."],
-  ["Running costs", "At cost", "Hosting, usually under £10 a month, plus the Claude plan the builder lives in. Both on your accounts."],
+  ["Running costs", "Cost of coordination", "Hosting and AI usage passed on at cost, on your own accounts, plus the time to coordinate them. Agreed up front."],
 ];
 
 export default function Home() {
@@ -35,7 +35,7 @@ export default function Home() {
       <Reveal />
       <header className="fixed top-0 inset-x-0 z-40 bg-stone/85 backdrop-blur-md">
         <div className="max-w-page mx-auto px-5 md:px-10 h-16 flex items-center justify-between">
-          <a href="/" className="font-display font-bold text-lg tracking-[-0.02em]">webforge<sup className="text-[.55em] font-normal align-super">®</sup></a>
+          <a href="/" className="font-display font-bold text-lg tracking-[-0.02em]">webflow outreach</a>
           <nav className="flex items-center gap-7 text-sm">
             <a href="#builder" className="hidden md:inline text-dim hover:text-ink transition-colors">The builder</a>
             <a href="#how" className="hidden md:inline text-dim hover:text-ink transition-colors">How it works</a>
@@ -51,7 +51,7 @@ export default function Home() {
         {/* HERO */}
         <section className="relative min-h-[100svh] overflow-hidden pt-16">
           <span aria-hidden className="drift absolute left-[-2vw] bottom-[-4vw] font-display font-black narrow leading-none tracking-[-0.06em] text-[38vw] md:text-[30vw] text-ink/[0.06] select-none pointer-events-none">
-            forge
+            flow
           </span>
           <div className="relative max-w-page mx-auto px-5 md:px-10 pt-10 md:pt-14 grid md:grid-cols-12 gap-8">
             <p className="fade md:col-start-9 md:col-span-4 text-sm leading-relaxed text-dim md:text-right" style={{ animationDelay: ".9s" }}>
@@ -67,7 +67,7 @@ export default function Home() {
 
           <div className="relative max-w-page mx-auto px-5 md:px-10 mt-10 md:-mt-[17vw] pb-14 grid md:grid-cols-12 gap-6 items-end">
             <div className="pop md:col-span-4 lg:col-span-3 bg-lime rounded-[20px] p-6 flex flex-col gap-5 min-h-[19rem]" style={{ animationDelay: ".6s" }}>
-              <p className="font-display font-bold text-lg tracking-[-0.01em]">webforge</p>
+              <p className="font-display font-bold text-lg tracking-[-0.01em]">webflow outreach</p>
               <p className="text-[15px] leading-snug">
                 We set up an AI workflow builder inside your business. Describe a problem and it builds a workflow in
                 ordinary code, which then runs on its own.
@@ -178,7 +178,7 @@ export default function Home() {
               {PRICES.map(([what, price, note], i) => (
                 <div key={what} className="reveal grid grid-cols-[1fr_auto] md:grid-cols-12 gap-x-6 gap-y-1 py-6 border-b border-white/15 items-baseline" style={{ transitionDelay: `${i * 0.06}s` }}>
                   <p className="md:col-span-4 text-lg">{what}</p>
-                  <p className={`md:col-span-3 font-display font-bold text-3xl md:text-4xl tracking-[-0.02em] num ${price === "£0" ? "text-lime" : ""}`}>{price}</p>
+                  <p className={`md:col-span-3 font-display font-bold tracking-[-0.02em] num ${price.length > 8 ? "text-xl md:text-2xl leading-tight text-right md:text-left" : "text-3xl md:text-4xl"} ${price === "£0" ? "text-lime" : ""}`}>{price}</p>
                   <p className="col-span-2 md:col-span-5 text-stone/60 leading-relaxed">{note}</p>
                 </div>
               ))}
@@ -203,7 +203,7 @@ export default function Home() {
             </div>
           </div>
           <footer className="max-w-page mx-auto px-5 md:px-10 py-8 border-t border-white/15 flex flex-wrap justify-between gap-4 text-sm text-stone/50">
-            <span>© WebForge 2026</span>
+            <span>© Webflow Outreach 2026</span>
             <a href="mailto:sam@webflowoutreach.com" className="hover:text-stone">sam@webflowoutreach.com</a>
           </footer>
         </section>

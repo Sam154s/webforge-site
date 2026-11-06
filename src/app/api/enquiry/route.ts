@@ -29,10 +29,10 @@ export async function POST(req: NextRequest) {
 
   if (process.env.RESEND_API_KEY) {
     await new Resend(process.env.RESEND_API_KEY).emails.send({
-      from: "WebForge <onboarding@resend.dev>",
+      from: "Webflow Outreach <onboarding@resend.dev>",
       to: NOTIFY,
       replyTo: email,
-      subject: `New enquiry: ${business || name}`,
+      subject: `Webflow Outreach enquiry: ${business || name}`,
       html: `<p><strong>${esc(name)}</strong> (${esc(email)})${business ? `, ${esc(business)}` : ""}</p><p>${esc(message || "No message").replace(/\n/g, "<br>")}</p>`,
     }).catch((e) => console.error("Resend failed", e));
   }

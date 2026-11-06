@@ -8,10 +8,10 @@ const sans = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-sans", displ
 const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "WebForge: AI builds it once. Plain code runs it forever.",
+  title: "Webflow Outreach: AI builds it once. Plain code runs it forever.",
   description:
     "We set up an AI workflow builder inside your business. Describe a problem in plain English and it builds a plain-code workflow that runs without AI: same result every time, nothing per run, code you own.",
-  openGraph: { title: "WebForge", description: "AI builds it once. Plain code runs it forever.", type: "website" },
+  openGraph: { title: "Webflow Outreach", description: "AI builds it once. Plain code runs it forever.", type: "website" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
