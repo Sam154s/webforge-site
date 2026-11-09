@@ -31,3 +31,6 @@ export const CONSENT_TEXT =
   "We use these details to prepare for and run your diagnostic call and to send your report. Before the call we look at information your company has published: Companies House, your website and your public email settings. We do not enter anything into your site. Privacy notice: /privacy";
 export const MARKETING_TEXT =
   "Send me occasional emails about how businesses like mine use automation. I can unsubscribe at any time.";
+
+// The honeypot field. Hidden from people, tempting to bots. Must never match a real field name.
+export const HONEYPOT = "hp_fax_x9k2";
