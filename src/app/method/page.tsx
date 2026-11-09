@@ -58,7 +58,7 @@ export default function Method() {
 
         <section className="max-w-page mx-auto px-5 md:px-10 pb-20 grid md:grid-cols-12 gap-10">
           <h2 className="reveal md:col-span-5 font-display font-bold tracking-[-0.035em] leading-[0.95] text-4xl md:text-6xl">The ranking.</h2>
-          <div className="md:col-span-6 md:col-start-7 space-y-6 text-lg leading-relaxed">
+          <div className="md:col-span-6 md:col-start-7 space-y-6 text-lg leading-relaxed min-w-0">
             <pre className="reveal font-mono text-[13px] md:text-sm bg-ink text-stone rounded-[16px] p-5 overflow-x-auto leading-relaxed">{`Value  = Hard + 0.4 x Soft
 Risked = (Value - Running cost) x Confidence
 Size   = our hours + your hours
@@ -85,7 +85,7 @@ Score  = Risked / Size`}</pre>
 
         <section className="max-w-page mx-auto px-5 md:px-10 pb-20 grid md:grid-cols-12 gap-10">
           <h2 className="reveal md:col-span-5 font-display font-bold tracking-[-0.035em] leading-[0.95] text-4xl md:text-6xl">What AI does, and does not.</h2>
-          <div className="md:col-span-6 md:col-start-7 space-y-6 text-lg leading-relaxed">
+          <div className="md:col-span-6 md:col-start-7 space-y-6 text-lg leading-relaxed min-w-0">
             <p className="reveal">Code works out every number and the ranking. AI writes words only, such as explaining a finding in plain English. A person reads the report before you do.</p>
             <p className="reveal"><strong>What we never take:</strong> passwords, bank logins, access to your systems at the diagnostic stage, or patient and other special category data. We read an export you choose to send, and public information.</p>
           </div>
@@ -99,7 +99,7 @@ Score  = Risked / Size`}</pre>
               <h2 className="reveal mt-3 font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[11vw] md:text-[5vw]">Ten runs. Same result, or it does not ship.</h2>
               <p className="reveal mt-6 text-stone/65 leading-relaxed">Before any fix goes live, we run it ten times against your own examples, including an empty input and a hostile one. Every run must give an identical result. A fix that stops safely on bad input counts as a pass. A fix that drifts does not, and you do not pay for it.</p>
             </div>
-            <div className="md:col-span-7">
+            <div className="md:col-span-7 min-w-0">
               <div className="reveal rounded-[16px] bg-[#171717] border border-white/10 p-5 md:p-7 font-mono text-[12.5px] md:text-sm leading-[1.8] overflow-x-auto">
                 <p className="text-stone/50">$ node wf.mjs eval {EVAL.workflow}</p>
                 <p className="text-lime">PASS {EVAL.workflow}</p>
