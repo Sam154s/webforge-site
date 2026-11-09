@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 
-// One background (warm grey), one ink, one accent (chartreuse), one signal (electric blue, live data only).
+// One background (warm grey), one ink, one accent (chartreuse), one signal (blue #234BE0: links and live data).
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
@@ -11,7 +11,7 @@ const config: Config = {
         dim: "#5E5B55",
         line: "#CFCBC3",
         lime: "#D9F24A",
-        signal: "#2B59FF",
+        signal: "#234BE0",
       },
       fontFamily: {
         display: ["var(--font-display)", "system-ui", "sans-serif"],
