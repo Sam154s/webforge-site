@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "../reveal";
-import { Cta } from "@/components/track-link";
 
 export const metadata: Metadata = {
   title: "Method and ten-run test",
