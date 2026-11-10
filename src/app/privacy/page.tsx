@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { COMPANY, EMAIL } from "@/lib/site";
+import { EMAIL } from "@/lib/site";
+import { COMPANY } from "@/lib/company";
 import { Co, LegalPage, Ph } from "@/components/legal";
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ export default function Privacy() {
       <p>This notice explains how we use personal data. It covers people who use this website or ask for a diagnostic (UK GDPR Article 13), and people at companies we contact who did not give us their details first (Article 14). It is written to be read, not skimmed past.</p>
 
       <h2>Who we are</h2>
-      <p>The controller is <Co />, trading as {COMPANY.tradingAs}. ICO registration: <Ph>{COMPANY.ico}</Ph>. Contact for anything in this notice: <a href={`mailto:${EMAIL}`}>{EMAIL}</a>. We have not appointed a data protection officer <Ph>CONFIRM</Ph>.</p>
+      <p>The controller is <Co />, trading as {COMPANY.tradingAs}. ICO registration: {COMPANY.ico ? <Ph>{COMPANY.ico}</Ph> : "being confirmed"}. Contact for anything in this notice: <a href={`mailto:${EMAIL}`}>{EMAIL}</a>. We have not appointed a data protection officer <Ph>CONFIRM</Ph>.</p>
 
       <h2>What we collect, and where from</h2>
       <p><strong>From you, on the diagnostic form:</strong> name, work email, phone (optional), company name, website, company number (optional), the systems you use, anything you tell us about your week, whether you ticked the optional marketing box, the exact consent wording you saw and when you submitted, and which page and campaign brought you here.</p>
