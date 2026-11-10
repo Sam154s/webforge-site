@@ -16,7 +16,7 @@ const CAPTIONS = [
   ["The builder picks ordinary tools.", "Spreadsheets, PDFs, email, your own systems. Nothing clever, nothing that guesses."],
   ["It writes a workflow, not a prompt.", "Real code, checked against your examples. AI is used here, once, to build it."],
   ["Then it runs on its own.", "No AI inside, so no drift. Same input, same output, every single time."],
-  ["And it builds the next one.", "Your team describes the next problem. The builder makes the next workflow."],
+  ["And the next one is quicker.", "Each fix teaches the builder more about your business. Later, your team can ask it for the next one."],
 ];
 const CODE = [
   ["monday_invoices.py", "c"],
@@ -113,7 +113,7 @@ export function BuilderScene() {
               })}
               {/* Live packets, only once it's running */}
               {[0, 1, 2, 3].map((k) => (
-                <span key={k} className="absolute left-[1.5em] w-[.7em] h-[.7em] rounded-full bg-signal shadow-[0_0_0_.25em_rgba(43,89,255,.25)]"
+                <span key={k} className="absolute left-[1.5em] w-[.7em] h-[.7em] rounded-full bg-signal shadow-[0_0_0_.25em_rgba(35,75,224,.25)]"
                   style={{ opacity: "var(--s3, 0)", animation: `packet 2.4s linear ${k * 0.6}s infinite` }} />
               ))}
             </div>
