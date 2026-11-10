@@ -97,7 +97,7 @@ Score  = Risked / Size`}</pre>
             <div className="md:col-span-5">
               <p className="font-mono text-xs text-lime">the ten-run test</p>
               <h2 className="reveal mt-3 font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[11vw] md:text-[5vw]">Ten runs. Same result, or it does not ship.</h2>
-              <p className="reveal mt-6 text-stone/65 leading-relaxed">Before any fix goes live, we run it ten times against your own examples, including an empty input and a hostile one. Every run must give an identical result. A fix that stops safely on bad input counts as a pass. A fix that drifts does not, and you do not pay for it.</p>
+              <p className="reveal mt-6 text-stone/65 leading-relaxed">Before any fix goes live, we run it ten times against your own examples, including an empty input and a hostile one. Every run must give an identical result. A fix that stops safely on bad input is behaving correctly. If a fix drifts, we adjust it and run the ten again.</p>
             </div>
             <div className="md:col-span-7 min-w-0">
               <div className="reveal rounded-[16px] bg-[#171717] border border-white/10 p-5 md:p-7 font-mono text-[12.5px] md:text-sm leading-[1.8] overflow-x-auto">

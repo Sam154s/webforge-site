@@ -18,8 +18,8 @@ const SCOPE = [
 ];
 const PRICES = [
   ["Diagnostic", "Free", "30 minute call and your ranked report. You can stop there and keep it."],
-  ["Fix this", "£750 to £1,000", "One audited fix. Signed order, fixed price. £750 for a smaller job, £1,000 for a bigger one. No fee if it fails its tests."],
-  ["Builder, then two workflows", "£5,000", "Four weeks. For teams that want to build the rest themselves. Offered after a fix has passed."],
+  ["Fix this", "£750 to £1,000", "One audited fix. Fixed price, agreed in writing and paid in full before we start. £750 for a smaller job, £1,000 for a bigger one. We build it, then test and adjust it with you until it works."],
+  ["Builder, then two workflows", "£5,000", "Four weeks. For teams that want to build the rest themselves. Offered after your first fix is working."],
   ["Extra workflows", "£1,000", "Each, built by us. Scoped and agreed before we start."],
   ["Support and AI consulting", "From £1,000 a month", "Re-testing, new tools, advice on where AI fits next. Rolling monthly."],
   ["Websites and customer tools", "Quoted per project", "Priced after the diagnostic, in writing, before any work starts."],

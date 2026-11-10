@@ -72,7 +72,7 @@ export default function SampleReport() {
             </div>
             <div className="md:col-span-4 space-y-3">
               <p className="font-display font-bold text-4xl tracking-[-0.03em]">£750 <span className="text-base font-semibold">fixed</span></p>
-              <p className="text-sm leading-snug">Tested ten times against your own examples. No fee if it fails.</p>
+              <p className="text-sm leading-snug">Paid in full before we start. Tested ten times against your own examples, and adjusted with you until it works.</p>
               <button type="button" disabled aria-disabled="true" className="inline-flex items-center gap-3 rounded-full bg-ink text-stone font-semibold pl-6 pr-2 py-2 min-h-[44px] opacity-90 cursor-not-allowed">
                 Fix this <span aria-hidden className="grid place-items-center w-8 h-8 rounded-full bg-lime text-ink">→</span>
               </button>

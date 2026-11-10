@@ -30,8 +30,8 @@ export default function Terms() {
       <h2>Fix this</h2>
       <ul>
         <li>You pick one item from your report. We agree the scope, the finish line and a fixed price in writing before we start. The price is £750 to £1,000, depending on the size of the job. Prices exclude VAT <Ph>CONFIRM VAT STATUS</Ph>.</li>
-        <li>Work starts when you sign the order. Payment terms: <Ph>CONFIRM, e.g. invoice on pass, 14 days</Ph>.</li>
-        <li><strong>Ten-run test.</strong> Before the fix goes live we run it ten times against examples you supply, including an empty input and a bad input. Every run must give the identical result, or stop safely. If the fix fails its tests and we cannot bring it to a pass, you owe nothing for it.</li>
+        <li>You pay the fixed price in full before we start building. Work starts when you have signed the order and paid.</li>
+        <li><strong>Ten-run test.</strong> Once we have built the fix, we run it ten times against examples you supply, including an empty input and a bad input. Every run must give the identical result, or stop safely. We test and adjust it with you until it works.</li>
         <li>We tell you plainly if a job should not be automated or will not pay back, and we decline it.</li>
         <li>What we deliver is yours to keep and use. Ownership of the code and any third-party components: <Ph>CONFIRM IP WORDING</Ph>.</li>
         <li>Running costs for hosting and AI usage, where they exist, are on your own accounts and agreed up front.</li>

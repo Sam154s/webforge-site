@@ -28,7 +28,7 @@ const FAQ = [
   ["What does it cost?", "Nothing. You can stop after the report and keep it."],
   ["What if I do not want to fix anything?", "Keep the report. There is no obligation and no sales sequence."],
   ["Who sees my data?", "Only us and the services we use to run this. The privacy notice lists them."],
-  ["What happens at “Fix this”?", "You pick one item. We agree scope and a fixed price of £750 to £1,000 in writing. It is tested ten times against your examples, and there is no fee if it fails."],
+  ["What happens at “Fix this”?", "You pick one item. We agree scope and a fixed price of £750 to £1,000 in writing. You pay in full before we start building. We build it, then test it ten times against your examples and adjust it with you until it works."],
   ["Is AI used?", "For words only. Code works out every number and the ranking, and a person reads the report before you do."],
 ];
 
