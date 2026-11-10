@@ -5,7 +5,7 @@ import { EMAIL } from "@/lib/site";
 // ASSUMED widget contract (from workflow-builder/kit/web/shell.js and build.mjs). Correct it here, in one place:
 //   script:  /tools/estimator/w.js, loaded with defer (the kit builds widget.js; the coordinator drops it in as w.js)
 //   element: <wf-tool> with no attributes; the tool's config is baked into the bundle
-//   height:  the kit's own page gives wf-tool display:block and min-height:24rem, so the same is reserved below
+//   height:  the kit's own page gives wf-tool display:block and min-height 585px, or 470px from 640px wide, so the same is reserved below
 //   fallback: children of <wf-tool> are not slotted by the widget, so they show only until it loads, or if it never does
 const SCRIPT = "/tools/estimator/w.js";
 const TAG = "wf-tool";
@@ -51,7 +51,7 @@ export default function EstimatePage() {
         <div className="md:col-span-7 md:col-start-6">
           <div className="rounded-[24px] border border-ink p-6 md:p-10">
             {/* React 18 passes `class` (not className) through to custom elements */}
-            <Tool class="block min-h-[24rem]">
+            <Tool class="block min-h-[585px] sm:min-h-[470px]">
               <p className="text-dim leading-relaxed">
                 The estimator needs JavaScript, and it has not loaded. You can get a proper number from the{" "}
                 <a href="/diagnostic" className="text-signal underline underline-offset-4">free diagnostic</a>{" "}
