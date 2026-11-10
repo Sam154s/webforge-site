@@ -65,14 +65,14 @@ export function BuilderScene() {
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <div className="max-w-page mx-auto h-full px-5 md:px-10 grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-6 md:gap-14 items-center content-center py-6">
           {/* Captions: one at a time, cross-fading */}
-          <div className="relative h-[9.5rem] md:h-auto md:min-h-[22rem]">
-            <p className="font-mono text-xs mb-4 md:mb-8 flex gap-2" aria-hidden>
+          <div className="grid">
+            <p className="col-start-1 row-start-1 font-mono text-xs flex gap-2 h-1" aria-hidden>
               {CAPTIONS.map((_, i) => (
                 <span key={i} className={`h-1 w-8 transition-colors duration-500 ${i <= stage ? "bg-ink" : "bg-line"}`} />
               ))}
             </p>
             {CAPTIONS.map(([title, body], i) => (
-              <div key={i} className={`absolute inset-x-0 top-8 md:top-14 transition-all duration-700 ease-out ${i === stage ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"}`} aria-hidden={i !== stage}>
+              <div key={i} className={`col-start-1 row-start-1 pt-8 md:pt-12 transition-all duration-700 ease-out ${i === stage ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"}`} aria-hidden={i !== stage}>
                 <p className="font-mono text-xs text-dim mb-3">0{i + 1}</p>
                 <h3 className="font-display font-bold tracking-[-0.03em] leading-[0.95] text-[2rem] md:text-[3.6rem]">{title}</h3>
                 <p className="mt-3 md:mt-6 text-base md:text-xl text-dim max-w-md leading-snug">{body}</p>

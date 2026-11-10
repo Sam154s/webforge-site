@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BOOKING_URL, EMAIL } from "@/lib/site";
-import { TrackLink } from "@/components/track-link";
 
 export const metadata: Metadata = {
   title: "Request received",
@@ -11,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const NEXT = [
-  ["Pick a time", BOOKING_URL ? "Use the button above. It takes a minute." : "We will email you times, normally within one working day."],
+  ["Pick a time", ""],
   ["Send one export", "Before the call, send us one list from your accounts or job system. No export, no report, because we will not guess your numbers. How to get it is below."],
   ["The call", "30 minutes. We ask 12 to 16 plain questions about how work gets done. Not a sales call."],
   ["Your report", "After a person has checked it, it appears in your dashboard: a ranked list with a pound range and confidence grade on each."],
@@ -37,16 +36,9 @@ export default function Booked() {
         <h1 className="mt-3 font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[13vw] md:text-[6vw] max-w-[16ch]">
           Thanks. Here is what happens next.
         </h1>
-        <div className="mt-8">
-          {BOOKING_URL ? (
-            <TrackLink where="booked-book" href={BOOKING_URL} className="group inline-flex items-center gap-3 rounded-full bg-ink text-stone font-semibold pl-6 pr-2 py-2 min-h-[44px]">
-              Pick a time for your call
-              <span aria-hidden className="grid place-items-center w-8 h-8 rounded-full bg-lime text-ink transition-transform duration-300 group-hover:translate-x-0.5">→</span>
-            </TrackLink>
-          ) : (
-            <p className="text-lg bg-lime inline-block px-2 py-1 rounded">We will email you times, normally within one working day.</p>
-          )}
-        </div>
+        <p className="mt-8 text-lg bg-lime inline-block px-2 py-1 rounded">
+          {BOOKING_URL ? "Pick a time now, it takes a minute." : "We will email you times, normally within one working day."}
+        </p>
       </section>
 
       <section className="max-w-page mx-auto px-5 md:px-10 pb-16 grid md:grid-cols-12 gap-10">
@@ -54,7 +46,21 @@ export default function Booked() {
           {NEXT.map(([t, d], i) => (
             <li key={t} className="grid grid-cols-[2.5rem_1fr] gap-x-2 py-6 border-b border-line">
               <span className="font-mono text-xs text-dim pt-1.5">0{i + 1}</span>
-              <div><h2 className="font-display font-bold text-2xl tracking-[-0.02em]">{t}</h2><p className="text-dim mt-1 leading-relaxed">{d}</p></div>
+              <div>
+                <h2 className="font-display font-bold text-2xl tracking-[-0.02em]">{t}</h2>
+                {i === 0 ? (
+                  BOOKING_URL ? (
+                    <a href={BOOKING_URL} target="_blank" rel="noopener" className="group mt-3 inline-flex items-center gap-3 rounded-full bg-ink text-stone font-semibold pl-6 pr-2 py-2 min-h-[44px]">
+                      Pick a time
+                      <span aria-hidden className="grid place-items-center w-8 h-8 rounded-full bg-lime text-ink transition-transform duration-300 ease-apple group-hover:translate-x-0.5">→</span>
+                    </a>
+                  ) : (
+                    <p className="text-dim mt-1 leading-relaxed">Reply to our email with the time that suits you best.</p>
+                  )
+                ) : (
+                  <p className="text-dim mt-1 leading-relaxed">{d}</p>
+                )}
+              </div>
             </li>
           ))}
         </ol>

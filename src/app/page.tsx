@@ -40,7 +40,7 @@ export default function Home() {
             <p className="fade md:col-start-9 md:col-span-4 text-sm leading-relaxed text-dim md:text-right" style={{ animationDelay: ".9s" }}>
               A free 30 minute diagnostic for UK limited companies with 5 to 50 staff. You get a ranked list of what to fix, with a pound range on each, in your own dashboard.
             </p>
-            <h1 className="md:col-start-3 md:col-span-10 font-display font-extrabold tracking-[-0.045em] leading-[0.9] text-[13.5vw] md:text-[7.4vw] md:text-right">
+            <h1 className="md:col-start-3 md:col-span-10 font-display font-extrabold tracking-[-0.045em] leading-[0.9] text-[13.5vw] md:text-[min(7.4vw,6.5rem)] md:text-right">
               <span className="mask"><span style={{ animationDelay: ".05s" }}>Find the jobs</span></span>
               <span className="mask"><span style={{ animationDelay: ".17s" }}>costing you money.</span></span>
               <span className="mask"><span style={{ animationDelay: ".29s" }} className="font-medium">Then fix</span></span>
@@ -48,8 +48,8 @@ export default function Home() {
             </h1>
           </div>
 
-          <div className="relative max-w-page mx-auto px-5 md:px-10 mt-10 md:-mt-[15vw] pb-14 grid md:grid-cols-12 gap-6 items-end">
-            <div className="pop md:col-span-5 lg:col-span-4 bg-lime rounded-[20px] p-6 flex flex-col gap-5 min-h-[19rem]" style={{ animationDelay: ".6s" }}>
+          <div className="relative max-w-page mx-auto px-5 md:px-10 mt-10 md:mt-0 pb-14 grid md:grid-cols-12 gap-6 items-end">
+            <div className="pop md:col-span-5 lg:col-span-4 md:-mt-[min(11vw,9.75rem)] bg-lime rounded-[20px] p-6 flex flex-col gap-5 min-h-[19rem]" style={{ animationDelay: ".6s" }}>
               <p className="font-mono text-xs">the path</p>
               <ol className="space-y-3">
                 {[["1", "Free diagnostic", "We find and rank the fixes."], ["2", "Fix this", "£750 to £1,000, one audited fix."], ["3", "Builder", "£5,000, only if you want more."]].map(([n, t, d]) => (
@@ -61,7 +61,7 @@ export default function Home() {
               </ol>
               <Cta where="hero" className="mt-auto self-start" />
             </div>
-            <div className="fade md:col-start-9 md:col-span-4 flex flex-col md:items-end gap-4 text-sm" style={{ animationDelay: "1.1s" }}>
+            <div className="fade md:col-start-9 md:col-span-4 flex flex-col md:items-end gap-4 text-sm md:pt-8" style={{ animationDelay: "1.1s" }}>
               <TrackLink where="hero-sample" href="/sample-report" className="flex items-center gap-3 group">
                 <span aria-hidden className="grid place-items-center w-11 h-11 rounded-full border border-ink transition-transform duration-500 ease-out group-hover:translate-x-1">→</span>
                 See a sample report

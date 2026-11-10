@@ -1,18 +1,16 @@
-// One place for facts that appear on several pages. Anything in [SQUARE BRACKETS] is a legal fact Sam must supply.
+// One place for facts that appear on several pages. Legal company facts live in company.ts.
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://webflowoutreach.com").replace(/\/$/, "");
 export const EMAIL = "sam@webflowoutreach.com";
-export const BOOKING_URL = process.env.NEXT_PUBLIC_BOOKING_URL || "";
-
-export const COMPANY = {
-  name: "[COMPANY NAME]",
-  tradingAs: "Webflow Outreach",
-  number: "[COMPANY NUMBER]",
-  office: "[REGISTERED OFFICE ADDRESS]",
-  place: "[PLACE OF REGISTRATION, e.g. England and Wales]",
-  vat: "[VAT NUMBER, if registered]",
-  ico: "[ICO REGISTRATION NUMBER]",
-  director: "[RESPONSIBLE PERSON NAME]",
-};
+// Optional booking link. Only an https URL is accepted; anything else is ignored.
+function httpsUrl(v: string | undefined): string {
+  try {
+    const u = new URL((v || "").trim());
+    return u.protocol === "https:" ? u.toString() : "";
+  } catch {
+    return "";
+  }
+}
+export const BOOKING_URL = httpsUrl(process.env.NEXT_PUBLIC_BOOKING_URL);
 
 export const NAV = [
   { href: "/#how", label: "How it works" },

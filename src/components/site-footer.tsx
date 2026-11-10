@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { COMPANY, EMAIL } from "@/lib/site";
+import { EMAIL } from "@/lib/site";
+import { COMPANY } from "@/lib/company";
 
 export function SiteFooter() {
   return (
@@ -7,10 +8,22 @@ export function SiteFooter() {
       <div className="max-w-page mx-auto px-5 md:px-10 py-10 border-t border-white/15 grid md:grid-cols-12 gap-8 text-sm text-stone/60">
         <div className="md:col-span-5 space-y-1">
           <p className="font-display font-bold text-lg tracking-[-0.02em] text-stone">webflow outreach</p>
-          <p>{COMPANY.name}, trading as {COMPANY.tradingAs}</p>
-          <p>Company number {COMPANY.number}, registered in {COMPANY.place}</p>
-          <p>Registered office: {COMPANY.office}</p>
-          <p>VAT: {COMPANY.vat} · ICO: {COMPANY.ico}</p>
+          {COMPANY.name && <p>{COMPANY.name}, trading as {COMPANY.tradingAs}</p>}
+          {(COMPANY.number || COMPANY.registeredIn) && (
+            <p>
+              {COMPANY.number && `Company number ${COMPANY.number}`}
+              {COMPANY.number && COMPANY.registeredIn && ", "}
+              {COMPANY.registeredIn && `${COMPANY.number ? "registered" : "Registered"} in ${COMPANY.registeredIn}`}
+            </p>
+          )}
+          {COMPANY.address && <p>Registered office: {COMPANY.address}</p>}
+          {(COMPANY.vat || COMPANY.ico) && (
+            <p>
+              {COMPANY.vat && `VAT: ${COMPANY.vat}`}
+              {COMPANY.vat && COMPANY.ico && " · "}
+              {COMPANY.ico && `ICO: ${COMPANY.ico}`}
+            </p>
+          )}
         </div>
         <div className="md:col-span-3 space-y-1">
           <p className="text-stone">Contact</p>

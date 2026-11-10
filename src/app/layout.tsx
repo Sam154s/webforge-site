@@ -33,9 +33,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-GB" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
-      <body className="font-sans">
+      <body className="font-sans min-h-screen flex flex-col">
         <SiteHeader />
-        {children}
+        <div className="flex-1">{children}</div>
         <SiteFooter />
         <SafeAnalytics />
       </body>
