@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { HONEYPOT } from "@/lib/site";
+import { OPS_KEY, OPS_URL, validToken } from "@/lib/outreach";
 
 // Enquiries go to the ops database (shows in Sales and "Needs you") and, if Resend is set up, to the inbox.
 // The ops RPC validates and rate-limits, so this route holds no database secret: the key is the public one.
-const OPS_URL = process.env.OPS_SUPABASE_URL ?? "https://qqqdjtjqizawgkzznxvm.supabase.co";
-const OPS_KEY = process.env.OPS_SUPABASE_KEY ?? "sb_publishable_f0kovNXdeLq1qZziijFi8g_YemeRMi5";
 const NOTIFY = process.env.CONTACT_EMAIL && !process.env.CONTACT_EMAIL.endsWith("webforge.build")
   ? process.env.CONTACT_EMAIL : "sam@webflowoutreach.com";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -48,6 +47,7 @@ export async function POST(req: NextRequest) {
   const details = {
     company_name: company, website, company_number: companyNumber || null, phone: phone || null, systems,
     consent_text: consentText, consented_at: new Date().toISOString(), marketing_opt_in: marketing,
+    c_token: validToken(b.c_token) ? b.c_token : null,
     source: str(b.source, 80) || "diagnostic", utm: typeof b.utm === "object" && b.utm ? b.utm : {},
   };
 

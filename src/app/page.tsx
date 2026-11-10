@@ -156,9 +156,10 @@ export default function Home() {
               <h2 className="reveal md:col-span-7 font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[11vw] md:text-[6vw]">
                 What it costs.
               </h2>
-              <p className="reveal md:col-span-4 md:col-start-9 text-stone/65 leading-relaxed">
-                In the order you would meet them. Fixed prices, agreed in writing before any work starts. No day rates.
-              </p>
+              <div className="reveal md:col-span-4 md:col-start-9 text-stone/65 leading-relaxed space-y-3">
+                <p>In the order you would meet them. Fixed prices, agreed in writing before any work starts. No day rates.</p>
+                <p className="text-sm">Want a rough number first? <Link href="/estimate" className="text-stone underline underline-offset-4">Try the price estimator</Link>.</p>
+              </div>
             </div>
             <div className="border-t border-white/15">
               {PRICES.map(([what, price, note], i) => (

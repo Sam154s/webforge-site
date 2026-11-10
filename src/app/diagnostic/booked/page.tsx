@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Request received",
   description: "What happens next, what to bring, and how to export your invoice list.",
   robots: { index: false, follow: false },
+  alternates: { canonical: "/diagnostic/booked" },
 };
 
 const NEXT = [

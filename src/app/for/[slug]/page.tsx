@@ -6,8 +6,10 @@ import { Cta } from "@/components/track-link";
 import { AttrCapture } from "@/components/attr-capture";
 import { EMAIL } from "@/lib/site";
 import { LANDINGS, bySlug } from "@/lib/landing";
+import { landingFor, validToken } from "@/lib/outreach";
 
 export const dynamicParams = false;
+export const dynamic = "force-dynamic"; // reads ?c= on every request
 export const generateStaticParams = () => LANDINGS.map((l) => ({ slug: l.slug }));
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
@@ -23,16 +25,19 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-export default function Landing({ params }: { params: { slug: string } }) {
+// The token and the company name stay out of the title, the description and analytics. They only appear in the page body.
+export default async function Landing({ params, searchParams }: { params: { slug: string }; searchParams: { c?: string } }) {
   const l = bySlug(params.slug);
   if (!l) notFound();
-  const href = `/diagnostic?src=for-${l.slug}`;
+  const known = await landingFor(searchParams.c);
+  const href = `/diagnostic?src=for-${l.slug}${validToken(searchParams.c) ? `&c=${searchParams.c}` : ""}`;
   return (
     <>
       <Reveal />
       <AttrCapture slug={l.slug} />
       <main className="pt-16">
         <section className="max-w-page mx-auto px-5 md:px-10 pt-10 md:pt-20 pb-16">
+          {known && <p className="font-mono text-xs text-dim mb-6">{`For ${known.company}`}</p>}
           <h1 className="font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[13vw] md:text-[7vw] max-w-[18ch]">
             <span className="mask"><span style={{ animationDelay: ".05s" }}>{l.h1[0]}</span></span>
             <span className="mask"><span style={{ animationDelay: ".2s" }} className="font-medium text-dim">{l.h1[1]}</span></span>

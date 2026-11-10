@@ -2,13 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "../reveal";
 import { DiagnosticForm } from "./diagnostic-form";
+import { landingFor } from "@/lib/outreach";
 
-export const metadata: Metadata = {
+const base: Metadata = {
   title: "Book a free diagnostic",
   description: "30 minutes on a call. You leave with a ranked list of fixes and what each is worth. Free, for UK limited companies with 5 to 50 staff.",
   alternates: { canonical: "/diagnostic" },
   openGraph: { title: "Book a free diagnostic | Webflow Outreach", url: "/diagnostic" },
 };
+
+// A visit with a token (c) is a personal link from an email: keep it out of search results.
+export function generateMetadata({ searchParams }: { searchParams: { c?: string } }): Metadata {
+  return searchParams.c ? { ...base, robots: { index: false, follow: false } } : base;
+}
 
 const GET = [
   "A 30 minute call with Sam",
@@ -26,7 +32,8 @@ const FAQ = [
   ["Is AI used?", "For words only. Code works out every number and the ranking, and a person reads the report before you do."],
 ];
 
-export default function DiagnosticPage() {
+export default async function DiagnosticPage({ searchParams }: { searchParams: { c?: string } }) {
+  const known = await landingFor(searchParams.c);
   return (
     <>
       <Reveal />
@@ -50,7 +57,7 @@ export default function DiagnosticPage() {
 
           <div className="md:col-span-7 md:col-start-6">
             <div className="rounded-[24px] border border-ink p-6 md:p-10">
-              <DiagnosticForm />
+              <DiagnosticForm defaults={known ? { company: known.company, website: known.website } : undefined} />
             </div>
           </div>
         </section>

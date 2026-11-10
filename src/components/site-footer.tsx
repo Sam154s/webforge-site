@@ -21,6 +21,7 @@ export function SiteFooter() {
           <p className="text-stone">Read</p>
           <Link href="/sample-report" className="block hover:text-stone">Sample report</Link>
           <Link href="/method" className="block hover:text-stone">Method and ten-run test</Link>
+          <Link href="/estimate" className="block hover:text-stone">What would it cost?</Link>
           <Link href="/privacy" className="block hover:text-stone">Privacy</Link>
           <Link href="/terms" className="block hover:text-stone">Terms</Link>
         </nav>

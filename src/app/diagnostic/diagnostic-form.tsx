@@ -18,13 +18,13 @@ function Field({ name, children, optional, hint }: { name: string; children: Rea
   );
 }
 
-export function DiagnosticForm() {
+export function DiagnosticForm({ defaults }: { defaults?: { company: string; website: string } }) {
   const router = useRouter();
   const started = useRef(false);
   const t0 = useRef(0);
   const [state, setState] = useState<"idle" | "sending" | "error">("idle");
   const [error, setError] = useState("");
-  const [meta, setMeta] = useState<{ source: string; utm: Record<string, string> }>({ source: "diagnostic", utm: {} });
+  const [meta, setMeta] = useState<{ source: string; utm: Record<string, string>; c: string }>({ source: "diagnostic", utm: {}, c: "" });
 
   // Remember where the visitor came from (landing page and utm_ tags) for the whole visit, without cookies.
   useEffect(() => {
@@ -33,8 +33,8 @@ export function DiagnosticForm() {
     let saved: typeof meta | null = null;
     try { saved = JSON.parse(sessionStorage.getItem("wo_attr") || "null"); } catch {}
     const utm: Record<string, string> = { ...(saved?.utm ?? {}) };
-    q.forEach((v, k) => { if (k.startsWith("utm_") || k === "c") utm[k] = v.slice(0, 120); });
-    const next = { source: q.get("src") || saved?.source || "diagnostic", utm };
+    q.forEach((v, k) => { if (k.startsWith("utm_")) utm[k] = v.slice(0, 120); });
+    const next = { source: q.get("src") || saved?.source || "diagnostic", utm, c: (q.get("c") || saved?.c || "").slice(0, 64) };
     try { sessionStorage.setItem("wo_attr", JSON.stringify(next)); } catch {}
     setMeta(next);
   }, []);
@@ -54,7 +54,7 @@ export function DiagnosticForm() {
       message: fd.get("message"),
       systems: [...(fd.getAll("systems") as string[]), ...(other ? [`Other: ${other}`] : [])],
       consent_text: CONSENT_TEXT, marketing_opt_in: fd.get("marketing") === "on",
-      source: meta.source, utm: meta.utm, _t: Date.now() - t0.current,
+      source: meta.source, utm: meta.utm, c_token: meta.c || undefined, _t: Date.now() - t0.current,
       [HONEYPOT]: fd.get(HONEYPOT),
     };
     try {
@@ -77,8 +77,8 @@ export function DiagnosticForm() {
       <div className="grid sm:grid-cols-2 gap-x-8 gap-y-7">
         <Field name="Your name"><input name="name" required maxLength={200} autoComplete="name" className={input} /></Field>
         <Field name="Work email"><input name="email" type="email" required maxLength={254} autoComplete="email" inputMode="email" className={input} /></Field>
-        <Field name="Company name"><input name="company_name" required maxLength={200} autoComplete="organization" className={input} /></Field>
-        <Field name="Company website"><input name="website" required maxLength={300} autoComplete="url" inputMode="url" placeholder="yourcompany.co.uk" className={input} /></Field>
+        <Field name="Company name"><input name="company_name" required maxLength={200} autoComplete="organization" defaultValue={defaults?.company} className={input} /></Field>
+        <Field name="Company website"><input name="website" required maxLength={300} autoComplete="url" inputMode="url" placeholder="yourcompany.co.uk" defaultValue={defaults?.website} className={input} /></Field>
         <Field name="Phone" optional hint="Only for the call itself."><input name="phone" type="tel" maxLength={40} autoComplete="tel" inputMode="tel" className={input} /></Field>
         <Field name="Company number" optional hint="We can find it from the name."><input name="company_number" maxLength={12} autoComplete="off" className={input} /></Field>
       </div>
