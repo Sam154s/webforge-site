@@ -9,6 +9,7 @@ body { background: #E8E6E1; color: #111; -webkit-font-smoothing: antialiased; te
 .wide { font-stretch: 112%; }
 .narrow { font-stretch: 75%; }
 .num { font-variant-numeric: tabular-nums; }
+.font-mono { font-stretch: 85%; }
 
 /* Hero load: lines rise out of a mask, the ghost word drifts in, the card scales up. */
 @keyframes rise { from { transform: translateY(105%); } to { transform: none; } }

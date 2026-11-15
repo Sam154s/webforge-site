@@ -1,188 +1,205 @@
 import Link from "next/link";
 import { BuilderScene } from "./builder-scene";
 import { Reveal } from "./reveal";
+import { Examples } from "./story/examples";
+import { Payoff } from "./story/payoff";
 import { Cta, TrackLink } from "@/components/track-link";
 import { EMAIL } from "@/lib/site";
+import "./story.css";
 
-const STEPS = [
-  ["Before we talk", "We read what is public: Companies House, your website and your email settings. Nothing is entered into your site."],
-  ["The call", "30 minutes. We ask 12 to 16 plain questions about how work gets done, and what a week looks like."],
-  ["The report", "A person checks it, then it appears in your dashboard: each job, what it costs a year as a range, how hard it is to fix, and how sure we are."],
+// The homepage is a storyboard: seven frames that take a visitor from A (work done by hand) to B (tools that run
+// themselves). The rail in the header follows along. Frame ids and labels live in lib/story.ts.
+
+// Six thumbnail drawings for the strip under the headline. Each path draws itself in on load.
+const STRIP: { side: string; cap: string; href: string; art: React.ReactNode }[] = [
+  { side: "A", cap: "An enquiry comes in", href: "#by-hand", art: <><rect x="58" y="16" width="44" height="68" rx="7" pathLength={1} /><path d="M68 34h24M68 43h24M68 52h14" pathLength={1} /><path d="M112 32a16 16 0 0 1 0 22M121 24a28 28 0 0 1 0 38" pathLength={1} /></> },
+  { side: "A", cap: "Days go by", href: "#by-hand", art: <><rect x="40" y="20" width="80" height="62" rx="4" pathLength={1} /><path d="M40 36h80M60 14v12M100 14v12" pathLength={1} /><path d="M52 46l8 8m0 -8l-8 8M72 46l8 8m0 -8l-8 8M92 46l8 8m0 -8l-8 8M52 62l8 8m0 -8l-8 8M72 62l8 8m0 -8l-8 8" pathLength={1} /></> },
+  { side: "→", cap: "We find the leak", href: "#pricing", art: <><path d="M18 40h64v18h60M18 52h52v18h72" pathLength={1} /><path d="M88 76v8M88 90v4" pathLength={1} /><circle cx="94" cy="46" r="20" pathLength={1} /><path d="M109 61l16 16" pathLength={1} /></> },
+  { side: "B", cap: "AI builds the tool, once", href: "#fix", art: <><rect x="46" y="60" width="34" height="22" rx="3" pathLength={1} /><rect x="84" y="60" width="34" height="22" rx="3" pathLength={1} /><rect x="65" y="34" width="34" height="22" rx="3" pathLength={1} /><path d="M118 14l3 9l9 3l-9 3l-3 9l-3 -9l-9 -3l9 -3z" pathLength={1} /></> },
+  { side: "B", cap: "Plain code runs it", href: "#fix", art: <><path d="M54 24c-8 0 -10 4 -10 10v8c0 5 -3 8 -8 8c5 0 8 3 8 8v8c0 6 2 10 10 10M106 24c8 0 10 4 10 10v8c0 5 3 8 8 8c-5 0 -8 3 -8 8v8c0 6 -2 10 -10 10" pathLength={1} /><path d="M66 50a14 14 0 1 1 6 11.5M72 68v-7h-7" pathLength={1} /></> },
+  { side: "B", cap: "More jobs, bigger jobs", href: "#payoff", art: <><path d="M30 84h100" pathLength={1} /><rect x="40" y="62" width="16" height="22" pathLength={1} /><rect x="64" y="50" width="16" height="34" pathLength={1} /><rect x="88" y="36" width="16" height="48" pathLength={1} /><path d="M40 44l32 -14l16 6l30 -20M106 16h12v12" pathLength={1} /></> },
 ];
-const SCOPE = [
-  ["Back-office jobs done by hand", "Chasing invoices, chasing quotes, copying between systems, weekly reports."],
-  ["Tools for your customers", "Calculators, quote and enquiry forms, booking."],
-  ["Website builds", "A new site, or fixing the one that does not bring in work."],
-  ["Marketing tools", "Review requests, follow-ups, simple tracking you can read."],
-  ["Better use of the AI you already pay for", "Where it helps, where it does not, and how staff should use it."],
+
+// One enquiry handled by hand. Days of waiting between each touch.
+const BY_HAND: [string, string, string, number][] = [
+  ["Mon 09:12", "Enquiry lands", "A voicemail and a web form.", 1],
+  ["Tue 17:40", "Called back", "After the day’s work.", 6],
+  ["Mon", "Site visit", "An hour there, an hour back.", 4],
+  ["Fri", "Quote typed up", "An evening. One page, one price.", 6],
+  ["Thu", "Chased once", "They went with someone else.", 0],
 ];
-const PRICES = [
-  ["Diagnostic", "Free", "30 minute call and your ranked report. You can stop there and keep it."],
-  ["Fix this", "£750 to £1,000", "One audited fix. Fixed price, agreed in writing and paid in full before we start. £750 for a smaller job, £1,000 for a bigger one. We build it, then test and adjust it with you until it works."],
-  ["Builder, then two workflows", "£5,000", "Four weeks. For teams that want to build the rest themselves. Offered after your first fix is working."],
+const LEAKS = [
+  ["Cost", "2 hrs", "of admin on every enquiry, won or lost."],
+  ["Customers", "4 in 5", "enquiries never become a job."],
+  ["Ticket", "1 price", "on one page. So you are compared on price alone."],
+];
+const TEN_AI = ["£4,180", "£4,420", "£3,950", "£4,300", "£4,610", "£4,090", "£4,250", "£4,480", "£3,990", "£4,350"];
+
+const PATH = [
+  ["01", "Free diagnostic", "Free", "A 30 minute call and a ranked report: each job, what it costs you a year, and what to fix first. Keep it either way."],
+  ["02", "Fix this", "£750 to £1,000", "One audited fix. Fixed price, agreed in writing and paid in full before we start. We test and adjust it with you until it works."],
+  ["03", "Builder, then two workflows", "£5,000", "Four weeks. For teams that want to build the rest themselves. Offered after your first fix is working."],
+];
+const ALSO = [
   ["Extra workflows", "£1,000", "Each, built by us. Scoped and agreed before we start."],
   ["Support and AI consulting", "From £1,000 a month", "Re-testing, new tools, advice on where AI fits next. Rolling monthly."],
   ["Websites and customer tools", "Quoted per project", "Priced after the diagnostic, in writing, before any work starts."],
-  ["Running costs", "At cost", "Hosting and AI usage on your own accounts, agreed up front."],
+  ["Running costs", "At cost", "Hosting and any AI usage on your own accounts, agreed up front."],
 ];
+
+const Slate = ({ n, children }: { n: string; children: React.ReactNode }) => (
+  <p className="slate reveal"><span>Frame {n}</span>{children}</p>
+);
 
 export default function Home() {
   return (
     <>
       <Reveal />
-      <main>
-        {/* HERO */}
-        <section className="relative min-h-[100svh] overflow-hidden pt-16">
-          <span aria-hidden className="drift absolute left-[-2vw] bottom-[-4vw] font-display font-black narrow leading-none tracking-[-0.06em] text-[38vw] md:text-[30vw] text-ink/[0.06] select-none pointer-events-none">
-            flow
-          </span>
-          <div className="relative max-w-page mx-auto px-5 md:px-10 pt-10 md:pt-14 grid md:grid-cols-12 gap-8">
-            <p className="fade md:col-start-9 md:col-span-4 text-sm leading-relaxed text-dim md:text-right" style={{ animationDelay: ".9s" }}>
-              A free 30 minute diagnostic for UK limited companies with 5 to 50 staff. You get a ranked list of what to fix, with a pound range on each, in your own dashboard.
-            </p>
-            <h1 className="md:col-start-3 md:col-span-10 font-display font-extrabold tracking-[-0.045em] leading-[0.9] text-[13.5vw] md:text-[min(7.4vw,6.5rem)] md:text-right">
-              <span className="mask"><span style={{ animationDelay: ".05s" }}>Find the jobs</span></span>
-              <span className="mask"><span style={{ animationDelay: ".17s" }}>costing you money.</span></span>
-              <span className="mask"><span style={{ animationDelay: ".29s" }} className="font-medium">Then fix</span></span>
-              <span className="mask"><span style={{ animationDelay: ".41s" }} className="font-medium">the first one.</span></span>
-            </h1>
-          </div>
-
-          <div className="relative max-w-page mx-auto px-5 md:px-10 mt-10 md:mt-0 pb-14 grid md:grid-cols-12 gap-6 items-end">
-            <div className="pop md:col-span-5 lg:col-span-4 md:-mt-[min(11vw,9.75rem)] bg-lime rounded-[20px] p-6 flex flex-col gap-5 min-h-[19rem]" style={{ animationDelay: ".6s" }}>
-              <p className="font-mono text-xs">the path</p>
-              <ol className="space-y-3">
-                {[["1", "Free diagnostic", "We find and rank the fixes."], ["2", "Fix this", "£750 to £1,000, one audited fix."], ["3", "Builder", "£5,000, only if you want more."]].map(([n, t, d]) => (
-                  <li key={n} className="grid grid-cols-[1.6rem_1fr] gap-x-2 leading-snug">
-                    <span className="font-mono text-sm pt-0.5">{n}</span>
-                    <span><span className="font-semibold">{t}.</span> {d}</span>
-                  </li>
-                ))}
-              </ol>
-              <Cta where="hero" className="mt-auto self-start" />
-            </div>
-            <div className="fade md:col-start-9 md:col-span-4 flex flex-col md:items-end gap-4 text-sm md:pt-8" style={{ animationDelay: "1.1s" }}>
-              <TrackLink where="hero-sample" href="/sample-report" className="flex items-center gap-3 group">
-                <span aria-hidden className="grid place-items-center w-11 h-11 rounded-full border border-ink transition-transform duration-500 ease-out group-hover:translate-x-1">→</span>
-                See a sample report
-              </TrackLink>
-              <p className="text-dim md:text-right">No card. No obligation. The sample is fictional, so you can see what you would get.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* HOW IT WORKS */}
-        <section id="how" className="max-w-page mx-auto px-5 md:px-10 py-24 md:py-36 scroll-mt-16">
-          <h2 className="reveal font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[11vw] md:text-[6vw] max-w-[14ch]">
-            Three steps. <span className="font-medium text-dim">The first is free.</span>
-          </h2>
-          <ol className="mt-16 md:mt-20 grid md:grid-cols-3 border-t border-ink">
-            {STEPS.map(([t, d], i) => (
-              <li key={t} className={`reveal py-8 md:pr-10 border-b md:border-b-0 border-line ${i ? "md:pl-10 md:border-l" : ""}`} style={{ transitionDelay: `${i * 0.12}s` }}>
-                <p className="font-mono text-xs text-dim">0{i + 1}</p>
-                <h3 className="font-display font-bold text-2xl md:text-3xl tracking-[-0.02em] mt-4 mb-3">{t}</h3>
-                <p className="text-dim leading-relaxed">{d}</p>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        {/* WHAT WE FIND AND BUILD */}
-        <section className="max-w-page mx-auto px-5 md:px-10 pb-24 md:pb-36 grid md:grid-cols-12 gap-10">
-          <h2 className="reveal md:col-span-5 font-display font-bold tracking-[-0.035em] leading-[0.95] text-5xl md:text-7xl">
-            What we find and build.
-          </h2>
-          <div className="md:col-span-6 md:col-start-7">
-            <dl>
-              {SCOPE.map(([t, d]) => (
-                <div key={t} className="reveal border-t border-line py-5">
-                  <dt className="font-semibold text-lg">{t}</dt>
-                  <dd className="text-dim mt-1">{d}</dd>
+      <main className="sb">
+        {/* 01 TODAY */}
+        <section id="today" className="frame hero">
+          <span aria-hidden className="ghost ghost-a">A</span>
+          <div className="wrap">
+            <div className="hero-top">
+              <h1 className="ab" aria-label="From A, done by hand, to B, runs itself.">
+                <span className="ab-row a" aria-hidden><b className="pin">A</b><span className="mask"><span>Done by hand.</span></span></span>
+                <span className="ab-row b" aria-hidden><b className="pin lime">B</b><span className="mask"><span style={{ animationDelay: ".25s" }}><mark>Runs itself.</mark></span></span></span>
+              </h1>
+              <div className="hero-side fade" style={{ animationDelay: ".7s" }}>
+                <p>We use AI once, to build tools for your business in plain code. They quote, book and chase for you, and cost almost nothing to run.</p>
+                <div className="hero-cta">
+                  <Cta where="hero" />
+                  <TrackLink where="hero-examples" href="#examples" className="ghost-link"><span aria-hidden>↓</span> Play with three examples</TrackLink>
                 </div>
-              ))}
-            </dl>
-            <p className="reveal border-t border-ink pt-5 text-lg">
-              If something should not be automated, the report says so. We would rather lose a job than sell you one you do not need.
-            </p>
-          </div>
-        </section>
-
-        {/* HOW A FIX GETS BUILT: the scroll story */}
-        <div className="max-w-page mx-auto px-5 md:px-10">
-          <p className="reveal font-mono text-xs text-dim">how a fix gets built</p>
-        </div>
-        <BuilderScene />
-
-        {/* FIX THIS + WHY PLAIN CODE */}
-        <section className="max-w-page mx-auto px-5 md:px-10 py-24 md:py-40 grid md:grid-cols-12 gap-10">
-          <h2 className="reveal md:col-span-5 font-display font-bold tracking-[-0.035em] leading-[0.95] text-5xl md:text-7xl">
-            Pick one. We fix it.
-          </h2>
-          <div className="md:col-span-6 md:col-start-7 space-y-8 text-lg md:text-xl leading-relaxed">
-            <p className="reveal">
-              Choose one item from your report. We scope it, you sign, and we build it for a fixed £750 to £1,000.
-            </p>
-            <p className="reveal">
-              Before it goes live it runs ten times against your own examples.{" "}
-              <span className="bg-lime px-1">Same result each time, or you do not pay.</span>
-            </p>
-            <p className="reveal text-dim">
-              What runs every day is ordinary code, not AI guessing. That keeps it predictable, cheap and yours. Code does the sums and the ranking. AI only helps with the words, and a person reads every report before you do.
-            </p>
-            <p className="reveal text-base">
-              <Link href="/method" className="text-signal underline underline-offset-4">Read the method and see a real ten-run test</Link>
-            </p>
-          </div>
-        </section>
-
-        {/* PROOF */}
-        <section className="max-w-page mx-auto px-5 md:px-10 pb-24 md:pb-40">
-          <div className="reveal rounded-[24px] border border-ink p-7 md:p-12 grid md:grid-cols-12 gap-8 items-center">
-            <div className="md:col-span-7">
-              <p className="font-mono text-xs text-dim">fictional example</p>
-              <h2 className="font-display font-bold text-4xl md:text-6xl tracking-[-0.03em] leading-[0.95] mt-3">See what a report looks like.</h2>
-              <p className="mt-5 text-dim text-lg max-w-xl">A made-up 12 person firm, ten jobs ranked, a pound range on each, and one marked &ldquo;do this first&rdquo;. Every number is illustrative.</p>
-            </div>
-            <div className="md:col-span-4 md:col-start-9">
-              <Cta where="proof-sample" href="/sample-report">Open the sample report</Cta>
-            </div>
-          </div>
-        </section>
-
-        {/* PRICING */}
-        <section id="pricing" className="bg-ink text-stone rounded-t-[36px] md:rounded-t-[56px] scroll-mt-0">
-          <div className="max-w-page mx-auto px-5 md:px-10 py-24 md:py-36">
-            <div className="grid md:grid-cols-12 gap-10 items-end mb-14">
-              <h2 className="reveal md:col-span-7 font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[11vw] md:text-[6vw]">
-                What it costs.
-              </h2>
-              <div className="reveal md:col-span-4 md:col-start-9 text-stone/65 leading-relaxed space-y-3">
-                <p>In the order you would meet them. Fixed prices, agreed in writing before any work starts. No day rates.</p>
-                <p className="text-sm">Want a rough number first? <Link href="/estimate" className="text-stone underline underline-offset-4">Try the price estimator</Link>.</p>
               </div>
             </div>
-            <div className="border-t border-white/15">
-              {PRICES.map(([what, price, note], i) => (
-                <div key={what} className="reveal grid grid-cols-[1fr_auto] md:grid-cols-12 gap-x-6 gap-y-1 py-6 border-b border-white/15 items-baseline" style={{ transitionDelay: `${i * 0.06}s` }}>
-                  <p className="md:col-span-4 text-lg">{what}</p>
-                  <p className={`md:col-span-3 font-display font-bold tracking-[-0.02em] num ${price.length > 9 ? "text-xl md:text-2xl leading-tight text-right md:text-left" : "text-3xl md:text-4xl"} ${price === "Free" ? "text-lime" : ""}`}>{price}</p>
-                  <p className="col-span-2 md:col-span-5 text-stone/60 leading-relaxed">{note}</p>
+            <ol className="strip" aria-label="The story in six frames">
+              {STRIP.map((s, i) => (
+                <li key={s.cap} style={{ "--i": i } as React.CSSProperties}>
+                  <a href={s.href}>
+                    <span className="strip-art">
+                      <span className="strip-side">{s.side}</span>
+                      <svg viewBox="0 0 160 100" aria-hidden>{s.art}</svg>
+                    </span>
+                    <span className="strip-cap"><span>{String(i + 1).padStart(2, "0")}</span>{s.cap}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* 02 BY HAND */}
+        <section id="by-hand" className="frame">
+          <div className="wrap">
+            <Slate n="02">A, where you are</Slate>
+            <h2 className="h2 reveal">One enquiry, <span>done by hand.</span></h2>
+            <ol className="hand reveal">
+              {BY_HAND.map(([when, title, sub, wait], i) => (
+                <li key={title} style={{ "--w": wait, "--i": i } as React.CSSProperties} className={i === BY_HAND.length - 1 ? "lost" : ""}>
+                  <span className="hand-when">{when}</span>
+                  <span className="hand-dot" aria-hidden><i />{wait > 0 && <><s /><em>{wait === 1 ? "1 day" : `${wait} days`}</em><s /></>}</span>
+                  <b>{title}</b>
+                  <span className="hand-sub">{sub}</span>
+                  {wait > 0 && <span className="hand-gap">Then {wait === 1 ? "a day" : `${wait} days`} of waiting.</span>}
+                </li>
+              ))}
+            </ol>
+            <p className="hand-sum reveal"><b>17 days. No job.</b> Nothing here was hard. It was just slow, and done by a person every time.</p>
+            <div className="leaks">
+              {LEAKS.map(([k, big, line], i) => (
+                <div key={k} className="leak reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
+                  <span className="leak-k">Leak {i + 1}: {k}</span>
+                  <b>{big}</b>
+                  <p>{line}</p>
                 </div>
               ))}
             </div>
+            <p className="fine reveal">An example builder, with typical figures. Yours go in at the diagnostic.</p>
           </div>
+        </section>
 
-          {/* BOTTOM CTA + CONTACT */}
-          <div className="max-w-page mx-auto px-5 md:px-10 pb-20 md:pb-32 grid md:grid-cols-12 gap-10 items-end">
-            <h2 className="reveal md:col-span-8 font-display font-extrabold tracking-[-0.045em] leading-[0.9] text-[13vw] md:text-[6.4vw]">
-              Find out what is worth fixing. <span className="text-lime">It is free.</span>
-            </h2>
-            <div className="reveal md:col-span-4 space-y-5">
-              <TrackLink where="bottom" href="/diagnostic" className="group inline-flex items-center gap-3 rounded-full bg-lime text-ink font-semibold pl-6 pr-2 py-2 min-h-[44px]">
+        {/* 03 THE FIX */}
+        <section id="fix" className="frame fix">
+          <div className="wrap">
+            <Slate n="03">The fix</Slate>
+            <h2 className="h2 reveal">AI builds it once. <span>Plain code runs it forever.</span></h2>
+            <div className="ten reveal">
+              <div className="ten-row ai">
+                <p><b>AI on every job</b>A different answer each time, and a bill each time.</p>
+                <div className="ten-tiles">{TEN_AI.map((v, i) => <span key={i} style={{ "--r": `${((i * 37) % 7) - 3}deg`, "--i": i } as React.CSSProperties}>{v}</span>)}</div>
+              </div>
+              <div className="ten-row code-row">
+                <p><b>AI once, then code</b>The same answer every time, for about nothing.</p>
+                <div className="ten-tiles">{TEN_AI.map((_, i) => <span key={i} style={{ "--i": i } as React.CSSProperties}>£4,250</span>)}</div>
+              </div>
+              <p className="fine">The same quote, run ten times. Illustrative. <Link href="/method">See a real ten-run test</Link>.</p>
+            </div>
+          </div>
+          <BuilderScene />
+        </section>
+
+        {/* 04 EXAMPLES */}
+        <section id="examples" className="frame">
+          <div className="wrap">
+            <Slate n="04">Three you can play with</Slate>
+            <h2 className="h2 reveal">Try the tools. <span>Then read the code.</span></h2>
+            <p className="lede reveal">Three example firms. Each panel is a small working piece of a tool we built for our own sales sandbox. Move the sliders, drag the numbers in the code, and open the photos to see the full thing.</p>
+            <Examples />
+            <div className="more reveal">
+              <p><b>Want the whole of each tool?</b> We walk you through all three on a call, then build the journey for your own business while you watch.</p>
+              <Cta where="examples" />
+            </div>
+          </div>
+        </section>
+
+        {/* 05 PAYOFF */}
+        <section id="payoff" className="frame">
+          <div className="wrap">
+            <Slate n="05">B, where you will be</Slate>
+            <h2 className="h2 reveal">Three ways it pays. <span>Put your own numbers in.</span></h2>
+            <div className="reveal"><Payoff /></div>
+          </div>
+        </section>
+
+        {/* 06 PRICE */}
+        <section id="pricing" className="frame dark">
+          <div className="wrap">
+            <Slate n="06">What it costs</Slate>
+            <h2 className="h2 reveal">Three steps. <span>The first is free.</span></h2>
+            <ol className="path">
+              {PATH.map(([no, what, cost, note], i) => (
+                <li key={no} className="reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
+                  <span className="path-no">{no}</span>
+                  <b className={cost === "Free" ? "free" : ""}>{cost}</b>
+                  <h3>{what}</h3>
+                  <p>{note}</p>
+                </li>
+              ))}
+            </ol>
+            <div className="also">
+              {ALSO.map(([what, cost, note]) => (
+                <div key={what} className="reveal"><span>{what}</span><b>{cost}</b><p>{note}</p></div>
+              ))}
+            </div>
+            <p className="fine reveal">
+              Fixed prices, agreed in writing before any work starts. No day rates. <Link href="/sample-report">See a sample report</Link>, <Link href="/method">read the method</Link>, or <Link href="/estimate">try the price estimator</Link>.
+            </p>
+          </div>
+        </section>
+
+        {/* 07 START */}
+        <section id="start" className="frame dark finale">
+          <span aria-hidden className="ghost ghost-b">B</span>
+          <div className="wrap">
+            <Slate n="07">Start</Slate>
+            <h2 className="end-h reveal">Find out what B looks like for you. <mark>It is free.</mark></h2>
+            <div className="end-cta reveal">
+              <TrackLink where="bottom" href="/diagnostic" className="group big-cta">
                 Book a free diagnostic
-                <span aria-hidden className="grid place-items-center w-8 h-8 rounded-full bg-ink text-lime transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+                <span aria-hidden className="chip">→</span>
               </TrackLink>
-              <p className="text-stone/60 text-sm">Or email <a href={`mailto:${EMAIL}`} className="text-stone underline underline-offset-4">{EMAIL}</a></p>
+              <p>Or email <a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
             </div>
           </div>
         </section>

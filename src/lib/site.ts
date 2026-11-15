@@ -13,9 +13,9 @@ function httpsUrl(v: string | undefined): string {
 export const BOOKING_URL = httpsUrl(process.env.NEXT_PUBLIC_BOOKING_URL);
 
 export const NAV = [
-  { href: "/#how", label: "How it works" },
+  { href: "/#fix", label: "How it works" },
+  { href: "/#examples", label: "Examples" },
   { href: "/sample-report", label: "Sample report" },
-  { href: "/method", label: "Method" },
   { href: "/#pricing", label: "Pricing" },
 ];
 
