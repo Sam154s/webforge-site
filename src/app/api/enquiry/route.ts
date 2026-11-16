@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-import { HONEYPOT } from "@/lib/site";
-import { OPS_KEY, OPS_URL, validToken } from "@/lib/outreach";
+import { EMAIL, HONEYPOT } from "@/lib/site";
+import { opsConfig, validToken } from "@/lib/outreach";
 
 // Enquiries go to the ops database (shows in Sales and "Needs you") and, if Resend is set up, to the inbox.
 // The ops RPC validates and rate-limits, so this route holds no database secret: the key is the public one.
+// It keeps only an allowlist of detail keys (submit_enquiry in the ops migrations), so the names below must match it exactly.
 const NOTIFY = process.env.CONTACT_EMAIL && !process.env.CONTACT_EMAIL.endsWith("webforge.build")
   ? process.env.CONTACT_EMAIL : "sam@webflowoutreach.com";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -18,12 +19,16 @@ function cleanWebsite(raw: string) {
   try { const u = new URL(url); return u.hostname.includes(".") ? u.toString() : ""; } catch { return ""; }
 }
 
-async function rpc(body: Record<string, unknown>) {
-  return fetch(`${OPS_URL}/rest/v1/rpc/submit_enquiry`, {
+const UTM = ["utm_source", "utm_medium", "utm_campaign"] as const;
+
+async function rpc(ops: { url: string; key: string }, body: Record<string, unknown>) {
+  // A network failure reads as a failed response, so the visitor still gets the plain "email us" message.
+  return fetch(`${ops.url}/rest/v1/rpc/submit_enquiry`, {
     method: "POST",
-    headers: { apikey: OPS_KEY, Authorization: `Bearer ${OPS_KEY}`, "content-type": "application/json" },
+    headers: { apikey: ops.key, Authorization: `Bearer ${ops.key}`, "content-type": "application/json" },
     body: JSON.stringify(body),
-  });
+    cache: "no-store",
+  }).catch((e) => { console.error("[enquiry] ops database unreachable", e); return new Response("unreachable", { status: 502 }); });
 }
 
 export async function POST(req: NextRequest) {
@@ -44,20 +49,32 @@ export async function POST(req: NextRequest) {
   if (!website) return NextResponse.json({ error: "Add your website, for example yourcompany.co.uk." }, { status: 400 });
   if (companyNumber && !/^[A-Z0-9]{6,8}$/.test(companyNumber)) return NextResponse.json({ error: "A company number is 8 characters, like 01234567. Leave it blank if you are not sure." }, { status: 400 });
 
-  const details = {
-    company_name: company, website, company_number: companyNumber || null, phone: phone || null, systems,
-    consent_text: consentText, consented_at: new Date().toISOString(), marketing_opt_in: marketing,
-    c_token: validToken(b.c_token) ? b.c_token : null,
-    source: str(b.source, 80) || "diagnostic", utm: typeof b.utm === "object" && b.utm ? b.utm : {},
-  };
+  // Not set up (a dev run or a preview without the ops variables): say so plainly and save nothing anywhere.
+  const ops = opsConfig();
+  if (!ops) {
+    console.error("[enquiry] Not saved: OPS_SUPABASE_URL or OPS_SUPABASE_KEY is not set.");
+    return NextResponse.json({ error: `The form is not working right now. Please email us at ${EMAIL}.` }, { status: 503 });
+  }
 
-  let res = await rpc({ p_name: name, p_email: email, p_business: company, p_message: message, p_details: details });
+  // Key names match the database allowlist. Empty values are left out rather than sent blank.
+  const utm = (typeof b.utm === "object" && b.utm ? b.utm : {}) as Record<string, unknown>;
+  const details: Record<string, unknown> = {
+    company_name: company, website, consent_text: consentText, consent_at: new Date().toISOString(),
+    marketing_opt_in: marketing, source: str(b.source, 80) || "diagnostic",
+  };
+  if (companyNumber) details.company_number = companyNumber;
+  if (phone) details.phone = phone;
+  if (systems.length) details.systems = systems;
+  if (validToken(b.c_token)) details.c_token = b.c_token;
+  for (const k of UTM) { const v = str(utm[k], 120); if (v) details[k] = v; }
+
+  let res = await rpc(ops, { p_name: name, p_email: email, p_business: company, p_message: message, p_details: details });
   if (!res.ok) {
     const text = await res.text();
     if (text.includes("rate limited")) return NextResponse.json({ error: "We've already got your message. We'll be in touch." }, { status: 429 });
     // Until the ops database has the p_details argument, send the old four and put the details in the message.
     const appended = `${message}\n\n--- details ---\n${JSON.stringify(details, null, 2)}`.trim();
-    res = await rpc({ p_name: name, p_email: email, p_business: company, p_message: appended });
+    res = await rpc(ops, { p_name: name, p_email: email, p_business: company, p_message: appended });
     if (!res.ok) {
       const limited = (await res.text()).includes("rate limited");
       return NextResponse.json({ error: limited ? "We've already got your message. We'll be in touch." : "Something went wrong. Email us instead." }, { status: limited ? 429 : 502 });
