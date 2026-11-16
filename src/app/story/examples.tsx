@@ -1,10 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useState, type ReactNode } from "react";
-import { ARCHITECT_STEPS, BUILDER_STEPS, FIRMS, PLUMBER_STEPS, gbp, range, type Firm, type Step } from "@/lib/showcase/journey";
-import { LIMITS, SPECS, START, price, type Design, type Spec } from "@/lib/showcase/architect";
-import { BOOK, FINISHES, LIMIT, RULE, kitchen, type Finish } from "@/lib/showcase/kitchen";
-import { COMPONENT, MAKES, codesFor, diagnose, firstCode, make as findMake, type Component } from "@/lib/showcase/plumber";
+import { ARCHITECT_STEPS, BUILDER_STEPS, FIRMS, PLUMBER_STEPS, gbp, range, type Firm, type Step } from "@/lib/sandbox/journey";
+import { LIMITS, SPECS, START, price, type Design, type Spec } from "@/lib/sandbox/architect";
+import { BOOK, FINISHES, LIMIT, RULE, kitchen, type Finish } from "@/lib/sandbox/kitchen";
+import { COMPONENT, MAKES, codesFor, diagnose, firstCode, make as findMake, type Component } from "@/lib/sandbox/plumber";
 import { Journey, Scrub, Seg, Shots, Slider, type Shot } from "./parts";
 
 // Three small working pieces of the tools in the sales sandbox. Each one is plain arithmetic and lookups:
@@ -12,8 +13,8 @@ import { Journey, Scrub, Seg, Shots, Slider, type Shot } from "./parts";
 
 const n = (v: number) => v.toLocaleString("en-GB");
 
-function Case({ no, firm, drawing, controls, code, outs, steps, shots, note }: {
-  no: string; firm: Firm; drawing: ReactNode; controls: ReactNode; code: ReactNode; outs: ReactNode; steps: Step[]; shots: Shot[]; note: string;
+function Case({ no, firm, href, drawing, controls, code, outs, steps, shots, note }: {
+  no: string; firm: Firm; href: string; drawing: ReactNode; controls: ReactNode; code: ReactNode; outs: ReactNode; steps: Step[]; shots: Shot[]; note: string;
 }) {
   return (
     <article className="case reveal">
@@ -37,7 +38,10 @@ function Case({ no, firm, drawing, controls, code, outs, steps, shots, note }: {
       </div>
       <Journey steps={steps} stages={firm.stages} />
       <div className="case-foot">
-        <p className="case-note">{note}</p>
+        <div className="case-open">
+          <p className="case-note">{note}</p>
+          <Link href={href} className="open-tool">Open the full tool <i aria-hidden>→</i></Link>
+        </div>
         <Shots items={shots} />
       </div>
     </article>
@@ -105,8 +109,8 @@ function Architect() {
   const spec = SPECS.find((s) => s[0] === d.spec)![1];
   return (
     <Case
-      no="EX-01" firm={FIRMS.architect} steps={ARCHITECT_STEPS}
-      note="This is one slice. The full tool is a 3D designer with drag and drop blocks, a planning guide, a sun study and a seven sheet drawing set."
+      no="EX-01" firm={FIRMS.architect} href="/examples/architect" steps={ARCHITECT_STEPS}
+      note="This is one slice. The full tool is a 3D designer with drag and drop blocks, a planning guide, a sun study and a seven sheet drawing set. It is all yours to try."
       shots={[
         { src: "/showcase/arch-model.webp", w: 1238, h: 871, title: "The 3D designer" },
         { src: "/showcase/arch-exploded.webp", w: 1238, h: 871, title: "Exploded view" },
@@ -180,8 +184,8 @@ function Builder() {
   const k = kitchen(length, width);
   return (
     <Case
-      no="EX-02" firm={FIRMS.builder} steps={BUILDER_STEPS}
-      note="This is one slice. The full tool is a drag and drop room planner for kitchens, bathrooms and extensions, with a nine sheet job pack."
+      no="EX-02" firm={FIRMS.builder} href="/examples/builder" steps={BUILDER_STEPS}
+      note="This is one slice. The full tool is a drag and drop room planner for kitchens, bathrooms and extensions, with a nine sheet job pack. It is all yours to try."
       shots={[
         { src: "/showcase/build-planner.webp", w: 1238, h: 1059, title: "The room planner" },
         { src: "/showcase/build-plan.webp", w: 1230, h: 1110, title: "Sheet A-101, floor plan" },
@@ -283,8 +287,8 @@ function Plumber() {
   const shown = d.hasCode ? d.code.code : "";
   return (
     <Case
-      no="EX-03" firm={FIRMS.plumber} steps={PLUMBER_STEPS}
-      note="This is one slice. The full build has two tools: this fault finder with a boiler passport, and a heating planner that works out heat loss room by room."
+      no="EX-03" firm={FIRMS.plumber} href="/examples/plumber" steps={PLUMBER_STEPS}
+      note="This is one slice. The full build has two tools: this fault finder with a boiler passport, and a heating planner that works out heat loss room by room. Both are yours to try."
       shots={[
         { src: "/showcase/plumb-diagnosis.webp", w: 1238, h: 945, title: "The fault finder" },
         { src: "/showcase/plumb-schematic.webp", w: 620, h: 945, title: "Fig. 1, the service schematic" },

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Figtree, Martian_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Figtree, DM_Mono } from "next/font/google";
 import { SafeAnalytics } from "@/components/safe-analytics";
 import { SiteHeader } from "@/components/site-header";
 import { StoryRail } from "@/components/story-rail";
@@ -9,10 +9,10 @@ import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 // Three faces only: Bricolage Grotesque (display, with its optical size and width axes), Figtree (body),
-// Martian Mono (labels and code, set slightly condensed in globals.css).
+// DM Mono (code and drawing dimensions only; every label is set in Figtree).
 const display = Bricolage_Grotesque({ subsets: ["latin"], axes: ["opsz", "wdth"], variable: "--font-display", display: "swap" });
 const sans = Figtree({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
-const mono = Martian_Mono({ subsets: ["latin"], axes: ["wdth"], variable: "--font-mono", display: "swap" });
+const mono = DM_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
 
 const DESCRIPTION =
   "A free 30 minute diagnostic for UK limited companies with 5 to 50 staff. You get a ranked list of what to fix, with a pound range on each, in your own dashboard.";

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { gbp, range, tidy } from "@/lib/showcase/journey";
-import { ASSUME, SECTORS, levers, sector, type Inputs } from "@/lib/showcase/yours";
+import { gbp, range, tidy } from "@/lib/sandbox/journey";
+import { ASSUME, SECTORS, levers, sector, type Inputs } from "@/lib/sandbox/yours";
 import { Slider } from "./parts";
 
 // The three levers, on the visitor's own numbers. Same sums as the "Now do yours" page in the sales sandbox.

@@ -1,4 +1,3 @@
-// Copied from the ops sandbox (webforge-ops apps/web/src/lib/sandbox) so the site and the sales sandbox give the same figures.
 // The sandbox journey model. Everything in the sandbox is plain code: no AI call is made anywhere.
 // A step is either code or a person. Where AI could be added to a step, `ai` says what it would add;
 // the demo still runs that step as code. Pure data and helpers, shared by staff pages and the leave-behind page.

@@ -1,4 +1,3 @@
-// Copied from the ops sandbox (webforge-ops apps/web/src/lib/sandbox) so the site and the sales sandbox give the same figures.
 // "Now do yours": a journey and three lever figures for the prospect's own business, from a sector template
 // and a handful of numbers typed in on the call. Pure code: the saved row holds only the inputs, and this
 // file turns them back into the page, so the staff view and the leave-behind link always agree.

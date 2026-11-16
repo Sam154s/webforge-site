@@ -1,4 +1,3 @@
-// Copied from the ops sandbox (webforge-ops apps/web/src/lib/sandbox) so the site and the sales sandbox give the same figures.
 // Boiler fault finder: a catalogue of makes, models, fault codes and parts, and the rules that turn
 // "this boiler, this code" into a diagnosis, a part, a stock decision, a fixed price and slots built round the part.
 // This is an example catalogue for a fictional firm. A live build loads the firm's own makes, codes, parts and prices.

@@ -144,10 +144,17 @@ export default function Home() {
           <div className="wrap">
             <Slate n="04">Three you can play with</Slate>
             <h2 className="h2 reveal">Try the tools. <span>Then read the code.</span></h2>
-            <p className="lede reveal">Three example firms. Each panel is a small working piece of a tool we built for our own sales sandbox. Move the sliders, drag the numbers in the code, and open the photos to see the full thing.</p>
+            <p className="lede reveal">Three example firms. Each panel is a small working piece of a tool we built for our own sales sandbox. Move the sliders and drag the numbers in the code. Then open the full tool and use it as a customer would.</p>
             <Examples />
             <div className="more reveal">
-              <p><b>Want the whole of each tool?</b> We walk you through all three on a call, then build the journey for your own business while you watch.</p>
+              <div>
+                <p><b>Every one of these is fully usable.</b> Open a tool and play the customer: design the house, plan the kitchen, find the fault.</p>
+                <p className="more-links" style={{ marginTop: 14 }}>
+                  <Link href="/examples/architect">Architect: 3D designer</Link>
+                  <Link href="/examples/builder">Builder: room planner</Link>
+                  <Link href="/examples/plumber">Plumber: fault finder and heating planner</Link>
+                </p>
+              </div>
               <Cta where="examples" />
             </div>
           </div>

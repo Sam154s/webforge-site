@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { counts, type Step } from "@/lib/showcase/journey";
+import { counts, type Step } from "@/lib/sandbox/journey";
 
 // Small shared pieces for the three examples: a number you can drag inside a line of code,
 // a photo strip with a full-size viewer, and the "behind the scenes" step dots.

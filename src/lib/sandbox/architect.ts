@@ -1,4 +1,3 @@
-// Copied from the ops sandbox (webforge-ops apps/web/src/lib/sandbox) so the site and the sales sandbox give the same figures.
 // Architect demo maths: floor area, indicative build budget and the practice fee proposal.
 // Example rate card for a fictional practice. Whole pounds throughout.
 import { tidy } from './journey'
