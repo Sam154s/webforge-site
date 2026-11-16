@@ -20,7 +20,7 @@ export default function Terms() {
 
       <h2>The intro call</h2>
       <ul>
-        <li>It is free, with no obligation. It is a 30 minute call for UK limited companies with about 30 to 250 people.</li>
+        <li>It is free, with no obligation. It is a 30 minute call for UK limited companies with up to about 250 people.</li>
         <li>It is a conversation, not a report and not advice.</li>
       </ul>
 

@@ -21,7 +21,7 @@ const SIDE = [
   ["What happens on the call", "You tell us what is slow or painful. We ask who does it, how often, and what it costs when it goes wrong."],
   ["What you get", "A straight answer on whether it is something we fix. If it is, the next step and its price. If it is not, we say so."],
   ["What it is not", "Not a pitch, not a report, and not a promise of savings."],
-  ["Who it is for", "UK limited companies with about 30 to 250 people."],
+  ["Who it is for", "UK limited companies with up to about 250 people."],
 ];
 
 export default async function StartPage({ searchParams }: { searchParams: { c?: string; situation?: string } }) {

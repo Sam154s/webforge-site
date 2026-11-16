@@ -38,7 +38,6 @@ const NOT_FOR = [
   "Clinical decisions, public payments, anything safety-critical.",
   "A chatbot for its own sake.",
   "A problem nobody senior owns.",
-  "Firms under about 30 people.",
 ];
 
 const Slate = ({ n, children }: { n: string; children?: React.ReactNode }) => (

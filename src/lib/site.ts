@@ -24,7 +24,7 @@ export const NAV = [
 export const LABEL = "AI engineers who work inside your business";
 export const EXPLAINER = "Like having your own engineering team on call, without hiring one.";
 export const DESCRIPTION =
-  "We work inside UK firms of 30 to 250 people, find the work that still runs by hand, and build the system that does it. Sprint £3,500. First build from £12,000. You own the code.";
+  "We work inside UK firms of up to 250 people, find the work that still runs by hand, and build the system that does it. Sprint £3,500. First build from £12,000. You own the code.";
 
 // The intro call form. The answers below are added to the message text, because the enquiry route accepts a fixed set of keys.
 export const STAFF_BANDS = ["Under 30", "30 to 99", "100 to 250", "Over 250"];
