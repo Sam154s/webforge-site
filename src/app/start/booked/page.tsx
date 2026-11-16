@@ -27,7 +27,7 @@ export default function Booked() {
         <div className="wrap">
           <p className="slate"><span>Request received</span></p>
           <h1 className="h1">Thanks. <span>Here is what happens next.</span></h1>
-          <p className="lede"><span className="note" style={{ fontSize: "1rem" }}>{BOOKING_URL ? "Pick a time now. It takes a minute." : "We will email you some times, normally within one working day."}</span></p>
+          <p className="lede"><span className="note" style={{ fontSize: "1rem" }}>{BOOKING_URL ? "Pick a time now. It takes a minute." : "We will email you some times to choose from."}</span></p>
         </div>
       </section>
       <section className="frame" style={{ paddingTop: 0 }}>
