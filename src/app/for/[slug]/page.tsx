@@ -13,9 +13,16 @@ export const dynamicParams = false;
 export const dynamic = "force-dynamic"; // reads ?c= on every request
 export const generateStaticParams = () => SITUATIONS.map((s) => ({ slug: s.key }));
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const s = situation(params.slug);
-  if (!s) return {};
+// A code typed by hand may arrive with capitals or spaces, so tidy it first.
+const tidy = (c: unknown) => (typeof c === "string" ? c.trim().toLowerCase() : "");
+
+// The title follows the content: if the code belongs to a different situation than the address, both use the code's.
+// landingFor is cached per request, so this and the page share one lookup.
+export async function generateMetadata({ params, searchParams }: { params: { slug: string }; searchParams: { c?: string } }): Promise<Metadata> {
+  const asked = situation(params.slug);
+  if (!asked) return {};
+  const known = await landingFor(tidy(searchParams.c));
+  const s = situation(known?.situation ?? "") ?? asked;
   return {
     title: s.title,
     description: s.description,
@@ -40,8 +47,8 @@ const LEAVE = [
 export default async function Landing({ params, searchParams }: { params: { slug: string }; searchParams: { c?: string } }) {
   const asked = situation(params.slug);
   if (!asked) notFound();
-  // One lookup per page load. A code typed by hand may arrive with capitals or spaces, so tidy it first.
-  const c = typeof searchParams.c === "string" ? searchParams.c.trim().toLowerCase() : "";
+  // One lookup per page load, shared with generateMetadata.
+  const c = tidy(searchParams.c);
   const known = await landingFor(c);
   // The engine knows which situation fits the company. If it differs from the address, show the engine's.
   const s = situation(known?.situation ?? "") ?? asked;
