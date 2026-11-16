@@ -69,7 +69,7 @@ export default function Home() {
                 <p>We use AI once, to build tools for your business in plain code. They quote, book and chase for you, and cost almost nothing to run.</p>
                 <div className="hero-cta">
                   <Cta where="hero" />
-                  <TrackLink where="hero-examples" href="#examples" className="ghost-link"><span aria-hidden>↓</span> Play with three examples</TrackLink>
+                  <TrackLink where="hero-examples" href="#examples" className="ghost-link"><span aria-hidden>↓</span> Play with three tools we built</TrackLink>
                 </div>
               </div>
             </div>
@@ -142,19 +142,12 @@ export default function Home() {
         {/* 04 EXAMPLES */}
         <section id="examples" className="frame">
           <div className="wrap">
-            <Slate n="04">Three you can play with</Slate>
-            <h2 className="h2 reveal">Try the tools. <span>Then read the code.</span></h2>
-            <p className="lede reveal">Three example firms. Each panel is a small working piece of a tool we built for our own sales sandbox. Move the sliders and drag the numbers in the code. Then open the full tool and use it as a customer would.</p>
+            <Slate n="04">See what we build</Slate>
+            <h2 className="h2 reveal">Three tools. <span>Open one and play.</span></h2>
+            <p className="lede reveal">Three example firms, three tools we built. Each one is fully usable, so open it and be the customer: design the house, plan the kitchen, find the fault.</p>
             <Examples />
             <div className="more reveal">
-              <div>
-                <p><b>Every one of these is fully usable.</b> Open a tool and play the customer: design the house, plan the kitchen, find the fault.</p>
-                <p className="more-links" style={{ marginTop: 14 }}>
-                  <Link href="/examples/architect">Architect: 3D designer</Link>
-                  <Link href="/examples/builder">Builder: room planner</Link>
-                  <Link href="/examples/plumber">Plumber: fault finder and heating planner</Link>
-                </p>
-              </div>
+              <p><b>Now picture yours.</b> We build the same kind of tool around your own prices, rules and diary.</p>
               <Cta where="examples" />
             </div>
           </div>
