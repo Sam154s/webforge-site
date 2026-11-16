@@ -19,7 +19,7 @@ for (const file of walk("src")) {
     for (const m of line.matchAll(PLACEHOLDER)) {
       const before = line[m.index - 1] || "";
       const after = line[m.index + m[0].length] || "";
-      if (/[\w)\]]/.test(before) || after === ":" || /[{+*?]/.test(after)) continue; // code: b[KEY], [KEY]: v, regex classes
+      if (/[\w)\](]/.test(before) || after === ":" || /[{+*?]/.test(after)) continue; // code: b[KEY], f([A, B]), [KEY]: v, regex classes
       if (ALLOWED.includes(m[0])) continue;
       hits.push(`${file}:${n + 1}  ${m[0]}`);
     }
