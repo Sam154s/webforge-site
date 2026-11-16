@@ -16,7 +16,7 @@ export default function Terms() {
       <p>These terms cover the free intro call, the sprint and the first build. An embedded engineer, and any later build, is agreed in a separate written order that refers to these terms.</p>
 
       <h2>Who we are</h2>
-      <p><Co />, trading as Webflow Outreach. Email <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p>
+      <p>We are <Co />. Email <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p>
 
       <h2>The intro call</h2>
       <ul>

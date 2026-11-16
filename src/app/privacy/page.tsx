@@ -16,7 +16,7 @@ export default function Privacy() {
       <p>This notice explains how we use personal data. It covers people who use this website or ask for an intro call (UK GDPR Article 13), and people at companies we contact first (Article 14). It is written to be read, not skimmed past.</p>
 
       <h2>Who we are</h2>
-      <p>The controller is <Co />, trading as {COMPANY.tradingAs}. ICO registration: {COMPANY.ico ? <Ph>{COMPANY.ico}</Ph> : "being confirmed"}. Contact for anything in this notice: <a href={`mailto:${EMAIL}`}>{EMAIL}</a>. We have not appointed a data protection officer <Ph>CONFIRM</Ph>.</p>
+      <p>The controller is <Co />. ICO registration: {COMPANY.ico ? <Ph>{COMPANY.ico}</Ph> : "being confirmed"}. Contact for anything in this notice: <a href={`mailto:${EMAIL}`}>{EMAIL}</a>. We have not appointed a data protection officer <Ph>CONFIRM</Ph>.</p>
 
       <h2 id="contacted" style={{ scrollMarginTop: 80 }}>If we contacted you first</h2>
       <p>We write to UK limited companies, by email and by post, about work we think is relevant to them. If that is how you got here, this is what we hold and what you can do about it.</p>
