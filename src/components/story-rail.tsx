@@ -55,8 +55,8 @@ export function StoryRail() {
           </div>
           <span className={`end b ${at === FRAMES.length - 1 ? "there" : ""}`} aria-hidden>B</span>
         </nav>
-        <TrackLink where="rail" href="/diagnostic" className="rail-cta group">
-          <span className="hidden sm:inline">Book a free diagnostic</span><span className="sm:hidden">Free diagnostic</span>
+        <TrackLink where="rail" href="/start" className="rail-cta group">
+          <span className="hidden sm:inline">Book an intro call</span><span className="sm:hidden">Book a call</span>
           <span aria-hidden className="chip">→</span>
         </TrackLink>
       </div>

@@ -2,9 +2,11 @@
 export const FRAMES = [
   { id: "today", label: "Today" },
   { id: "by-hand", label: "By hand" },
-  { id: "fix", label: "The fix" },
+  { id: "gap", label: "The gap" },
+  { id: "how", label: "How" },
   { id: "examples", label: "Examples" },
   { id: "payoff", label: "Payoff" },
   { id: "pricing", label: "Price" },
+  { id: "who", label: "Who" },
   { id: "start", label: "Start" },
 ] as const;
