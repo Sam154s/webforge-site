@@ -120,7 +120,8 @@
 .hand-dot s + em, .hand-dot em + s { display: none; }
 .hand li b { grid-column: 3; font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; letter-spacing: -.02em; line-height: 1.15; }
 .hand-sub { grid-column: 3; font-size: 14.5px; color: var(--dim); }
-.hand-gap { grid-column: 3; padding: 8px 0 18px; font-size: 13px; color: var(--dim); }
+.hand-gap { grid-column: 3; padding: 4px 0 20px; font-size: 13.5px; color: var(--dim); }
+.hand li:last-child b { padding-bottom: 4px; }
 .lost .hand-dot i { background: var(--stone); border: 2px solid var(--ink); }
 .lost b { text-decoration: line-through; text-decoration-thickness: 2px; }
 .hand-sum { margin: 36px 0 0; max-width: 52ch; font-size: clamp(1.1rem, 1.6vw, 1.4rem); line-height: 1.4; }
@@ -135,7 +136,6 @@
   .hand-dot em + s { display: block; }
   .hand-gap { display: none; }
 }
-.hand-who { grid-column: 3; padding-top: 2px; font-size: 13px; font-weight: 600; }
 /* The sum: four factors and a result, on one sheet. */
 .sum { position: relative; display: grid; grid-template-columns: 1fr 1fr; margin-top: 40px; border: 1.5px solid var(--ink); border-radius: 16px; background: var(--paper); }
 .sum > div { position: relative; padding: 16px 16px 18px; }
@@ -191,12 +191,8 @@
 .code-row .ten-tiles span { background: var(--lime); font-weight: 600; }
 .ten.reveal:not(.in) .ten-tiles span { opacity: 0; transform: translateY(10px); }
 @media (min-width: 900px) { .ten-row { grid-template-columns: 250px minmax(0, 1fr); } .ten-tiles { grid-template-columns: repeat(10, minmax(0, 1fr)); } }
-.method { list-style: none; display: grid; gap: 14px; margin: clamp(32px, 4vw, 56px) 0 0; padding: 0; }
-.method li { padding: 20px; border: 1.5px solid var(--ink); border-radius: 14px; background: var(--paper); }
-.method b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; letter-spacing: -.02em; line-height: 1.15; }
-.method p { margin-top: 8px; font-size: 15.5px; line-height: 1.5; color: var(--dim); }
-@media (min-width: 700px) { .method { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1100px) { .method { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.method { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; }
+.method li { padding: 9px 15px; border: 1.5px solid var(--ink); border-radius: 999px; background: var(--paper); font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; letter-spacing: -.015em; line-height: 1.2; }
 
 /* ---------------------------------------------------------------- 04 examples */
 .cases { display: grid; gap: clamp(28px, 4vw, 56px); margin-top: clamp(36px, 5vw, 64px); }
@@ -507,3 +503,22 @@
 .code-form button { display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 6px 8px 6px 22px; border-radius: 999px; background: var(--ink); color: var(--stone); font-weight: 600; white-space: nowrap; }
 .code-form button i { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--lime); color: var(--ink); font-style: normal; }
 .code-form p { margin-top: 12px; }
+
+/* Second round: a shorter homepage. */
+.gap > .wrap > .fine { margin-top: 20px; }
+.path.compact li { grid-template-rows: auto auto auto 1fr; }
+.hire > p { align-self: center; }
+.worked { font-size: 13px; line-height: 1.55; color: var(--dim); }
+.worked summary { cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.worked p { margin-top: 8px; }
+.hq { display: block; padding: 22px; border: 1.5px solid var(--ink); border-radius: 18px; background: var(--paper); transition: background .25s; }
+.hq:hover { background: var(--lime); }
+.hq span { display: block; font-size: 15px; line-height: 1.45; color: var(--dim); }
+.hq b { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 8px; font-family: var(--font-display); font-weight: 800; font-stretch: 90%; font-size: clamp(1.5rem, 2.6vw, 2.1rem); letter-spacing: -.025em; line-height: 1.05; }
+.hq i { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--ink); color: var(--lime); font-family: var(--font-sans); font-size: 1rem; font-style: normal; font-weight: 600; letter-spacing: 0; }
+.who .notfor { margin-top: 14px; }
+@media (min-width: 760px) { .who .notfor ul { grid-template-columns: 1fr; } }
+@media (min-width: 900px) { .hand-dot em::first-letter { text-transform: uppercase; } }
+.method-line { margin: clamp(24px, 3vw, 40px) 0 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.2rem, 2vw, 1.6rem); letter-spacing: -.02em; line-height: 1.25; }
+.method-line a { color: var(--signal); text-decoration: underline; text-underline-offset: 4px; }
+.hero-side > p, .lede { text-wrap: pretty; }

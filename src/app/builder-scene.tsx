@@ -7,25 +7,25 @@ import { useEffect, useRef, useState } from "react";
 // No animation library, no per-frame React renders: only the caption index and the counters touch state.
 // With reduced motion the scene is not pinned: the steps are a plain list and the drawing is shown finished.
 
-const NOTE = "Every Monday, six people rebuild the board report from four spreadsheets. It lands on Tuesday.";
+const NOTE = "Every Monday, six people rebuild the board report by hand.";
 type Kind = "code" | "AI" | "person";
 const STEPS: [string, Kind][] = [
-  ["Collect the four team sheets", "code"],
-  ["Check every total adds up", "code"],
-  ["Read the managers' notes", "AI"],
-  ["Build the board pack", "code"],
-  ["Odd figures go to a person", "person"],
-  ["Send it, Monday 8am", "code"],
+  ["Collect the sheets", "code"],
+  ["Check the totals", "code"],
+  ["Read the notes", "AI"],
+  ["Build the pack", "code"],
+  ["Flag odd figures", "person"],
+  ["Send, Monday 8am", "code"],
 ];
 // Where each step starts before it is drawn into place (offsets in % of the panel), and its tilt.
 const SCATTER: [number, number, number][] = [[38, -16, -9], [-4, 30, 7], [44, 22, -5], [-10, -34, 11], [40, -40, 6], [6, 44, -12]];
-const NEXT = [["Orders typed into two systems", "2"], ["Supplier chasing by email", "3"], ["Quotes waiting on one person", "4"]];
+const NEXT = [["Orders typed twice", "2"], ["Supplier chasing", "3"], ["Quotes that wait", "4"]];
 const CAPTIONS: [string, string, string][] = [
-  ["Step 1 of 4", "Watch.", "We sit with the people who do the work and follow real cases from start to finish."],
-  ["Step 2 of 4", "Draw.", "We sketch the system, mark where a person checks, and agree in writing what passing looks like."],
-  ["Step 3 of 4", "Build.", "AI writes the code once. What ships is ordinary code, with AI only where judgement is needed."],
-  ["Step 3 of 4", "And test.", "Ten runs, ten identical results, including on empty and hostile input. Or it does not ship."],
-  ["Step 4 of 4", "Hand over and stay.", "It runs on your accounts and you own it. We stay for the next thing on your list."],
+  ["Step 1 of 4", "Watch.", "We sit with the people who do the work."],
+  ["Step 2 of 4", "Draw.", "We sketch the system and agree the pass test in writing."],
+  ["Step 3 of 4", "Build.", "AI writes the code once. Plain code ships."],
+  ["Step 3 of 4", "And test.", "Ten runs, ten identical results. Or it does not ship."],
+  ["Step 4 of 4", "Hand over and stay.", "It runs on your accounts. We stay for the next thing."],
 ];
 const CODE: [string, string][] = [
   ["monday_report.py", "c"],
@@ -83,14 +83,13 @@ export function HowScene() {
   }, []);
 
   return (
-    <section ref={root} className={`relative ${still ? "" : "h-[480vh]"}`} aria-label="How we work, in four steps">
+    <section ref={root} className={`relative ${still ? "" : "h-[400vh]"}`} aria-label="How we work, in four steps">
       <div className={still ? "py-10" : "sticky top-0 h-[100svh] overflow-hidden"}>
         <div className="max-w-page mx-auto h-full px-5 md:px-10 grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-6 md:gap-14 items-center content-center pt-[76px] pb-4 md:py-6">
           {still ? (
             <ol className="grid gap-5">
-              {CAPTIONS.map(([step, title, body]) => (
+              {CAPTIONS.map(([, title, body]) => (
                 <li key={title}>
-                  <p className="text-[13px] font-semibold text-dim">{step}</p>
                   <h3 className="font-display font-bold tracking-[-0.03em] leading-none text-[1.6rem]">{title}</h3>
                   <p className="mt-1 text-dim max-w-md leading-snug">{body}</p>
                 </li>
@@ -104,11 +103,10 @@ export function HowScene() {
                   <span key={i} className={`h-1 w-8 transition-colors duration-500 ${i <= stage ? "bg-ink" : "bg-line"}`} />
                 ))}
               </p>
-              {CAPTIONS.map(([step, title, body], i) => (
+              {CAPTIONS.map(([, title, body], i) => (
                 <div key={i} className={`col-start-1 row-start-1 pt-6 md:pt-12 transition-all duration-700 ease-out ${i === stage ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"}`} aria-hidden={i !== stage}>
-                  <p className="text-[13px] font-semibold text-dim mb-2 md:mb-3">{step}</p>
                   <h3 className="font-display font-bold tracking-[-0.03em] leading-[0.95] text-[2rem] md:text-[3.6rem]">{title}</h3>
-                  <p className="mt-2 md:mt-6 text-base md:text-xl text-dim max-w-md leading-snug min-h-[4.2em] md:min-h-0">{body}</p>
+                  <p className="mt-2 md:mt-6 text-base md:text-xl text-dim max-w-md leading-snug min-h-[2.8em] md:min-h-0">{body}</p>
                 </div>
               ))}
             </div>
@@ -129,6 +127,11 @@ export function HowScene() {
               {/* The system, drawn step by step */}
               <div className="absolute left-[5%] right-[5%] md:right-auto md:w-[46%] top-[27%] bottom-[33%] md:top-[29%] md:bottom-[16%]" style={{ opacity: "calc(1 - var(--s4, 0) * 0.92)" }}>
                 <div className="absolute left-[1.5em] top-[1em] bottom-[1em] w-[.16em] bg-lime origin-top" style={{ transform: "scaleY(var(--s2, 0))" }} />
+                {/* Six empty slots appear while we watch, so the sheet is never blank. The drawn steps land on them. */}
+                {STEPS.map(([t], i) => (
+                  <div key={`slot-${t}`} className="absolute left-0 right-0 rounded-[.55em] border border-dashed border-white/35 h-[14%]"
+                    style={{ top: `${i * 16.8}%`, opacity: `clamp(0, calc(var(--s0, 0) * 2.4 - ${i * 0.22}), 1)`, transform: `translateY(calc((1 - clamp(0, calc(var(--s0, 0) * 2.4 - ${i * 0.22}), 1)) * 1em))` }} />
+                ))}
                 {STEPS.map(([t, kind], i) => {
                   const [dx, dy, rot] = SCATTER[i];
                   const local = `clamp(0, calc(var(--s1, 0) * 1.6 - ${i * 0.12}), 1)`;
