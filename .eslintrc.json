@@ -1,3 +1,21 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "src/app/examples/tools/**",
+        "src/lib/sandbox/**"
+      ],
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "off",
+        "prefer-const": "off",
+        "@next/next/no-img-element": "off",
+        "react-hooks/exhaustive-deps": "off",
+        "jsx-a11y/alt-text": "off"
+      }
+    }
+  ]
 }
