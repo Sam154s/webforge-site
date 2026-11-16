@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const SHOWS = [
   ["Range", "An architect, a builder and a plumber. Three trades, three different kinds of problem: drawing, pricing and fault finding."],
-  ["Speed", "We were outsiders to all three. Getting into an unfamiliar business quickly is the job."],
+  ["Speed", "Each tool is built around how that trade does its work. Getting into an unfamiliar business quickly is the job."],
   ["Method", "Every step in these tools runs as plain code. Nothing is sent, and the same input gives the same output."],
 ];
 
