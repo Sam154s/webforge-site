@@ -39,7 +39,7 @@ export default function Stage({ firm, steps, stage, artefacts, onRestart, next, 
   return (
     <main>
       <header className="page-head">
-        <p className="kicker"><Link href="/#examples">All three examples</Link> · fictional example firm, nothing is really sent</p>
+        <p className="kicker"><Link href="/examples">All three examples</Link> · fictional example firm, nothing is really sent</p>
         <h1>{firm.name}</h1>
         <p className="lede">{firm.line}</p>
         <div className="actions">
@@ -73,8 +73,8 @@ export default function Stage({ firm, steps, stage, artefacts, onRestart, next, 
         </aside>
       </div>
       <div className="tool-cta">
-        <p><strong>This is an example firm.</strong> We build the same kind of tool around your own prices, rules and diary. It starts with a free 30 minute diagnostic.</p>
-        <Link className="btn primary" href="/diagnostic">Book a free diagnostic <span className="chip" aria-hidden>→</span></Link>
+        <p><strong>This is not what we sell.</strong> It shows how fast we can get into an unfamiliar business. Yours is next. It starts with a free 30 minute call.</p>
+        <Link className="btn primary" href="/start">Book an intro call <span className="chip" aria-hidden>→</span></Link>
       </div>
     </main>
   )

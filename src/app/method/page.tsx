@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "../reveal";
+import { Finale, Hero } from "@/components/page-kit";
 
 export const metadata: Metadata = {
   title: "Method and ten-run test",
-  description: "How the diagnostic ranks fixes, what counts as hard cash, how sure we are, and a real ten-run test output from our builder.",
+  description: "Plain code, AI only where judgement is needed, a person near the loop, and every workflow run ten times before release. With a real ten-run test output, and what we will not build.",
   alternates: { canonical: "/method" },
   openGraph: { title: "Method and ten-run test | Webflow Outreach", url: "/method" },
 };
@@ -23,109 +24,124 @@ const EVAL = {
   ],
   hashes: { spec: "ce4ee195acc9", src: "be38189f43e0", fixtures: "e0c58692e907" },
 };
-const GRADES = [["A", "0.9", "Seen in a document or export"], ["B", "0.7", "Counted from a sample we checked"], ["C", "0.5", "Your estimate, from a recent real example"], ["D", "0.3", "A guess. Check it before spending"]];
-const STEPS = [
-  ["Pre-scan", "We read public information only: Companies House, your website, your email settings. It is call prep. Everything in it is a hypothesis until you confirm it."],
-  ["The call", "12 to 16 plain questions. We anchor on the last real quote or invoice, not an average, because people remember the last one better."],
-  ["The engine", "Code turns your answers and your export into pounds and hours, and ranks them. Same inputs, same list, every time."],
-  ["Review", "A person reads the report before it reaches you. Anything we cannot defend is cut or graded down."],
+
+const LANES: ["code" | "ai" | "person", string, string, string][] = [
+  ["code", "Code", "Sums, rules, moving data between systems, building documents.", "The same input gives the same output, every time. Most of every system we build."],
+  ["ai", "AI", "Reading a messy email. Drafting a paragraph. Sorting free text.", "Only where judgement is needed, at a named step, with its output checked."],
+  ["person", "A person", "Exceptions, a sample of the rest, and the stop button.", "Named, and near the loop. Not approving every step."],
+];
+const WONT = [
+  ["Clinical decisions", "Software that makes decisions about patients is regulated, for good reason. We do not build it here."],
+  ["Payments taken from the public", "Taking card or bank payments has its own rules. Use a payment provider."],
+  ["Anything safety-critical", "If a wrong answer could injure someone, it is not a job for us."],
 ];
 
 export default function Method() {
   return (
     <>
       <Reveal />
-      <main className="pt-16">
-        <section className="max-w-page mx-auto px-5 md:px-10 pt-10 md:pt-20 pb-16">
-          <p className="font-mono text-xs text-dim">method</p>
-          <h1 className="mt-3 font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[13vw] md:text-[6vw] max-w-[16ch]">
-            How we rank fixes, and how we prove them.
-          </h1>
-          <p className="mt-6 text-lg text-dim max-w-2xl leading-relaxed">Published so you can check our working. Nothing here is secret, and nothing here is a promise of savings.</p>
-        </section>
+      <main className="sb sub">
+        <Hero kicker="Method" title="Plain code. AI only where judgement is needed." sub="Tested ten times."
+          lede="Published so you can check our working. Nothing here is secret, and nothing here is a promise of savings." />
 
-        <section className="max-w-page mx-auto px-5 md:px-10 pb-20">
-          <ol className="grid md:grid-cols-4 border-t border-ink">
-            {STEPS.map(([t, d], i) => (
-              <li key={t} className={`reveal py-7 md:pr-8 border-b md:border-b-0 border-line ${i ? "md:pl-8 md:border-l" : ""}`}>
-                <p className="font-mono text-xs text-dim">0{i + 1}</p>
-                <h2 className="font-display font-bold text-2xl tracking-[-0.02em] mt-3 mb-2">{t}</h2>
-                <p className="text-dim leading-relaxed">{d}</p>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        <section className="max-w-page mx-auto px-5 md:px-10 pb-20 grid md:grid-cols-12 gap-10">
-          <h2 className="reveal md:col-span-5 font-display font-bold tracking-[-0.035em] leading-[0.95] text-4xl md:text-6xl">The ranking.</h2>
-          <div className="md:col-span-6 md:col-start-7 space-y-6 text-lg leading-relaxed min-w-0">
-            <pre className="reveal font-mono text-[13px] md:text-sm bg-ink text-stone rounded-[16px] p-5 overflow-x-auto leading-relaxed">{`Value  = Hard + 0.4 x Soft
-Risked = (Value - Running cost) x Confidence
-Size   = our hours + your hours
-Score  = Risked / Size`}</pre>
-            <p className="reveal"><strong>Hard cash</strong> is money that reaches your bank: faster payment, wins you would not have had, errors you stop paying for. <strong>Soft time</strong> is staff hours freed. Time is only worth money if you use it to cut cost or earn more, so it counts at 40% and is shown separately. The headline figure uses hard cash only.</p>
-            <p className="reveal">The list is cheapest-to-fix first. Items worth under £1,000 a year after risking are parked. Items within 10% of each other are a tie, broken by confidence, then by fewer hours.</p>
-            <p className="reveal">Every figure is a range. Low is after we reduce it for how sure we are. We never subtract confidence from your own numbers. It only orders the list.</p>
+        <section className="frame" style={{ paddingTop: 0 }}>
+          <div className="wrap cols">
+            <blockquote className="quote reveal">
+              <p>&ldquo;When building applications with LLMs, we recommend finding the simplest solution possible, and only increasing complexity when needed.&rdquo;</p>
+              <footer>Anthropic, <a href="https://www.anthropic.com/engineering/building-effective-agents" rel="noopener">Building effective agents</a>, 19 December 2024</footer>
+            </blockquote>
+            <div className="prose big">
+              <p className="reveal">That is from one of the firms that makes the AI. An LLM is the kind of AI behind the chat tools. We agree with them.</p>
+              <p className="reveal">So we design the system first. AI writes the code once, when we build. What ships and runs every day is ordinary code. AI is used at run time only where judgement is needed.</p>
+            </div>
           </div>
         </section>
 
-        <section className="max-w-page mx-auto px-5 md:px-10 pb-20 grid md:grid-cols-12 gap-10">
-          <h2 className="reveal md:col-span-5 font-display font-bold tracking-[-0.035em] leading-[0.95] text-4xl md:text-6xl">How sure we are.</h2>
-          <div className="md:col-span-6 md:col-start-7">
-            {GRADES.map(([g, w, d]) => (
-              <div key={g} className="reveal grid grid-cols-[2.5rem_3rem_1fr] gap-x-3 items-baseline border-t border-line py-4">
-                <span className="inline-grid place-items-center w-8 h-8 rounded-full border border-ink font-mono text-sm">{g}</span>
-                <span className="font-mono text-sm text-dim num">{w}</span>
-                <span>{d}</span>
-              </div>
-            ))}
-            <p className="reveal border-t border-ink pt-4 text-dim">A grade D figure is still shown, but its first task is a short check of the number.</p>
+        <section className="frame">
+          <div className="wrap">
+            <h2 className="h2 reveal">Three kinds of step. <span>Each does what it is good at.</span></h2>
+            <ul className="cards c3" style={{ marginTop: 36 }}>
+              {LANES.map(([k, name, does, rule], i) => (
+                <li key={k} className="reveal" style={{ transitionDelay: `${i * 0.08}s` }}>
+                  <span className={`tag ${k}`}>{name}</span>
+                  <b>{does}</b>
+                  <p>{rule}</p>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
-        <section className="max-w-page mx-auto px-5 md:px-10 pb-20 grid md:grid-cols-12 gap-10">
-          <h2 className="reveal md:col-span-5 font-display font-bold tracking-[-0.035em] leading-[0.95] text-4xl md:text-6xl">What AI does, and does not.</h2>
-          <div className="md:col-span-6 md:col-start-7 space-y-6 text-lg leading-relaxed min-w-0">
-            <p className="reveal">Code works out every number and the ranking. AI writes words only, such as explaining a finding in plain English. A person reads the report before you do.</p>
-            <p className="reveal"><strong>What we never take:</strong> passwords, bank logins, access to your systems at the diagnostic stage, or patient and other special category data. We read an export you choose to send, and public information.</p>
+        <section className="frame" id="person" style={{ scrollMarginTop: 64 }}>
+          <div className="wrap cols">
+            <h2 className="h2 reveal">A person <span>near the loop.</span></h2>
+            <div className="prose big">
+              <p className="reveal"><b>It means this:</b> a named person reviews the exceptions and a sample of the rest, and can stop the system at any time. They do not approve every step.</p>
+              <p className="reveal">A person approving every step is the work done by hand again, with extra clicks. Nobody checking at all is how small errors become big ones. This sits between the two.</p>
+            </div>
           </div>
         </section>
 
         {/* Ten-run test */}
-        <section id="ten-run" className="bg-ink text-stone rounded-t-[36px] md:rounded-t-[56px] scroll-mt-0">
-          <div className="max-w-page mx-auto px-5 md:px-10 py-20 md:py-32 grid md:grid-cols-12 gap-10">
-            <div className="md:col-span-5">
-              <p className="font-mono text-xs text-lime">the ten-run test</p>
-              <h2 className="reveal mt-3 font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[11vw] md:text-[5vw]">Ten runs. Same result, or it does not ship.</h2>
-              <p className="reveal mt-6 text-stone/65 leading-relaxed">Before any fix goes live, we run it ten times against your own examples, including an empty input and a hostile one. Every run must give an identical result. A fix that stops safely on bad input is behaving correctly. If a fix drifts, we adjust it and run the ten again.</p>
+        <section id="ten-run" className="frame dark slab" style={{ scrollMarginTop: 64 }}>
+          <div className="wrap cols">
+            <div>
+              <p className="slate reveal"><span>The ten-run test</span></p>
+              <h2 className="h2 reveal">Ten runs. Same result, <span>or it does not ship.</span></h2>
+              <p className="end-p reveal">Before anything goes live we run it ten times against your own examples, including an empty input and a hostile one. Every run must give an identical result. Stopping safely on bad input is the right behaviour. If it drifts, we fix it and run the ten again.</p>
             </div>
-            <div className="md:col-span-7 min-w-0">
-              <div className="reveal rounded-[16px] bg-[#171717] border border-white/10 p-5 md:p-7 font-mono text-[12.5px] md:text-sm leading-[1.8] overflow-x-auto">
-                <p className="text-stone/50">$ node wf.mjs eval {EVAL.workflow}</p>
-                <p className="text-lime">PASS {EVAL.workflow}</p>
+            <div style={{ minWidth: 0 }}>
+              <div className="term reveal">
+                <p className="dim">$ node wf.mjs eval {EVAL.workflow}</p>
+                <p className="ok">PASS {EVAL.workflow}</p>
                 {EVAL.cases.map(([c, runs, distinct, out]) => (
-                  <p key={c} className="whitespace-pre text-stone/85">{`  ${c}: ${runs}, ${distinct}, ${out}`}</p>
+                  <p key={c}>{`  ${c}: ${runs}, ${distinct}, ${out}`}</p>
                 ))}
               </div>
-              <dl className="reveal mt-6 grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-stone/65">
-                <div><dt className="font-mono text-xs text-stone/45">ran</dt><dd>{EVAL.ran}, builder commit {EVAL.commit}</dd></div>
-                <div><dt className="font-mono text-xs text-stone/45">fingerprints (first 12 characters)</dt><dd className="font-mono text-xs break-all">spec {EVAL.hashes.spec} · code {EVAL.hashes.src} · examples {EVAL.hashes.fixtures}</dd></div>
-              </dl>
-              <div className="reveal mt-8 border-t border-white/15 pt-6 text-stone/65 leading-relaxed space-y-3">
-                <p><strong className="text-stone">What this workflow does.</strong> {EVAL.purpose}</p>
-                <p><strong className="text-stone">What it must never do.</strong> {EVAL.never.join(". ")}.</p>
-                <p className="text-sm text-stone/50">This is a real run, but of an example workflow on made-up sample data, not a client&apos;s. It is the output of our own builder, captured on the date above. It shows how the test works, not a result for your business.</p>
+              <div className="also">
+                <div className="reveal"><span>Ran</span><b>{EVAL.ran}</b><p>Builder commit {EVAL.commit}.</p></div>
+                <div className="reveal"><span>What this workflow does</span><b>{EVAL.workflow}</b><p>{EVAL.purpose}</p></div>
+                <div className="reveal"><span>What it must never do</span><b>Three rules</b><p>{EVAL.never.join(". ")}.</p></div>
               </div>
+              <p className="fine reveal">Fingerprints, first 12 characters: spec {EVAL.hashes.spec}, code {EVAL.hashes.src}, examples {EVAL.hashes.fixtures}.</p>
+              <p className="fine reveal">This is a real run, but of an example workflow on made-up sample data, not a client&rsquo;s. It is the output of our own builder, captured on the date above. It shows how the test works, not a result for your business.</p>
             </div>
           </div>
-          <div className="max-w-page mx-auto px-5 md:px-10 pb-20 flex flex-wrap items-center gap-6">
-            <Link href="/diagnostic" className="group inline-flex items-center gap-3 rounded-full bg-lime text-ink font-semibold pl-6 pr-2 py-2 min-h-[44px]">
-              Book a free diagnostic
-              <span aria-hidden className="grid place-items-center w-8 h-8 rounded-full bg-ink text-lime transition-transform duration-300 group-hover:translate-x-0.5">→</span>
-            </Link>
-            <Link href="/sample-report" className="text-stone underline underline-offset-4">See a sample report</Link>
+        </section>
+
+        <section className="frame">
+          <div className="wrap cols">
+            <h2 className="h2 reveal">The written pass test. <span>Agreed before we start.</span></h2>
+            <div className="prose big">
+              <p className="reveal">Every build has one. It says what working means, on your own examples, in words you would use. One firm told the government&rsquo;s AI survey: &ldquo;it&rsquo;s got to be as black and white as a set of numbers on a piece of paper.&rdquo;</p>
+              <div className="flow-test reveal"><b>An example line from a pass test</b>For any of the last twelve weekly reports, the pack matches the hand-built one to the pound, ten runs out of ten. If a team sheet is missing, it stops and says which.</div>
+              <p className="reveal">Half the build price is due when it passes. We keep working until it does.</p>
+              <p className="fine reveal">Quote: DSIT AI Adoption Survey 2026, published 29 October 2026.</p>
+            </div>
           </div>
         </section>
+
+        <section className="frame">
+          <div className="wrap cols">
+            <h2 className="h2 reveal">You own it.</h2>
+            <div className="prose big">
+              <p className="reveal">The code is yours. It runs on your own accounts, with your permissions, and comes with a runbook. Hosting and any AI usage are billed to you at cost, agreed up front.</p>
+              <p className="reveal">You could hand it to any developer. That is the point.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="frame" id="wont" style={{ scrollMarginTop: 64 }}>
+          <div className="wrap">
+            <h2 className="h2 reveal">What we will not build.</h2>
+            <ul className="cards c3" style={{ marginTop: 36 }}>
+              {WONT.map(([t, d]) => <li key={t} className="reveal"><b>{t}</b><p>{d}</p></li>)}
+            </ul>
+            <p className="fine reveal">And when the answer is a rule, a template or a setting you already have, we say so. <Link href="/trust">More hard questions</Link>.</p>
+          </div>
+        </section>
+
+        <Finale where="method-bottom" />
       </main>
     </>
   );
