@@ -1,16 +1,31 @@
-// Server-only helpers for the ops database. The key is the public one the enquiry route already uses.
-export const OPS_URL = process.env.OPS_SUPABASE_URL ?? "https://qqqdjtjqizawgkzznxvm.supabase.co";
-export const OPS_KEY = process.env.OPS_SUPABASE_KEY ?? "sb_publishable_f0kovNXdeLq1qZziijFi8g_YemeRMi5";
+import { cache } from "react";
+
+// Server-only helpers for the ops database. The URL and key come only from OPS_SUPABASE_URL and OPS_SUPABASE_KEY.
+// There is no built-in fallback: a dev run or a preview without them must never reach the production database.
+// When either is unset, every call fails cleanly: the form shows a plain message and private pages show their generic content.
+let warned = false;
+export function opsConfig(): { url: string; key: string } | null {
+  const url = process.env.OPS_SUPABASE_URL?.trim().replace(/\/+$/, "");
+  const key = process.env.OPS_SUPABASE_KEY?.trim();
+  if (url && key) return { url, key };
+  if (!warned) {
+    warned = true;
+    console.error("[ops] OPS_SUPABASE_URL or OPS_SUPABASE_KEY is not set. Enquiries cannot be saved and private pages show generic content.");
+  }
+  return null;
+}
 
 // ASSUMED token shape: 16 to 64 URL-safe characters. Anything else is treated as no token and never sent to the database.
 export const TOKEN_RE = /^[A-Za-z0-9_-]{16,64}$/;
 export const validToken = (t: unknown): t is string => typeof t === "string" && TOKEN_RE.test(t);
 
 export async function opsRpc(fn: string, args: Record<string, unknown>, ms: number): Promise<{ ok: boolean; data: unknown }> {
+  const ops = opsConfig();
+  if (!ops) return { ok: false, data: null };
   try {
-    const res = await fetch(`${OPS_URL}/rest/v1/rpc/${fn}`, {
+    const res = await fetch(`${ops.url}/rest/v1/rpc/${fn}`, {
       method: "POST",
-      headers: { apikey: OPS_KEY, Authorization: `Bearer ${OPS_KEY}`, "content-type": "application/json" },
+      headers: { apikey: ops.key, Authorization: `Bearer ${ops.key}`, "content-type": "application/json" },
       body: JSON.stringify(args),
       cache: "no-store",
       signal: AbortSignal.timeout(ms),
@@ -38,7 +53,8 @@ function webUrl(v: unknown, httpsOnly = false): string {
 
 // Who a landing token belongs to. Any problem (bad token, slow, error, odd shape) gives null, so the page just renders normally.
 // Every key except company_name is optional: older rows carry only the name and website.
-export async function landingFor(token: unknown): Promise<Known | null> {
+// Wrapped in cache() so the page title and the page body share one lookup per request.
+export const landingFor = cache(async (token: unknown): Promise<Known | null> => {
   if (!validToken(token)) return null;
   const { data } = await opsRpc("outreach_landing", { p_token: token }, 1500);
   const d = data as Record<string, unknown> | null;
@@ -61,4 +77,4 @@ export async function landingFor(token: unknown): Promise<Known | null> {
     evidence,
     artefactUrl: webUrl(d?.artefact_url, true),
   };
-}
+});
