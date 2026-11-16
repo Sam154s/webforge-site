@@ -49,8 +49,9 @@
 .wrap { position: relative; max-width: 86rem; margin: 0 auto; padding: 0 20px; }
 .frame { position: relative; padding: clamp(72px, 10vw, 150px) 0; scroll-margin-top: 64px; }
 .frame + .frame { border-top: 1px solid var(--line); }
-.slate { display: flex; align-items: center; gap: 12px; margin: 0 0 22px; font-size: 13px; color: var(--dim); }
-.slate span { color: var(--ink); border: 1.5px solid var(--ink); border-radius: 999px; padding: 4px 10px; }
+/* The space after the pill is a margin on the pill, not a flex gap, so the pill and its label cannot touch even where gap is not applied. */
+.slate { display: flex; align-items: center; margin: 0 0 22px; font-size: 13px; color: var(--dim); }
+.slate span { flex: none; margin-right: 12px; color: var(--ink); border: 1.5px solid var(--ink); border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
 .h2 { margin: 0; max-width: 22ch; font-family: var(--font-display); font-weight: 800; font-stretch: 90%; letter-spacing: -.025em; line-height: .97; font-size: clamp(2.4rem, 6vw, 5.4rem); text-wrap: balance; }
 .h2 span { display: block; font-weight: 500; color: var(--dim); }
 .lede { margin: 24px 0 0; max-width: 58ch; font-size: clamp(1.05rem, 1.5vw, 1.25rem); line-height: 1.5; color: var(--dim); }
@@ -317,7 +318,8 @@
 }
 
 /* ---------------------------------------------------------------- 08 who */
-.who { display: grid; gap: 40px 64px; margin-top: clamp(32px, 5vw, 60px); }
+/* Scoped to a frame: the example tools have their own .who (the label on the customer screen bar), which this must not move. */
+.frame .who { display: grid; gap: 40px 64px; margin-top: clamp(32px, 5vw, 60px); }
 .who-me p { max-width: 30ch; font-family: var(--font-display); font-weight: 500; font-size: clamp(1.45rem, 2.5vw, 2.1rem); letter-spacing: -.02em; line-height: 1.22; }
 .who-me p b { font-weight: 800; }
 .who-me .fine { max-width: 44ch; font-family: var(--font-sans); font-size: 14px; letter-spacing: 0; line-height: 1.55; }
@@ -332,7 +334,7 @@
 .notfor li { position: relative; padding-left: 28px; font-size: 16px; line-height: 1.45; }
 .notfor li::before { content: ""; position: absolute; left: 0; top: 3px; width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--ink); background: linear-gradient(to top right, transparent calc(50% - 1px), var(--ink) calc(50% - 1px), var(--ink) calc(50% + 1px), transparent calc(50% + 1px)); }
 @media (min-width: 760px) { .notfor ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } .notfor { padding: 30px; } }
-@media (min-width: 1000px) { .who { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
+@media (min-width: 1000px) { .frame .who { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
 
 /* ---------------------------------------------------------------- 09 start */
 .finale { padding-top: clamp(72px, 10vw, 150px); overflow: hidden; }
@@ -413,7 +415,7 @@
 .bars { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
 .bars li { display: grid; gap: 6px; }
 .bars .bl { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 14px; font-size: 16px; }
-.bars .bl b { font-variant-numeric: tabular-nums; }
+.bars .bl b { margin-left: auto; font-variant-numeric: tabular-nums; }
 .bars .track { position: relative; height: 18px; border-radius: 4px; background: rgb(17 17 17 / .07); overflow: hidden; }
 .bars .track i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--ink); border-radius: 4px; transform-origin: left; transition: transform 1.1s var(--out) .15s; }
 .bars .track i.hi { background: repeating-linear-gradient(-45deg, var(--ink) 0 2px, transparent 2px 6px); }
@@ -521,4 +523,4 @@
 @media (min-width: 900px) { .hand-dot em::first-letter { text-transform: uppercase; } }
 .method-line { margin: clamp(24px, 3vw, 40px) 0 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.2rem, 2vw, 1.6rem); letter-spacing: -.02em; line-height: 1.25; }
 .method-line a { color: var(--signal); text-decoration: underline; text-underline-offset: 4px; }
-.hero-side > p, .lede { text-wrap: pretty; }
+.hero-side > p, .lede, .sb p, .sb dd, .sb li { text-wrap: pretty; }
