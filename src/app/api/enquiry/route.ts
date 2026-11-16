@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
       from: "Webflow Outreach <onboarding@resend.dev>",
       to: NOTIFY,
       replyTo: email,
-      subject: `Diagnostic request: ${company}`,
+      subject: `Intro call request: ${company}`,
       html: `<p><strong>${esc(name)}</strong> (${esc(email)})</p><table>${rows.map(([k, v]) => `<tr><td><strong>${k}</strong></td><td>${esc(String(v))}</td></tr>`).join("")}</table><p>${esc(message || "No message").replace(/\n/g, "<br>")}</p>`,
     }).catch((e) => console.error("Resend failed", e));
   }

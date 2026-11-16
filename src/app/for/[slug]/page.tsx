@@ -2,92 +2,129 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Reveal } from "../../reveal";
-import { Cta } from "@/components/track-link";
+import { Cta, TrackLink } from "@/components/track-link";
 import { AttrCapture } from "@/components/attr-capture";
+import { Flow } from "@/components/flow";
 import { EMAIL } from "@/lib/site";
-import { LANDINGS, bySlug } from "@/lib/landing";
-import { landingFor, validToken } from "@/lib/outreach";
+import { SITUATIONS, situation } from "@/lib/situations";
+import { landingFor, validToken, type Evidence } from "@/lib/outreach";
 
 export const dynamicParams = false;
 export const dynamic = "force-dynamic"; // reads ?c= on every request
-export const generateStaticParams = () => LANDINGS.map((l) => ({ slug: l.slug }));
+export const generateStaticParams = () => SITUATIONS.map((s) => ({ slug: s.key }));
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const l = bySlug(params.slug);
-  if (!l) return {};
+  const s = situation(params.slug);
+  if (!s) return {};
   return {
-    title: l.title,
-    description: l.description,
+    title: s.title,
+    description: s.description,
     // Email destinations, not search pages.
-    robots: { index: false, follow: true },
-    alternates: { canonical: `/for/${l.slug}` },
-    openGraph: { title: `${l.title} | Webflow Outreach`, description: l.description, url: `/for/${l.slug}` },
+    robots: { index: false, follow: false },
+    alternates: { canonical: `/for/${s.key}` },
+    openGraph: { title: `${s.title} | Webflow Outreach`, description: s.description, url: `/for/${s.key}` },
   };
 }
 
+const KIND: Record<Evidence["kind"], string> = { job_advert: "From a job advert you published", website: "From your website", filing: "From a filing at Companies House" };
+const day = (iso: string) => new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+const host = (url: string) => { try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return ""; } };
+
+const LEAVE = [
+  ["A ranked list", "Every problem we find, with a pound range and a payback on each."],
+  ["One thing working", "On your real data. Small, but it runs."],
+  ["A fixed quote", "For the first build, with the written pass test attached."],
+];
+
 // The token and the company name stay out of the title, the description and analytics. They only appear in the page body.
 export default async function Landing({ params, searchParams }: { params: { slug: string }; searchParams: { c?: string } }) {
-  const l = bySlug(params.slug);
-  if (!l) notFound();
-  const known = await landingFor(searchParams.c);
-  const href = `/diagnostic?src=for-${l.slug}${validToken(searchParams.c) ? `&c=${searchParams.c}` : ""}`;
+  const asked = situation(params.slug);
+  if (!asked) notFound();
+  // One lookup per page load. A code typed by hand may arrive with capitals or spaces, so tidy it first.
+  const c = typeof searchParams.c === "string" ? searchParams.c.trim().toLowerCase() : "";
+  const known = await landingFor(c);
+  // The engine knows which situation fits the company. If it differs from the address, show the engine's.
+  const s = situation(known?.situation ?? "") ?? asked;
+  const href = `/start?src=for-${s.key}&situation=${s.key}${validToken(c) ? `&c=${c}` : ""}`;
+  const evidence = known?.evidence ?? [];
   return (
     <>
       <Reveal />
-      <AttrCapture slug={l.slug} />
-      <main className="pt-16">
-        <section className="max-w-page mx-auto px-5 md:px-10 pt-10 md:pt-20 pb-16">
-          {known && <p className="font-mono text-xs text-dim mb-6">{`For ${known.company}`}</p>}
-          <h1 className="font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[13vw] md:text-[7vw] max-w-[18ch]">
-            <span className="mask"><span style={{ animationDelay: ".05s" }}>{l.h1[0]}</span></span>
-            <span className="mask"><span style={{ animationDelay: ".2s" }} className="font-medium text-dim">{l.h1[1]}</span></span>
-          </h1>
-          <p className="fade mt-8 text-lg text-dim max-w-xl leading-relaxed" style={{ animationDelay: ".6s" }}>{l.lead}</p>
-          <div className="fade mt-8 flex flex-wrap items-center gap-6" style={{ animationDelay: ".8s" }}>
-            <Cta where={`landing-${l.slug}-top`} href={href} />
-            <Link href="/sample-report" className="text-signal underline underline-offset-4">See a sample report</Link>
-          </div>
-        </section>
-
-        <section className="max-w-page mx-auto px-5 md:px-10 pb-16">
-          <h2 className="font-display font-bold tracking-[-0.035em] text-3xl md:text-5xl">What the diagnostic finds.</h2>
-          <ol className="mt-8 grid md:grid-cols-3 border-t border-ink">
-            {l.finds.map(([t, d], i) => (
-              <li key={t} className={`reveal py-7 md:pr-8 border-b md:border-b-0 border-line ${i ? "md:pl-8 md:border-l" : ""}`}>
-                <p className="font-mono text-xs text-dim">0{i + 1}</p>
-                <h3 className="font-display font-bold text-xl tracking-[-0.02em] mt-3 mb-2">{t}</h3>
-                <p className="text-dim leading-relaxed">{d}</p>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        <section className="max-w-page mx-auto px-5 md:px-10 pb-16">
-          <div className="reveal rounded-[24px] bg-ink text-stone p-6 md:p-10">
-            <p className="font-mono text-xs text-lime">{l.excerptLabel} · numbers are illustrative</p>
-            <div className="mt-6">
-              {l.excerpt.map((r) => (
-                <div key={r.job} className="grid md:grid-cols-12 gap-x-6 gap-y-1 py-5 border-t border-white/15 items-baseline">
-                  <p className="md:col-span-5 font-semibold">{r.job}</p>
-                  <p className="md:col-span-3 num">{r.range}</p>
-                  <p className="md:col-span-1 font-mono text-sm text-stone/60">Grade {r.grade}</p>
-                  <p className="md:col-span-1 font-mono text-sm text-stone/60">{r.hours}</p>
-                  <p className="md:col-span-2"><span className="inline-block rounded-full bg-lime text-ink px-3 py-1 text-sm">{r.lane}</span></p>
-                </div>
-              ))}
+      <AttrCapture slug={s.key} />
+      <main className="sb sub">
+        <section className="sub-hero">
+          <div className="wrap">
+            <p className="slate"><span>{known ? `For ${known.company}` : "A private page"}</span></p>
+            <h1 className="h1" style={{ maxWidth: "19ch" }}>{s.h1[0]}<span>{s.h1[1]}</span></h1>
+            <p className="lede">{s.lead}</p>
+            <div className="btn-row fade" style={{ animationDelay: ".3s" }}>
+              {known?.artefactUrl && (
+                <TrackLink where={`landing-${s.key}-artefact`} href={known.artefactUrl} target="_blank" rel="noopener" className="open-tool">Open the working version <i aria-hidden>→</i></TrackLink>
+              )}
+              <Cta where={`landing-${s.key}-top`} href={href} prefetch={false} className={known?.artefactUrl ? "!bg-transparent !text-ink border-[1.5px] border-ink" : ""} />
             </div>
-            <p className="mt-4 text-sm text-stone/55">Estimates, not promises. Every figure is a range. <Link href="/sample-report" className="text-stone underline underline-offset-4">The full fictional report</Link>.</p>
+            {known?.artefactUrl && <p className="fine">We built a small working version from what your company has published. It uses none of your private data.</p>}
           </div>
         </section>
 
-        <section className="max-w-page mx-auto px-5 md:px-10 pb-24 md:pb-32 grid md:grid-cols-12 gap-8 items-end">
-          <h2 className="md:col-span-7 font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[11vw] md:text-[5vw]">Free. 30 minutes. You can stop at the report.</h2>
-          <div className="md:col-span-5 space-y-4">
-            <Cta where={`landing-${l.slug}-bottom`} href={href} />
-            <p className="text-sm text-dim">Or email <a href={`mailto:${EMAIL}`} className="text-signal underline underline-offset-4">{EMAIL}</a></p>
-            <p className="text-xs text-dim leading-relaxed">
-              Got here from an email from us? We contact UK limited companies about this offer. Reply &ldquo;no&rdquo; to stop, and we will not contact you again. How we got your details and what we do with them: <Link href="/privacy" className="text-signal underline underline-offset-2">privacy notice</Link>.
-            </p>
+        {evidence.length > 0 && (
+          <section className="frame">
+            <div className="wrap cols">
+              <div>
+                <h2 className="h2 reveal">What we saw. <span>In your own published words.</span></h2>
+                <p className="fine reveal">Only things your company has published. Nothing private, and nothing about any one person.</p>
+              </div>
+              <ul className="saw">
+                {evidence.map((e, i) => (
+                  <li key={i} className="reveal">
+                    <blockquote>&ldquo;{e.quote}&rdquo;</blockquote>
+                    <p>
+                      <span>{KIND[e.kind]}</span>
+                      {e.seenOn && <span>Seen on {day(e.seenOn)}</span>}
+                      {e.url && <a href={e.url} target="_blank" rel="nofollow noopener noreferrer">Source: {host(e.url)}</a>}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
+
+        <section className="frame">
+          <div className="wrap">
+            <h2 className="h2 reveal">From A to B. <span>What we would build.</span></h2>
+            <div style={{ marginTop: 36 }}><Flow s={s} /></div>
+            <p className="fine reveal">A sketch, not a design. We draw yours after watching the real work. Code runs most of it. AI is used only where judgement is needed, and a named person checks the exceptions. <Link href="/method">The method</Link>.</p>
+          </div>
+        </section>
+
+        <section className="frame dark slab">
+          <div className="wrap cols">
+            <div>
+              <p className="slate reveal"><span>The sprint</span></p>
+              <h2 className="h2 reveal">£3,500 fixed. <span>We come in and measure it.</span></h2>
+              <p className="end-p reveal">We spend time with your team, measure the work, and leave you with three things. The fee is credited in full against a build signed within 30 days.</p>
+              <p className="fine reveal"><Link href="/sprint">What happens in the sprint</Link>, <Link href="/pricing">every price</Link>, <Link href="/sample-report">a sample report</Link>.</p>
+            </div>
+            <div className="also" style={{ marginTop: 0 }}>
+              {LEAVE.map(([t, d], i) => <div key={t} className="reveal"><span>{i + 1} of 3</span><b>{t}</b><p>{d}</p></div>)}
+            </div>
+          </div>
+        </section>
+
+        <section className="frame">
+          <div className="wrap cols">
+            <h2 className="h2 reveal">It starts with a call. <span>Free, 30 minutes.</span></h2>
+            <div>
+              <p className="lede reveal" style={{ marginTop: 0, color: "var(--ink)" }}>Tell us what is slow. We will say whether it is something we fix. If it is not a fit, we will say so.</p>
+              <div className="btn-row reveal">
+                <Cta where={`landing-${s.key}-bottom`} href={href} prefetch={false} />
+                <p style={{ fontSize: 14 }}>Or email <a href={`mailto:${EMAIL}`} className="text-signal underline underline-offset-4">{EMAIL}</a></p>
+              </div>
+              <p className="fine reveal">
+                Got here from an email from us? We contact UK limited companies about this offer. Reply &ldquo;stop&rdquo; or email us, and we will not contact you again. How we hold your company&rsquo;s details, and how to object: <Link href="/privacy#contacted">privacy notice</Link>.{!known && <> Have a code from a letter? <Link href="/for">Type it here</Link>.</>}
+              </p>
+            </div>
           </div>
         </section>
       </main>
