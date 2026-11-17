@@ -3,7 +3,6 @@ import { FIRMS, type Firm } from "@/lib/sandbox/journey";
 import { Shots, type Shot } from "./parts";
 
 // The three example tools: photos of the real thing, one line on what it does, and a button to open it.
-// They are proof of range and speed, not the product.
 export const CASES: { no: string; firm: Firm; href: string; short: string; does: string; shots: Shot[] }[] = [
   {
     no: "EX-01", firm: FIRMS.architect, href: "/examples/architect",
@@ -39,17 +38,17 @@ export const CASES: { no: string; firm: Firm; href: string; short: string; does:
 
 export function Examples({ compact }: { compact?: boolean }) {
   return (
-    <div className="cases">
+    <div className={`cases ${compact ? "compact" : ""}`}>
       {CASES.map((c) => (
         <article key={c.no} className="case reveal">
           <header className="case-head">
-            <span className="case-no">{c.no}</span>
+            {!compact && <span className="case-no">{c.no}</span>}
             <div>
               <h3>{c.firm.name}</h3>
               <p>{compact ? c.short : c.does}</p>
               {!compact && <span className="stamp">Example firm, not a client</span>}
             </div>
-            <Link href={c.href} className="open-tool">Open the full tool <i aria-hidden>→</i></Link>
+            <Link href={c.href} className="open-tool">Try it <i aria-hidden>→</i></Link>
           </header>
           <div className="case-foot">
             <Shots items={c.shots} captions={!compact} />

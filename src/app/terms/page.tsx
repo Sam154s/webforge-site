@@ -5,7 +5,7 @@ import { Co, LegalPage, Ph } from "@/components/legal";
 
 export const metadata: Metadata = {
   title: "Terms (draft)",
-  description: "Terms for the intro call, the sprint and the first build from Webflow Outreach.",
+  description: "Terms for the intro call, the Diagnosis, the Solution and Upkeep from Webflow Outreach.",
   alternates: { canonical: "/terms" },
   robots: { index: false, follow: true },
 };
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function Terms() {
   return (
     <LegalPage title="Terms" updated="16 November 2026">
-      <p>These terms cover the free intro call, the sprint and the first build. An embedded engineer, and any later build, is agreed in a separate written order that refers to these terms.</p>
+      <p>These terms cover the free intro call, the Diagnosis (a fixed-price piece of work), the Solution and Upkeep. Any later build is agreed in a separate written order that refers to these terms.</p>
 
       <h2>Who we are</h2>
       <p>We are <Co />. Email <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p>
@@ -24,11 +24,11 @@ export default function Terms() {
         <li>It is a conversation, not a report and not advice.</li>
       </ul>
 
-      <h2>The sprint</h2>
+      <h2>The Diagnosis</h2>
       <ul>
         <li>The price is £3,500, fixed, and paid on booking. Prices exclude VAT <Ph>CONFIRM VAT STATUS</Ph>.</li>
-        <li>If you sign a build with us within 30 days, the sprint fee is credited in full against the price of that build.</li>
-        <li>You get a ranked list of problems with a pound range and a payback on each, one thing working on your real data, and a fixed quote for a first build. See the <Link href="/sample-report">sample report</Link>.</li>
+        <li>If you sign a build with us within 30 days, the Diagnosis fee is credited in full against the price of that build.</li>
+        <li>You get a ranked list of problems with a pound range and a payback on each, one thing working on your real data, and a fixed quote for a first build.</li>
         <li>The report is an estimate based on what we saw and what you shared, at the date it is made. Every figure is a range, not a promise. It is not financial, tax, legal or HR advice.</li>
         <li>We agree in writing, before we start, what we may see and where any data is processed. You must have the right to share what you give us, and you should not send passwords, bank logins or special category data.</li>
       </ul>
@@ -44,9 +44,11 @@ export default function Terms() {
         <li>Running costs for hosting and AI usage, where they exist, are on your own accounts, at cost, and agreed up front.</li>
       </ul>
 
-      <h2>Embedded engineer</h2>
+      <h2>Upkeep</h2>
       <ul>
-        <li>From £4,500 a month, paid monthly in advance. There is a three month minimum, then either of us can end it with 30 days&apos; notice. The details are in the written order.</li>
+        <li>From £750 a month per system, paid monthly. We watch the system, fix it, and make small changes.</li>
+        <li>Either of us can end it with 30 days&apos; notice. The details are in the written order.</li>
+        <li>Running costs for hosting and AI usage are at cost, on your own accounts.</li>
       </ul>
 
       <h2>Our responsibility</h2>

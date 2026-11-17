@@ -19,10 +19,9 @@ export function SiteHeader() {
           {NAV.map((n) => (
             <Link key={n.href} href={n.href} aria-current={path === n.href ? "page" : undefined} className={`hidden lg:inline hover:text-ink transition-colors ${path === n.href ? "text-ink font-semibold" : "text-dim"}`}>{n.label}</Link>
           ))}
-          <a href={`mailto:${EMAIL}`} className="hidden xl:inline text-signal hover:underline underline-offset-4">{EMAIL}</a>
           <button type="button" className="menu-btn lg:hidden" aria-expanded={open} aria-controls="site-menu" onClick={() => setOpen(!open)}>{open ? "Close" : "Menu"}</button>
-          <TrackLink where="header" href="/start" className="group flex items-center gap-2 bg-ink text-stone rounded-full pl-3.5 sm:pl-4 pr-1.5 py-1.5 whitespace-nowrap">
-            <span className="hidden sm:inline">Book an intro call</span><span className="sm:hidden">Book a call</span>
+          <TrackLink where="header" href="/start" className="group flex items-center gap-2 min-h-[44px] bg-ink text-stone rounded-full pl-3.5 sm:pl-4 pr-1.5 py-1.5 whitespace-nowrap">
+            Book a call
             <span aria-hidden className="grid place-items-center w-6 h-6 rounded-full bg-lime text-ink transition-transform duration-300 group-hover:translate-x-0.5">→</span>
           </TrackLink>
         </nav>

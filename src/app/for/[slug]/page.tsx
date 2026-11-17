@@ -5,7 +5,7 @@ import { Reveal } from "../../reveal";
 import { Cta, TrackLink } from "@/components/track-link";
 import { AttrCapture } from "@/components/attr-capture";
 import { Flow } from "@/components/flow";
-import { EMAIL } from "@/lib/site";
+import { EMAIL, social } from "@/lib/site";
 import { SITUATIONS, situation } from "@/lib/situations";
 import { landingFor, validToken, type Evidence } from "@/lib/outreach";
 
@@ -29,7 +29,7 @@ export async function generateMetadata({ params, searchParams }: { params: { slu
     // Email destinations, not search pages.
     robots: { index: false, follow: false },
     alternates: { canonical: `/for/${s.key}` },
-    openGraph: { title: `${s.title} | Webflow Outreach`, description: s.description, url: `/for/${s.key}` },
+    ...social(`${s.title} | Webflow Outreach`, `/for/${s.key}`, s.description),
   };
 }
 
@@ -101,17 +101,17 @@ export default async function Landing({ params, searchParams }: { params: { slug
           <div className="wrap">
             <h2 className="h2 reveal">From A to B. <span>What we would build.</span></h2>
             <div style={{ marginTop: 36 }}><Flow s={s} /></div>
-            <p className="fine reveal">A sketch, not a design. We draw yours after watching the real work. Code runs most of it. AI is used only where judgement is needed, and a named person checks the exceptions. <Link href="/method">The method</Link>.</p>
+            <p className="fine reveal">A sketch, not a design. We draw yours after watching the real work. Code runs most of it. AI is used only where judgement is needed, and a named person checks the exceptions.</p>
           </div>
         </section>
 
         <section className="frame dark slab">
           <div className="wrap cols">
             <div>
-              <p className="slate reveal"><span>The sprint</span></p>
+              <p className="slate reveal"><span>The Diagnosis</span></p>
               <h2 className="h2 reveal">£3,500 fixed. <span>We come in and measure it.</span></h2>
-              <p className="end-p reveal">We spend time with your team, measure the work, and leave you with three things. The fee is credited in full against a build signed within 30 days.</p>
-              <p className="fine reveal"><Link href="/sprint">What happens in the sprint</Link>, <Link href="/pricing">every price</Link>, <Link href="/sample-report">a sample report</Link>.</p>
+              <p className="end-p reveal">We sit in with your team, measure the work, and leave you with three things. The fee is credited in full against a build signed within 30 days.</p>
+              <p className="fine reveal"><Link href="/pricing">Every price</Link>.</p>
             </div>
             <div className="also" style={{ marginTop: 0 }}>
               {LEAVE.map(([t, d], i) => <div key={t} className="reveal"><span>{i + 1} of 3</span><b>{t}</b><p>{d}</p></div>)}

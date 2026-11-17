@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const NEXT = [
   ["Pick a time", ""],
   ["The call", "Thirty minutes. Tell us what is slow or painful. We ask who does it, how often, and what it costs when it goes wrong."],
-  ["A straight answer", "Before we hang up you know whether it is something we fix. If it is, we send one page on the sprint and its price. If it is not, we say so."],
+  ["A straight answer", "Before we hang up you know whether it is something we fix. If it is, we send one page on the Diagnosis and its price. If it is not, we say so."],
 ];
 const BRING = [
   "Nothing to prepare.",
@@ -52,7 +52,7 @@ export default function Booked() {
             <dl className="qa" style={{ marginTop: 18 }}>
               {BRING.map((b) => <div key={b}><dd style={{ margin: 0, color: "var(--ink)" }}>{b}</dd></div>)}
             </dl>
-            <p className="fine">While you wait: <Link href="/sprint">what happens in the sprint</Link>, <Link href="/sample-report">a sample sprint report</Link>, or <Link href="/examples">three working tools</Link>. Questions to <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p>
+            <p className="fine">While you wait, <Link href="/examples">try one of our tools</Link>. Questions to <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p>
           </div>
         </div>
       </section>

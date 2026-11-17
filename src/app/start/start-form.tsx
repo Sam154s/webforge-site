@@ -3,7 +3,7 @@
 import { track } from "@vercel/analytics";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CONSENT_TEXT, HONEYPOT, MARKETING_TEXT, STAFF_BANDS } from "@/lib/site";
+import { CONSENT_TEXT, HONEYPOT, MARKETING_TEXT } from "@/lib/site";
 import { SITUATIONS } from "@/lib/situations";
 
 const input = "w-full bg-transparent border-b border-ink/40 focus:border-ink outline-none py-3 text-base placeholder:text-dim/60 transition-colors rounded-none aria-[invalid=true]:border-ink aria-[invalid=true]:border-b-2";
@@ -31,7 +31,6 @@ export function StartForm({ defaults, situation }: { defaults?: { company: strin
   const [state, setState] = useState<"idle" | "sending" | "error">("idle");
   const [error, setError] = useState("");
   const [errors, setErrors] = useState<Errors>({});
-  const [staff, setStaff] = useState("");
   const [sit, setSit] = useState(situation ?? "");
   const [meta, setMeta] = useState<{ source: string; utm: Record<string, string>; c: string }>({ source: "intro-call", utm: {}, c: "" });
 
@@ -71,13 +70,9 @@ export function StartForm({ defaults, situation }: { defaults?: { company: strin
     setState("sending");
     // The enquiry route takes a fixed set of keys, so these answers travel in the message text.
     const chosen = SITUATIONS.find((s) => s.key === sit);
-    const extra = [
-      v("role") && `Role: ${v("role")}`,
-      staff && `Staff: ${staff}`,
-      sit && `Situation: ${chosen ? `${chosen.short} (${chosen.key})` : "Something else"}`,
-    ].filter(Boolean).join("\n");
+    const extra = sit ? `Situation: ${chosen ? `${chosen.short} (${chosen.key})` : "Something else"}` : "";
     const body = {
-      name: v("name"), email: v("email"), phone: v("phone"),
+      name: v("name"), email: v("email"), phone: "",
       company_name: v("company_name"), website: v("website"),
       message: [v("message"), extra].filter(Boolean).join("\n\n"),
       systems: [],
@@ -109,16 +104,7 @@ export function StartForm({ defaults, situation }: { defaults?: { company: strin
         <Field id="f-email" name="Work email" hint="So we can send you times." error={errors.email}><input id="f-email" name="email" type="email" maxLength={254} autoComplete="email" inputMode="email" className={input} {...bad("email")} /></Field>
         <Field id="f-company_name" name="Company" error={errors.company_name}><input id="f-company_name" name="company_name" maxLength={200} autoComplete="organization" defaultValue={defaults?.company} className={input} {...bad("company_name")} /></Field>
         <Field id="f-website" name="Company website" hint="So we can read up before the call." error={errors.website}><input id="f-website" name="website" maxLength={300} autoComplete="url" inputMode="url" placeholder="yourcompany.co.uk" defaultValue={defaults?.website} className={input} {...bad("website")} /></Field>
-        <Field id="f-role" name="Your role" optional><input id="f-role" name="role" maxLength={80} autoComplete="organization-title" placeholder="Operations director" className={input} /></Field>
-        <Field id="f-phone" name="Phone" optional hint="Only for the call itself."><input id="f-phone" name="phone" type="tel" maxLength={40} autoComplete="tel" inputMode="tel" className={input} /></Field>
       </div>
-
-      <fieldset>
-        <legend className={label}>How many people work there? <span className="font-normal text-dim">(optional)</span></legend>
-        <div className="flex flex-wrap gap-2 mt-2">
-          {STAFF_BANDS.map((b) => <button key={b} type="button" className={chip} aria-pressed={staff === b} onClick={() => setStaff(staff === b ? "" : b)}>{b}</button>)}
-        </div>
-      </fieldset>
 
       <fieldset>
         <legend className={label}>Which sounds most like you? <span className="font-normal text-dim">(optional)</span></legend>
@@ -145,7 +131,7 @@ export function StartForm({ defaults, situation }: { defaults?: { company: strin
 
       <div>
         <button type="submit" disabled={state === "sending"} className="group inline-flex items-center gap-3 rounded-full bg-ink text-stone font-semibold pl-6 pr-2 py-2 min-h-[48px] disabled:opacity-60">
-          {state === "sending" ? "Sending" : "Ask for an intro call"}
+          {state === "sending" ? "Sending" : "Book a call"}
           <span aria-hidden className="grid place-items-center w-8 h-8 rounded-full bg-lime text-ink transition-transform duration-300 ease-apple group-hover:translate-x-0.5">→</span>
         </button>
         {state === "error" && <p className="mt-3 text-sm font-semibold" role="alert"><span className="note">Problem: {error}</span></p>}

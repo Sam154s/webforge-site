@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Reveal } from "../reveal";
 import { Finale } from "@/components/page-kit";
 import { PRICE } from "@/lib/offer";
+import { social } from "@/lib/site";
 import { RATE, WEEKS, gbp, num, processCost } from "@/lib/sum";
 
 export const metadata: Metadata = {
-  title: "Sample sprint report (fictional)",
-  description: "A fictional sprint report for a made-up firm of 100 people: a ranked list of problems with a pound range and payback on each, one thing working, and a fixed quote.",
+  title: "Example diagnosis",
+  description: "A fictional diagnosis for a made-up firm of 100 people: a ranked list of problems with a pound range and payback on each, one thing working, and a fixed quote.",
   alternates: { canonical: "/sample-report" },
-  openGraph: { title: "Sample sprint report (fictional) | Webflow Outreach", url: "/sample-report" },
+  ...social("Example diagnosis | Webflow Outreach", "/sample-report"),
 };
 
 const FICTION = "Fictional example. Not a real company. Every figure is made up to show the layout.";
@@ -23,7 +23,7 @@ const RAW: [string, number, number, number, string, Call, string][] = [
   ["Supplier dates chased by email", 3, 4, 12000, "Their estimate", "Later", "A shared inbox rule would take some of this off first. Try that."],
   ["Month end that only one person can run", 1, 6, 0, "Watched once", "Do not build", "Write it down first. A runbook, not software."],
 ];
-const ROWS = RAW.map(([job, people, hours, build, basis, call, note]) => ({ job, people, hours, build, basis, call, note, ...processCost(people, hours, RATE, build || PRICE.build) }));
+const ROWS = RAW.map(([job, people, hours, build, basis, call, note]) => ({ job, people, hours, build, basis, call, note, ...processCost(people, hours, RATE, build || PRICE.solution) }));
 const TOP = Math.max(...ROWS.map((r) => r.high));
 const first = ROWS[0];
 
@@ -36,9 +36,9 @@ export default function SampleReport() {
 
         <section className="sub-hero" style={{ paddingTop: "clamp(32px, 6vw, 72px)" }}>
           <div className="wrap">
-            <p className="slate"><span>Sprint report</span>Sample</p>
+            <p className="slate"><span>Example diagnosis</span></p>
             <h1 className="h1">Example Supplies Ltd</h1>
-            <p className="lede">A made-up distributor with 100 people. This is the layout you would get in your own dashboard at the end of a sprint.</p>
+            <p className="lede">A made-up distributor with 100 people. This is what a diagnosis leaves you with.</p>
             <div className="sum" role="img" aria-label={`Five problems found. The first costs ${gbp(first.byHand)} a year by hand.`}>
               <div><span>Problems found</span><b>5</b></div>
               <div><span>Worth building</span><b>4</b></div>
@@ -88,7 +88,7 @@ export default function SampleReport() {
           <div className="wrap cols">
             <div>
               <p className="slate reveal"><span>2 of 3</span>One thing working</p>
-              <h2 className="h2 reveal">Built in the sprint, <span>on their real data.</span></h2>
+              <h2 className="h2 reveal">Built in the diagnosis, <span>on their real data.</span></h2>
             </div>
             <div className="prose">
               <p className="reveal">A small piece of the first build: it reads last week&rsquo;s four team sheets and produces the summary table from the board report.</p>
@@ -99,7 +99,7 @@ export default function SampleReport() {
                 <p>{"  sheet missing: 10 runs, stops, names it"}</p>
                 <p>{"  matches hand-built table: to the pound"}</p>
               </div>
-              <p className="fine reveal">Made-up output for this fictional firm. <Link href="/method#ten-run">A real ten-run test is on the method page</Link>.</p>
+              <p className="fine reveal">Made-up output for this fictional firm.</p>
             </div>
           </div>
         </section>
@@ -114,7 +114,6 @@ export default function SampleReport() {
             </div>
             <div>
               <div className="also" style={{ marginTop: 0 }}>
-                <div className="reveal"><span>Sprint fee</span><b>Credited</b><p>Signed within 30 days, so the {gbp(PRICE.sprint)} comes off. {gbp(first.build - PRICE.sprint)} left to pay.</p></div>
                 <div className="reveal"><span>The written pass test</span><b>Agreed first</b><p>For any of the last twelve weekly reports, the pack matches the hand-built one to the pound, ten runs out of ten. If a team sheet is missing, it stops and says which.</p></div>
                 <div className="reveal"><span>A person near the loop</span><b>Named</b><p>The operations director sees every figure that moved more than usual, and can stop the Monday send.</p></div>
                 <div className="reveal"><span>Running costs</span><b>At cost</b><p>On their own accounts, agreed up front.</p></div>
@@ -131,11 +130,11 @@ export default function SampleReport() {
               <li className="reveal"><b>Month end, for now</b><p>One person runs it from memory. Software would copy the muddle. Write the steps down first.</p></li>
               <li className="reveal"><b>What we did not check</b><p>We did not audit the accounts. If a number they gave us is wrong, the result is wrong. Tell us and we run it again.</p></li>
             </ul>
-            <p className="fine reveal">Not a guarantee of any saving, and not financial, tax or legal advice. Time taken off people is only money if it is used to cut cost or earn more. {FICTION}</p>
+            <p className="fine reveal">Not a guarantee of any saving, and not financial, tax or legal advice. Time taken off people is only money if it is used to cut cost or earn more.</p>
           </div>
         </section>
 
-        <Finale where="sample-bottom" title="Want one of these" mark="for your firm?">It starts with a free 30 minute call. If a sprint is not worth your £3,500, we will say so.</Finale>
+        <Finale where="sample-bottom" title="Want one of these" mark="for your firm?" />
       </main>
     </>
   );

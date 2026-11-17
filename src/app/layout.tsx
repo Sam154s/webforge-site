@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque, Figtree, DM_Mono } from "next/font/google";
 import { SafeAnalytics } from "@/components/safe-analytics";
 import { SiteHeader } from "@/components/site-header";
-import { StoryRail } from "@/components/story-rail";
-import { HeaderSwitch } from "@/components/header-switch";
 import { SiteFooter } from "@/components/site-footer";
 import { DESCRIPTION, EMAIL, LABEL, SITE_URL } from "@/lib/site";
 import { COMPANY } from "@/lib/company";
@@ -50,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-GB" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
       <body className="font-sans min-h-screen flex flex-col">
-        <HeaderSwitch home={<StoryRail />} other={<SiteHeader />} />
+        <SiteHeader />
         <div className="flex-1">{children}</div>
         <SiteFooter />
         <SafeAnalytics />

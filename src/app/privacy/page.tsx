@@ -30,12 +30,12 @@ export default function Privacy() {
       <h2>What we collect, and where from</h2>
       <p><strong>From you, on the intro call form:</strong> name, work email, phone (optional), company name, website, your role and the size of your company (both optional), anything you tell us about what is slow, whether you ticked the optional marketing box, the exact consent wording you saw and when you submitted, and which page and campaign brought you here.</p>
       <p><strong>From public sources, before the call:</strong> your company&apos;s record on Companies House (including directors named there), your public website, your public email settings (DNS records) and public page-speed test results. We read these only. We do not log in to anything or enter anything into your site.</p>
-      <p><strong>From you, on the call and in a sprint:</strong> what you tell us, and any export or test data you choose to share. These may contain your customers&apos; or staff names. Please send only what we ask for, and never passwords, bank logins or special category data.</p>
+      <p><strong>From you, on the call and in a Diagnosis:</strong> what you tell us, and any export or test data you choose to share. These may contain your customers&apos; or staff names. Please send only what we ask for, and never passwords, bank logins or special category data.</p>
       <p><strong>From this website:</strong> aggregate visit and click counts through Vercel Web Analytics. It sets no cookies and does not follow you across other sites.</p>
 
       <h2>Why we use it, and our legal basis</h2>
       <ul>
-        <li><strong>To arrange and run your intro call, and any sprint you book.</strong> Taking steps at your request before a contract (Article 6(1)(b)).</li>
+        <li><strong>To arrange and run your intro call, and any Diagnosis you book.</strong> Taking steps at your request before a contract (Article 6(1)(b)).</li>
         <li><strong>To read public information about your company before the call.</strong> Our legitimate interest in preparing properly for a business conversation you asked for (Article 6(1)(f)). A written assessment is available on request <Ph>CONFIRM LIA DONE</Ph>.</li>
         <li><strong>To contact companies we think we could help.</strong> Our legitimate interest in contacting a business about a service relevant to it (Article 6(1)(f)). See &ldquo;If we contacted you first&rdquo; above.</li>
         <li><strong>To send you occasional emails about our work.</strong> Only if you ticked the separate box. Your consent (Article 6(1)(a)). You can withdraw it at any time.</li>
@@ -46,7 +46,7 @@ export default function Privacy() {
       <h2>How long we keep it</h2>
       <ul>
         <li>Enquiries that go no further: <Ph>12 months, CONFIRM</Ph> from the last contact, then deleted.</li>
-        <li>Exports and files you send: deleted <Ph>90 days, CONFIRM</Ph> after your sprint report is delivered, unless you ask us to keep them for a build.</li>
+        <li>Exports and files you send: deleted <Ph>90 days, CONFIRM</Ph> after your Diagnosis report is delivered, unless you ask us to keep them for a build.</li>
         <li>Clients: contract, invoice and report records for <Ph>6 years, CONFIRM</Ph> after the work ends.</li>
         <li>Text taken from the website of a company we have contacted: cleared when we stop contacting that company, and after 12 months at most.</li>
         <li>Marketing consent: until you withdraw it. Suppression list: kept for as long as needed to honour your opt-out.</li>

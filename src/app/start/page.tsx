@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import { Reveal } from "../reveal";
 import { StartForm } from "./start-form";
 import { landingFor } from "@/lib/outreach";
-import { EMAIL } from "@/lib/site";
+import { EMAIL, social } from "@/lib/site";
 import { situation } from "@/lib/situations";
 
 const base: Metadata = {
-  title: "Book an intro call",
+  title: "Book a call",
   description: "Thirty minutes, free. Tell us what is slow or painful and get a straight answer on whether we can help, what the next step is and what it costs.",
   alternates: { canonical: "/start" },
-  openGraph: { title: "Book an intro call | Webflow Outreach", url: "/start" },
+  ...social("Book a call | Webflow Outreach", "/start"),
 };
 
 // A visit with a token (c) is a personal link from an email: keep it out of search results.
@@ -35,7 +35,7 @@ export default async function StartPage({ searchParams }: { searchParams: { c?: 
           <div className="wrap start">
             <div className="s-head">
               <p className="slate"><span>Start</span>Free, 30 minutes</p>
-              <h1 className="h1">Book an intro call.</h1>
+              <h1 className="h1">Book a call.</h1>
               <p className="lede">Tell us what is slow. You get a straight answer on whether we can help.</p>
             </div>
             <div className="s-form">
