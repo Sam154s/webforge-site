@@ -5,36 +5,50 @@ import { Co, LegalPage, Ph } from "@/components/legal";
 
 export const metadata: Metadata = {
   title: "Terms (draft)",
-  description: "Terms for the free diagnostic and the Fix this service from Webflow Outreach.",
+  description: "Terms for the intro call, the Diagnosis, the Solution and Upkeep from Webflow Outreach.",
   alternates: { canonical: "/terms" },
   robots: { index: false, follow: true },
 };
 
 export default function Terms() {
   return (
-    <LegalPage title="Terms" updated="9 November 2026">
-      <p>These terms cover the free diagnostic and the &ldquo;Fix this&rdquo; service. Larger work, such as the builder, extra workflows, support and websites, is agreed in a separate written order that refers to these terms.</p>
+    <LegalPage title="Terms" updated="16 November 2026">
+      <p>These terms cover the free intro call, the Diagnosis (a fixed-price piece of work), the Solution and Upkeep. Any later build is agreed in a separate written order that refers to these terms.</p>
 
       <h2>Who we are</h2>
-      <p><Co />, trading as Webflow Outreach. Email <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p>
+      <p>We are <Co />. Email <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p>
 
-      <h2>The free diagnostic</h2>
+      <h2>The intro call</h2>
       <ul>
-        <li>It is free, with no obligation. It is a 30 minute call and a report, for UK limited companies with 5 to 50 staff.</li>
-        <li>We need one export from your accounts or job system. If we do not receive it, we cannot produce a report, because we will not guess your numbers.</li>
-        <li>The report is an estimate based on what you told us and what you shared, at the date it is made. Every figure is a range, not a promise. It is not financial, tax, legal or HR advice. See the <Link href="/sample-report">sample report</Link> for the full wording.</li>
-        <li>You must have the right to share the information you give us, and you should not send passwords, bank logins or special category data.</li>
-        <li>You may keep and use the report whether or not you buy anything.</li>
+        <li>It is free, with no obligation. It is a 30 minute call for UK limited companies with up to about 250 people.</li>
+        <li>It is a conversation, not a report and not advice.</li>
       </ul>
 
-      <h2>Fix this</h2>
+      <h2>The Diagnosis</h2>
       <ul>
-        <li>You pick one item from your report. We agree the scope, the finish line and a fixed price in writing before we start. The price is £750 to £1,000, depending on the size of the job. Prices exclude VAT <Ph>CONFIRM VAT STATUS</Ph>.</li>
-        <li>You pay the fixed price in full before we start building. Work starts when you have signed the order and paid.</li>
-        <li><strong>Ten-run test.</strong> Once we have built the fix, we run it ten times against examples you supply, including an empty input and a bad input. Every run must give the identical result, or stop safely. We test and adjust it with you until it works.</li>
-        <li>We tell you plainly if a job should not be automated or will not pay back, and we decline it.</li>
-        <li>What we deliver is yours to keep and use. Ownership of the code and any third-party components: <Ph>CONFIRM IP WORDING</Ph>.</li>
-        <li>Running costs for hosting and AI usage, where they exist, are on your own accounts and agreed up front.</li>
+        <li>The price is £3,500, fixed, and paid on booking. Prices exclude VAT <Ph>CONFIRM VAT STATUS</Ph>.</li>
+        <li>If you sign a build with us within 30 days, the Diagnosis fee is credited in full against the price of that build.</li>
+        <li>You get a ranked list of problems with a pound range and a payback on each, one thing working on your real data, and a fixed quote for a first build.</li>
+        <li>The report is an estimate based on what we saw and what you shared, at the date it is made. Every figure is a range, not a promise. It is not financial, tax, legal or HR advice.</li>
+        <li>We agree in writing, before we start, what we may see and where any data is processed. You must have the right to share what you give us, and you should not send passwords, bank logins or special category data.</li>
+      </ul>
+
+      <h2>The first build</h2>
+      <ul>
+        <li>We agree the scope, a written pass test and a fixed price in writing before we start. Prices start at £12,000 and exclude VAT <Ph>CONFIRM VAT STATUS</Ph>.</li>
+        <li>You pay half on signature and half when the build passes the written pass test. We keep working until it passes.</li>
+        <li><strong>Ten-run test.</strong> Before release we run each workflow ten times against examples you supply, including an empty input and a bad input. Every run must give the identical result, or stop safely.</li>
+        <li>An independent senior engineer reviews each build before it goes live. Their fee is inside the fixed price.</li>
+        <li>We tell you plainly if something should not be built or will not pay back, and we decline it. We do not build systems that make clinical decisions, take payments from the public, or are safety-critical.</li>
+        <li>What we deliver is yours, and it runs on your own accounts. Ownership of the code and any third-party components: <Ph>CONFIRM IP WORDING</Ph>.</li>
+        <li>Running costs for hosting and AI usage, where they exist, are on your own accounts, at cost, and agreed up front.</li>
+      </ul>
+
+      <h2>Upkeep</h2>
+      <ul>
+        <li>From £750 a month per system, paid monthly. We watch the system, fix it, and make small changes.</li>
+        <li>Either of us can end it with 30 days&apos; notice. The details are in the written order.</li>
+        <li>Running costs for hosting and AI usage are at cost, on your own accounts.</li>
       </ul>
 
       <h2>Our responsibility</h2>

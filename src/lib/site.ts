@@ -13,22 +13,31 @@ function httpsUrl(v: string | undefined): string {
 export const BOOKING_URL = httpsUrl(process.env.NEXT_PUBLIC_BOOKING_URL);
 
 export const NAV = [
-  { href: "/#fix", label: "How it works" },
-  { href: "/#examples", label: "Examples" },
-  { href: "/sample-report", label: "Sample report" },
-  { href: "/#pricing", label: "Pricing" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/about", label: "About" },
 ];
 
-export const SYSTEMS = [
-  "Xero", "QuickBooks", "Sage", "FreeAgent", "Microsoft 365", "Google Workspace",
-  "HubSpot", "A job or CRM system", "Mostly spreadsheets",
-];
+export const LABEL = "We\u2019re forward deployed engineers.";
+export const DESCRIPTION = "We go into your company, find what\u2019s holding it back, and engineer the solution.";
+
+// The social preview image (the file-based route in app/opengraph-image.tsx). A page that sets its own openGraph or twitter
+// object replaces the root one, so every public page spreads social() to keep the image.
+const OG = { url: "/opengraph-image", width: 1200, height: 630, alt: `Webflow Outreach: ${LABEL}` };
+export function social(title: string, url: string, description?: string) {
+  return {
+    openGraph: { title, url, ...(description && { description }), images: [OG] },
+    twitter: { card: "summary_large_image" as const, title, ...(description && { description }), images: [{ url: OG.url, alt: OG.alt }] },
+  };
+}
+
+// The intro call form. The answers below are added to the message text, because the enquiry route accepts a fixed set of keys.
+export const STAFF_BANDS = ["Under 30", "30 to 99", "100 to 250", "Over 250"];
 
 // Shown under the form button and stored with the enquiry as proof of what the person saw.
 export const CONSENT_TEXT =
-  "We use these details to prepare for and run your diagnostic call and to send your report. Before the call we look at information your company has published: Companies House, your website and your public email settings. We do not enter anything into your site. Privacy notice: /privacy";
+  "We use these details to arrange and prepare for your intro call. Before the call we look at information your company has published: Companies House, your website and your public email settings. We do not enter anything into your site. Privacy notice: /privacy";
 export const MARKETING_TEXT =
-  "Send me occasional emails about how businesses like mine use automation. I can unsubscribe at any time.";
+  "Send occasional emails about how firms like yours take work off their people. You can unsubscribe at any time.";
 
 // The honeypot field. Hidden from people, tempting to bots. Must never match a real field name.
 export const HONEYPOT = "hp_fax_x9k2";

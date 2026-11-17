@@ -21,3 +21,12 @@ export function companyLine(c: typeof COMPANY): string {
     c.address && `registered office ${c.address}`,
   ].filter(Boolean).join(", ");
 }
+
+// Who "we" are, as a phrase that completes a sentence ("We are ...", "The controller is ...").
+// With a company name: the legal details, then the trading name. Without one: the trading name alone, so the
+// sentence still reads properly and nothing about a registered company is implied.
+export function legalIdentity(c: typeof COMPANY): string {
+  if (c.name) return `${companyLine(c)}, trading as ${c.tradingAs}`;
+  const rest = companyLine(c);
+  return rest ? `${c.tradingAs} (${rest})` : c.tradingAs;
+}

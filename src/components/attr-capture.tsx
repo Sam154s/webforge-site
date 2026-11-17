@@ -9,7 +9,7 @@ export function AttrCapture({ slug }: { slug: string }) {
     const q = new URLSearchParams(window.location.search);
     const utm: Record<string, string> = {};
     q.forEach((v, k) => { if (k.startsWith("utm_")) utm[k] = v.slice(0, 120); });
-    try { sessionStorage.setItem("wo_attr", JSON.stringify({ source: `for-${slug}`, utm, c: (q.get("c") || "").slice(0, 64) })); } catch {}
+    try { sessionStorage.setItem("wo_attr", JSON.stringify({ source: `for-${slug}`, utm, c: (q.get("c") || "").trim().toLowerCase().slice(0, 64) })); } catch {}
     track("landing_view", { slug });
   }, [slug]);
   return null;

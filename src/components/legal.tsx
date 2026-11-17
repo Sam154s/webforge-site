@@ -1,4 +1,4 @@
-import { COMPANY, companyLine } from "@/lib/company";
+import { COMPANY, legalIdentity } from "@/lib/company";
 
 export function DraftBanner() {
   return (
@@ -27,7 +27,7 @@ export function LegalPage({ title, updated, children }: { title: string; updated
   );
 }
 
-// A visible placeholder for a legal fact Sam must supply.
+// A visible placeholder for a legal fact the company must supply.
 export const Ph = ({ children }: { children: React.ReactNode }) => <span className="ph">{children}</span>;
-// Renders whichever company facts exist; with none set, a neutral phrase.
-export const Co = () => <>{companyLine(COMPANY) || "our registered company details"}</>;
+// Who we are, to finish a sentence: the company facts that are set and the trading name, or the trading name alone.
+export const Co = () => <>{legalIdentity(COMPANY)}</>;

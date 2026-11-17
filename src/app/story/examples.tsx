@@ -2,11 +2,11 @@ import Link from "next/link";
 import { FIRMS, type Firm } from "@/lib/sandbox/journey";
 import { Shots, type Shot } from "./parts";
 
-// The three example tools: photos of the real thing, one line on what it does, and a button to open it and play.
-const CASES: { no: string; firm: Firm; href: string; does: string; shots: Shot[] }[] = [
+// The three example tools: photos of the real thing, one line on what it does, and a button to open it.
+export const CASES: { no: string; firm: Firm; href: string; short: string; does: string; shots: Shot[] }[] = [
   {
     no: "EX-01", firm: FIRMS.architect, href: "/examples/architect",
-    does: "Drag blocks on a plot to shape a house in 3D. You get a seven sheet drawing set, a planning guide, a cost plan and a fee proposal.",
+    short: "Shape a house in 3D. Get the drawings and the fee.", does: "Shape a house in 3D. Get a seven sheet drawing set, a cost plan and a fee proposal.",
     shots: [
       { src: "/showcase/arch-model.webp", w: 1238, h: 871, title: "The 3D designer" },
       { src: "/showcase/arch-exploded.webp", w: 1238, h: 871, title: "Exploded view" },
@@ -16,7 +16,7 @@ const CASES: { no: string; firm: Firm; href: string; does: string; shots: Shot[]
   },
   {
     no: "EX-02", firm: FIRMS.builder, href: "/examples/builder",
-    does: "Drag units and fittings onto a plan of a kitchen, bathroom or extension. You get a nine sheet job pack with drawings, quantities and three priced options.",
+    short: "Plan a room. Get a priced job pack.", does: "Plan a kitchen, bathroom or extension. Get a nine sheet job pack with three priced options.",
     shots: [
       { src: "/showcase/build-planner.webp", w: 1238, h: 1059, title: "The room planner" },
       { src: "/showcase/build-plan.webp", w: 1230, h: 1110, title: "Sheet A-101, floor plan" },
@@ -26,7 +26,7 @@ const CASES: { no: string; firm: Firm; href: string; does: string; shots: Shot[]
   },
   {
     no: "EX-03", firm: FIRMS.plumber, href: "/examples/plumber",
-    does: "Two tools. A fault finder that reads the boiler code, orders the part and books the engineer. And a heating planner that works out heat loss room by room and prices a new system.",
+    short: "Find a boiler fault. Book the engineer.", does: "A boiler fault finder that orders the part and books the engineer. And a heating planner that prices a new system.",
     shots: [
       { src: "/showcase/plumb-diagnosis.webp", w: 1238, h: 945, title: "The fault finder" },
       { src: "/showcase/plumb-schematic.webp", w: 620, h: 945, title: "Fig. 1, the service schematic" },
@@ -36,22 +36,22 @@ const CASES: { no: string; firm: Firm; href: string; does: string; shots: Shot[]
   },
 ];
 
-export function Examples() {
+export function Examples({ compact }: { compact?: boolean }) {
   return (
-    <div className="cases">
+    <div className={`cases ${compact ? "compact" : ""}`}>
       {CASES.map((c) => (
         <article key={c.no} className="case reveal">
           <header className="case-head">
-            <span className="case-no">{c.no}</span>
+            {!compact && <span className="case-no">{c.no}</span>}
             <div>
               <h3>{c.firm.name}</h3>
-              <p>{c.does}</p>
-              <span className="stamp">Example firm, not a client</span>
+              <p>{compact ? c.short : c.does}</p>
+              {!compact && <span className="stamp">Example firm, not a client</span>}
             </div>
-            <Link href={c.href} className="open-tool">Open the full tool <i aria-hidden>→</i></Link>
+            <Link href={c.href} className="open-tool">Try it <i aria-hidden>→</i></Link>
           </header>
           <div className="case-foot">
-            <Shots items={c.shots} />
+            <Shots items={c.shots} captions={!compact} />
           </div>
         </article>
       ))}

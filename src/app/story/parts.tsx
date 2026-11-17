@@ -16,7 +16,7 @@ export function Slider({ label, value, min, max, step = 1, onChange, show }: { l
 
 export type Shot = { src: string; w: number; h: number; title: string };
 
-export function Shots({ items }: { items: Shot[] }) {
+export function Shots({ items, captions = true }: { items: Shot[]; captions?: boolean }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState<number | null>(null);
   useEffect(() => {
@@ -34,7 +34,7 @@ export function Shots({ items }: { items: Shot[] }) {
           <li key={s.src}>
             <button type="button" onClick={() => setOpen(i)} aria-label={`Enlarge: ${s.title}`}>
               <span className="shot-img"><Image src={s.src} alt="" fill sizes="(max-width: 760px) 60vw, 300px" /></span>
-              <span className="shot-cap"><span>{String(i + 1).padStart(2, "0")}</span>{s.title}</span>
+              {captions && <span className="shot-cap"><span>{String(i + 1).padStart(2, "0")}</span>{s.title}</span>}
             </button>
           </li>
         ))}
