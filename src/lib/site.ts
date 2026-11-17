@@ -22,11 +22,11 @@ export const DESCRIPTION = "We go into your company, find what\u2019s holding it
 
 // The social preview image (the file-based route in app/opengraph-image.tsx). A page that sets its own openGraph or twitter
 // object replaces the root one, so every public page spreads social() to keep the image.
-const OG = { url: "/opengraph-image", width: 1200, height: 630, alt: `Webflow Outreach: ${LABEL}` };
+const ogImage = { url: "/opengraph-image", width: 1200, height: 630, alt: `Webflow Outreach: ${LABEL}` };
 export function social(title: string, url: string, description?: string) {
   return {
-    openGraph: { title, url, ...(description && { description }), images: [OG] },
-    twitter: { card: "summary_large_image" as const, title, ...(description && { description }), images: [{ url: OG.url, alt: OG.alt }] },
+    openGraph: { title, url, ...(description && { description }), images: [ogImage] },
+    twitter: { card: "summary_large_image" as const, title, ...(description && { description }), images: [{ url: ogImage.url, alt: ogImage.alt }] },
   };
 }
 
