@@ -1,0 +1,105 @@
+/* Drawings to quote: the homepage sheet (stone, ink, one lime accent), ink keylines, body face throughout.
+   Figures are set in the body face with tabular numbers, not DM Mono: its slashed zero reads as a diameter sign (Ø) on a drawing. */
+.qd .qd-h1 { max-width: 20ch; font-size: clamp(2.4rem, 6.4vw, 5.4rem); }
+.qd .sub-hero { padding-bottom: clamp(32px, 4vw, 56px); }
+.qd .qd-frame { padding-top: 0; }
+.qd .m { font-variant-numeric: tabular-nums; }
+.qd button { font: inherit; color: inherit; text-align: left; background: none; border: 0; padding: 0; cursor: pointer; }
+
+/* The three outcomes, as a key. Each opens its example. */
+.qd-mark { flex: none; display: grid; place-items: center; width: 14px; height: 14px; margin: 3px 2px 0; border-radius: 50%; border: 1.5px solid var(--ink); background: var(--ink); font-size: 10px; font-weight: 700; line-height: 1; color: var(--ink); }
+.qd-mark[data-o=hold] { background: transparent; }
+.qd-mark[data-o=query] { width: 18px; height: 18px; margin: 1px 0 0; background: transparent; }
+.qd-key { list-style: none; display: grid; margin: 0 0 clamp(24px, 3vw, 40px); padding: 0; border-top: 1.5px solid var(--ink); }
+.qd-key li { border-bottom: 1px solid var(--line); }
+.qd-key button { display: flex; gap: 14px; width: 100%; min-height: 44px; padding: 16px 0; }
+.qd-key button > span:last-child { font-size: 15.5px; line-height: 1.45; color: var(--dim); }
+.qd-key b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; letter-spacing: -.02em; line-height: 1.2; color: var(--ink); }
+.qd-key button:hover b { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; }
+@media (min-width: 760px) {
+  .qd-key { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 32px; border-bottom: 1px solid var(--line); }
+  .qd-key li { border-bottom: 0; }
+  .qd-key button { padding: 20px 0; }
+}
+
+/* The inbox and the open email. */
+.qd-box { display: grid; gap: 24px; align-items: start; }
+.qd-list { border: 1.5px solid var(--ink); border-radius: 16px; background: var(--paper); overflow: hidden; }
+.qd-list-h { margin: 0; padding: 14px 18px; border-bottom: 1.5px solid var(--ink); background: var(--sheet); font-size: 14px; font-weight: 600; color: var(--dim); }
+.qd-list ul { list-style: none; margin: 0; padding: 0; }
+.qd-list li + li { border-top: 1px solid var(--line); }
+.qd-list button { position: relative; display: flex; gap: 12px; align-items: flex-start; width: 100%; min-height: 44px; padding: 13px 16px 13px 18px; }
+.qd-list button:hover { background: var(--sheet); }
+.qd-list button[aria-current] { background: var(--sheet); }
+.qd-list button[aria-current]::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--ink); }
+.qd-li-main { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.qd-li-top { display: flex; justify-content: space-between; gap: 10px; font-size: 14.5px; }
+.qd-li-top b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.qd-li-top time { flex: none; font-size: 13px; color: var(--dim); }
+.qd-li-sub { font-size: 14px; line-height: 1.35; color: var(--dim); }
+.qd-li-st { flex: none; align-self: center; font-size: 13.5px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.qd-list button[data-o=priced] .qd-li-st { font-weight: 500; }
+.qd-list button[aria-current] .qd-li-sub { color: var(--ink); }
+
+.qd-case { min-width: 0; scroll-margin-top: 76px; }
+.qd-head h2 { margin: 0; font-family: var(--font-display); font-weight: 800; font-stretch: 90%; font-size: clamp(1.6rem, 2.6vw, 2.3rem); letter-spacing: -.03em; line-height: 1.05; overflow-wrap: anywhere; }
+.qd-from { margin: 8px 0 0; font-size: 14px; color: var(--dim); overflow-wrap: anywhere; }
+.qd-body { margin: 16px 0 0; padding-left: 16px; border-left: 1.5px solid var(--line); max-width: 64ch; font-size: 15.5px; line-height: 1.5; white-space: pre-line; }
+.qd-out { display: flex; gap: 12px; margin: 20px 0 0; padding: 14px 16px; border: 1.5px solid var(--ink); border-radius: 12px; background: var(--sheet); font-size: 15.5px; line-height: 1.45; }
+.qd-out b { font-weight: 700; }
+
+.qd-grid { display: grid; gap: 16px; margin-top: 20px; }
+.qd-panel { min-width: 0; margin: 0; border: 1.5px solid var(--ink); border-radius: 16px; background: var(--paper); overflow: hidden; }
+.qd-ph { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 16px; margin: 0; padding: 12px 18px; border-bottom: 1.5px solid var(--ink); background: var(--sheet); font-family: var(--font-sans), system-ui, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0; color: var(--ink); }
+.qd-ph span + span { font-weight: 500; color: var(--dim); }
+.qd-ph a { display: inline-flex; align-items: center; min-height: 32px; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+.qd-draw { background: #fff; }
+.qd-draw img { display: block; width: 100%; height: auto; }
+
+.qd-read dl { margin: 0; padding: 6px 18px 10px; }
+.qd-read dl > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.35; }
+.qd-read dl > div:last-child { border-bottom: 0; }
+.qd-read dt { color: var(--dim); }
+.qd-read dd { margin: 0; overflow-wrap: anywhere; }
+
+.qd-read .un dt { color: var(--ink); font-weight: 600; }
+.qd-read .un dd { font-weight: 600; }
+.qd-read .un dd::before { content: "?"; display: inline-grid; place-items: center; width: 16px; height: 16px; margin-right: 7px; border: 1.5px solid var(--ink); border-radius: 50%; font-family: var(--font-sans); font-size: 10px; font-weight: 700; vertical-align: 1px; }
+.qd-read .off dt, .qd-read .off dd { color: var(--ink); font-weight: 600; }
+.qd-read .off dd::before { content: ""; display: inline-block; width: 11px; height: 11px; margin-right: 8px; border: 1.5px solid var(--ink); border-radius: 50%; vertical-align: 0; }
+.qd-note { margin: 0 18px 16px; padding: 10px 12px; border: 1.5px solid var(--ink); border-radius: 10px; background: var(--sheet); font-size: 14px; line-height: 1.45; }
+
+.qd-lines { list-style: none; margin: 0; padding: 4px 18px 0; }
+.qd-lines li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.qd-l-name { font-size: 14.5px; line-height: 1.4; }
+.qd-l-name b { font-weight: 600; margin-right: 4px; }
+.qd-l-amt { font-size: 14px; text-align: right; white-space: nowrap; }
+.qd-l-work { grid-column: 1 / -1; font-size: 13.5px; line-height: 1.5; color: var(--dim); overflow-wrap: anywhere; }
+.qd-sum { margin: 0; padding: 6px 18px 0; }
+.qd-sum > div { display: flex; justify-content: space-between; gap: 16px; padding: 6px 0; font-size: 14.5px; }
+.qd-sum dt { color: var(--dim); }
+.qd-sum dd { margin: 0; white-space: nowrap; }
+.qd-sum .tot { margin-top: 6px; padding: 12px 0 4px; border-top: 1.5px solid var(--ink); }
+.qd-sum .tot dt { color: var(--ink); font-weight: 700; }
+.qd-sum .tot dd { font-size: 1.2rem; font-weight: 700; }
+.qd-sum mark { color: inherit; background: linear-gradient(var(--lime), var(--lime)) no-repeat 0 90% / 100% .38em; }
+.qd-lead { margin: 6px 18px 16px; font-size: 14px; color: var(--dim); }
+.qd-none { margin: 0; padding: 18px; font-size: 15px; line-height: 1.5; color: var(--dim); }
+
+.qd-mail { padding: 14px 18px 18px; }
+.qd-meta { margin: 0; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 14px; overflow-wrap: anywhere; }
+.qd-meta span { display: inline-block; min-width: 4.5em; color: var(--dim); }
+.qd-txt { margin: 14px 0 0; font-size: 15px; line-height: 1.55; white-space: pre-line; overflow-wrap: anywhere; }
+
+.qd-fiction { margin-top: clamp(40px, 5vw, 64px); }
+
+@media (min-width: 1000px) {
+  .qd-box { grid-template-columns: 300px minmax(0, 1fr); gap: 28px; }
+  .qd-list { position: sticky; top: 84px; }
+  .qd-grid { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); grid-template-areas: "draw draw" "work read" "reply read"; grid-template-rows: auto auto 1fr; align-items: start; }
+  .qd-draw { grid-area: draw; }
+  .qd-read { grid-area: read; }
+  .qd-work { grid-area: work; }
+  .qd-reply { grid-area: reply; }
+}
+@media (min-width: 1240px) { .qd-box { grid-template-columns: 340px minmax(0, 1fr); } }

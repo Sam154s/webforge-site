@@ -1,0 +1,1288 @@
+[
+ {
+  "id": "01",
+  "subject": "RFQ AP-2210-04 spacer bush",
+  "from": "Gareth Moss",
+  "fromAddr": "g.moss@ashmerepumps.example",
+  "received": "Mon 23 Nov, 08:14",
+  "body": "Hi,\n\nCould you quote 200 off the attached spacer bush please, rev B. Clear anodise as per drawing.\n\nThanks,\nGareth Moss\nBuyer, Ashmere Pumps Ltd",
+  "drawing": "AP-2210-04",
+  "part": "Spacer bush",
+  "outcome": "priced",
+  "read": [
+   {
+    "k": "Customer",
+    "v": "Ashmere Pumps Ltd",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Part",
+    "v": "Spacer bush",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Drawing",
+    "v": "AP-2210-04 rev B",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Material",
+    "v": "ALUMINIUM ALLOY 6082-T6",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Finish",
+    "v": "CLEAR ANODISE",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Quantity on drawing",
+    "v": "200",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Quantity in email",
+    "v": "200",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Type",
+    "v": "Turned",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Size",
+    "v": "Ø20 x 25 long",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Diameters",
+    "v": "1",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "External threads",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Internal threads",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Bores",
+    "v": "1",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Grooves",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Cross holes",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Tightest tolerance band",
+    "v": "0.1 mm",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "3.1 material certs",
+    "v": "No",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Certificate of conformity",
+    "v": "No",
+    "mono": false,
+    "unread": null
+   }
+  ],
+  "reply": {
+   "to": "g.moss@ashmerepumps.example",
+   "subject": "Re: RFQ AP-2210-04 spacer bush",
+   "body": "Hi Gareth,\n\nThanks for sending this over. Our price for 200 off AP-2210-04 rev B (spacer bush) in Aluminium 6082-T6, clear anodise, is £5.39 each, £1,078.00 for the batch, plus VAT.\n\nLead time is 15 working days from order.\n\nThe quote is attached and is valid for 30 days. Any questions, just reply here.\n\nThanks,\nMark Ellis\nEstimating, Corvane Precision Ltd"
+  },
+  "price": {
+   "lines": [
+    {
+     "group": "Material",
+     "label": "Aluminium 6082-T6: bar Ø22 x 31 long (Ø20 + 2, next standard bar; length 25 + 6)",
+     "working": "11.78 cc x 2.7 g/cc = 0.0318 kg each; x £6.80/kg x 200 x 1.05 scrap",
+     "amount": 45.43
+    },
+    {
+     "group": "Setup",
+     "label": "Lathe setup",
+     "working": "45 min x £55.00/h",
+     "amount": 41.25
+    },
+    {
+     "group": "Machining",
+     "label": "Lathe cycle",
+     "working": "(0.5 + 0.6 + 0.6 + 1 + 0 + 0 + 0 + 0.3 = 3.00 min) x 0.7 (6082-T6) x 1.0 (tightest band 0.1) = 2.100 min each x 200 x £55.00/h",
+     "amount": 385.0
+    },
+    {
+     "group": "Machining",
+     "label": "Deburr",
+     "working": "0.8 min x 200 x £38.00/h",
+     "amount": 101.33
+    },
+    {
+     "group": "Inspection",
+     "label": "First article and inspection",
+     "working": "30 min + 20 parts (10% sample, rounded up) x 1.5 min = 60 min x £60.00/h",
+     "amount": 60.0
+    },
+    {
+     "group": "Finishing",
+     "label": "Clear anodise",
+     "working": "max(200 x £0.90 = £180.00, lot minimum £85) = £180.00 x 1.15 handling",
+     "amount": 207.0
+    }
+   ],
+   "cost": 840.02,
+   "margin": 0.22,
+   "gross": 1076.95,
+   "unit": 5.39,
+   "total": 1078.0,
+   "qty": 200,
+   "lead": 15
+  }
+ },
+ {
+  "id": "02",
+  "subject": "Quote request BMS-0417 x 500",
+  "from": "Priya Nandra",
+  "fromAddr": "purchasing@brindleymotion.example",
+  "received": "Mon 23 Nov, 09:02",
+  "body": "Morning,\n\nPlease can we have a price for 500 of BMS-0417 rev C, drawing attached. Zinc nickel as per the drawing. Usual delivery to our Telford site.\n\nKind regards,\nPriya Nandra\nPurchasing, Brindley Motion Systems",
+  "drawing": "BMS-0417",
+  "part": "Adjuster shaft",
+  "outcome": "priced",
+  "read": [
+   {
+    "k": "Customer",
+    "v": "Brindley Motion Systems Ltd",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Part",
+    "v": "Adjuster shaft",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Drawing",
+    "v": "BMS-0417 rev C",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Material",
+    "v": "230M07 (EN1A)",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Finish",
+    "v": "ZINC NICKEL PLATE",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Quantity on drawing",
+    "v": "500",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Quantity in email",
+    "v": "500",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Type",
+    "v": "Turned",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Size",
+    "v": "Ø16 x 85 long",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Diameters",
+    "v": "3",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "External threads",
+    "v": "1",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Internal threads",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Bores",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Grooves",
+    "v": "1",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Cross holes",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Tightest tolerance band",
+    "v": "0.04 mm",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "3.1 material certs",
+    "v": "No",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Certificate of conformity",
+    "v": "No",
+    "mono": false,
+    "unread": null
+   }
+  ],
+  "reply": {
+   "to": "purchasing@brindleymotion.example",
+   "subject": "Re: Quote request BMS-0417 x 500",
+   "body": "Hi Priya,\n\nThanks for sending this over. Our price for 500 off BMS-0417 rev C (adjuster shaft) in Free cutting steel 230M07 (EN1A), zinc nickel plate, is £9.47 each, £4,735.00 for the batch, plus VAT.\n\nLead time is 15 working days from order.\n\nThe quote is attached and is valid for 30 days. Any questions, just reply here.\n\nThanks,\nMark Ellis\nEstimating, Corvane Precision Ltd"
+  },
+  "price": {
+   "lines": [
+    {
+     "group": "Material",
+     "label": "Free cutting steel 230M07 (EN1A): bar Ø20 x 91 long (Ø16 + 2, next standard bar; length 85 + 6)",
+     "working": "28.59 cc x 7.85 g/cc = 0.2244 kg each; x £2.90/kg x 500 x 1.05 scrap",
+     "amount": 341.68
+    },
+    {
+     "group": "Setup",
+     "label": "Lathe setup",
+     "working": "45 min x £55.00/h",
+     "amount": 41.25
+    },
+    {
+     "group": "Machining",
+     "label": "Lathe cycle",
+     "working": "(0.5 + 0.6 + 1.8 + 0 + 0.8 + 0 + 0.4 + 0.3 = 4.40 min) x 1.0 (230M07) x 1.15 (tightest band 0.04) = 5.060 min each x 500 x £55.00/h",
+     "amount": 2319.17
+    },
+    {
+     "group": "Machining",
+     "label": "Deburr",
+     "working": "0.8 min x 500 x £38.00/h",
+     "amount": 253.33
+    },
+    {
+     "group": "Inspection",
+     "label": "First article and inspection",
+     "working": "30 min + 50 parts (10% sample, rounded up) x 1.5 min = 105 min x £60.00/h",
+     "amount": 105.0
+    },
+    {
+     "group": "Finishing",
+     "label": "Zinc nickel plate",
+     "working": "max(500 x £1.10 = £550.00, lot minimum £95) = £550.00 x 1.15 handling",
+     "amount": 632.5
+    }
+   ],
+   "cost": 3692.93,
+   "margin": 0.22,
+   "gross": 4734.52,
+   "unit": 9.47,
+   "total": 4735.0,
+   "qty": 500,
+   "lead": 15
+  }
+ },
+ {
+  "id": "03",
+  "subject": "RFQ TFC-3302",
+  "from": "Dan Ewart",
+  "fromAddr": "d.ewart@tollandfluid.example",
+  "received": "Mon 23 Nov, 11:40",
+  "body": "Hello,\n\nRFQ for 60 off TFC-3302 valve stem, 316L. We need 3.1 material certs and a CoC with the delivery.\n\nRegards,\nDan Ewart\nSupply Chain, Tolland Fluid Controls",
+  "drawing": "TFC-3302",
+  "part": "Valve stem",
+  "outcome": "priced",
+  "read": [
+   {
+    "k": "Customer",
+    "v": "Tolland Fluid Controls Ltd",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Part",
+    "v": "Valve stem",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Drawing",
+    "v": "TFC-3302 rev A",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Material",
+    "v": "STAINLESS STEEL 316L",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Finish",
+    "v": "PASSIVATE",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Quantity on drawing",
+    "v": "60",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Quantity in email",
+    "v": "60",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Type",
+    "v": "Turned",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Size",
+    "v": "Ø12 x 65 long",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Diameters",
+    "v": "2",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "External threads",
+    "v": "1",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Internal threads",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Bores",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Grooves",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Cross holes",
+    "v": "1",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Tightest tolerance band",
+    "v": "0.02 mm",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "3.1 material certs",
+    "v": "Yes",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Certificate of conformity",
+    "v": "Yes",
+    "mono": false,
+    "unread": null
+   }
+  ],
+  "reply": {
+   "to": "d.ewart@tollandfluid.example",
+   "subject": "Re: RFQ TFC-3302",
+   "body": "Hi Dan,\n\nThanks for sending this over. Our price for 60 off TFC-3302 rev A (valve stem) in Stainless steel 316L, passivate, is £20.95 each, £1,257.00 for the batch, plus VAT.\n\nLead time is 18 working days from order, including 3.1 material certificates and a certificate of conformity.\n\nThe quote is attached and is valid for 30 days. Any questions, just reply here.\n\nThanks,\nMark Ellis\nEstimating, Corvane Precision Ltd"
+  },
+  "price": {
+   "lines": [
+    {
+     "group": "Material",
+     "label": "Stainless steel 316L: bar Ø16 x 71 long (Ø12 + 2, next standard bar; length 65 + 6)",
+     "working": "14.28 cc x 8.0 g/cc = 0.1142 kg each; x £11.20/kg x 60 x 1.05 scrap",
+     "amount": 80.58
+    },
+    {
+     "group": "Setup",
+     "label": "Lathe setup",
+     "working": "45 min x £55.00/h",
+     "amount": 41.25
+    },
+    {
+     "group": "Setup",
+     "label": "Mill setup for cross holes",
+     "working": "30 min x £62.00/h",
+     "amount": 31.0
+    },
+    {
+     "group": "Machining",
+     "label": "Lathe cycle",
+     "working": "(0.5 + 0.6 + 1.2 + 0 + 0.8 + 0 + 0 + 0.3 = 3.40 min) x 1.6 (316L) x 1.3 (tightest band 0.02) = 7.072 min each x 60 x £55.00/h",
+     "amount": 388.96
+    },
+    {
+     "group": "Machining",
+     "label": "Cross holes on the mill",
+     "working": "(0.8 + 1 x 0.5 = 1.30 min) x 1.6 (316L) x 1.3 (tightest band 0.02) = 2.704 min each x 60 x £62.00/h",
+     "amount": 167.65
+    },
+    {
+     "group": "Machining",
+     "label": "Deburr",
+     "working": "0.8 min x 60 x £38.00/h",
+     "amount": 30.4
+    },
+    {
+     "group": "Inspection",
+     "label": "First article and inspection",
+     "working": "30 min + 60 parts (every part (tightest band 0.02)) x 1.5 min = 120 min x £60.00/h",
+     "amount": 120.0
+    },
+    {
+     "group": "Finishing",
+     "label": "Passivate",
+     "working": "max(60 x £0.60 = £36.00, lot minimum £70) = £70.00 x 1.15 handling",
+     "amount": 80.5
+    },
+    {
+     "group": "Certificates",
+     "label": "Certificate of conformity",
+     "working": "per batch",
+     "amount": 15.0
+    },
+    {
+     "group": "Certificates",
+     "label": "Material certificates 3.1",
+     "working": "per batch",
+     "amount": 25.0
+    }
+   ],
+   "cost": 980.34,
+   "margin": 0.22,
+   "gross": 1256.85,
+   "unit": 20.95,
+   "total": 1257.0,
+   "qty": 60,
+   "lead": 18
+  }
+ },
+ {
+  "id": "04",
+  "subject": "RFQ AP-2231-01 mounting plate",
+  "from": "Gareth Moss",
+  "fromAddr": "g.moss@ashmerepumps.example",
+  "received": "Mon 23 Nov, 14:25",
+  "body": "Hi again,\n\nSecond one from me today. 40 off the mounting plate AP-2231-01, black hard anodise. CoC please.\n\nThanks,\nGareth",
+  "drawing": "AP-2231-01",
+  "part": "Mounting plate",
+  "outcome": "priced",
+  "read": [
+   {
+    "k": "Customer",
+    "v": "Ashmere Pumps Ltd",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Part",
+    "v": "Mounting plate",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Drawing",
+    "v": "AP-2231-01 rev A",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Material",
+    "v": "ALUMINIUM ALLOY 6082-T6",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Finish",
+    "v": "HARD ANODISE, BLACK",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Quantity on drawing",
+    "v": "40",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Quantity in email",
+    "v": "40",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Type",
+    "v": "Milled",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Size",
+    "v": "120 x 80 x 10",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Through holes",
+    "v": "4",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Tapped holes",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Reamed holes",
+    "v": "2",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Pockets",
+    "v": "1",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Tightest tolerance band",
+    "v": "0.1 mm",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "3.1 material certs",
+    "v": "No",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Certificate of conformity",
+    "v": "Yes",
+    "mono": false,
+    "unread": null
+   }
+  ],
+  "reply": {
+   "to": "g.moss@ashmerepumps.example",
+   "subject": "Re: RFQ AP-2231-01 mounting plate",
+   "body": "Hi Gareth,\n\nThanks for sending this over. Our price for 40 off AP-2231-01 rev A (mounting plate) in Aluminium 6082-T6, hard anodise, black, is £26.48 each, £1,059.20 for the batch, plus VAT.\n\nLead time is 15 working days from order, including a certificate of conformity.\n\nThe quote is attached and is valid for 30 days. Any questions, just reply here.\n\nThanks,\nMark Ellis\nEstimating, Corvane Precision Ltd"
+  },
+  "price": {
+   "lines": [
+    {
+     "group": "Material",
+     "label": "Aluminium 6082-T6: plate 126 x 86 x 12 (120 x 80 + 6 each way; 10 + 2, next standard thickness)",
+     "working": "130.03 cc x 2.7 g/cc = 0.3511 kg each; x £6.80/kg x 40 x 1.05 scrap",
+     "amount": 100.27
+    },
+    {
+     "group": "Setup",
+     "label": "Mill setups (2)",
+     "working": "2 x 60 min x £62.00/h",
+     "amount": 124.0
+    },
+    {
+     "group": "Machining",
+     "label": "Mill cycle",
+     "working": "(load 2 + profile 4.00 + facing 0.96 + 1 pockets 3 + 4 thru 1.6 + 0 tapped 0 + 2 reamed 2 = 13.56 min) x 0.7 (6082-T6) x 1.0 (tightest band 0.1) = 9.492 min each x 40 x £62.00/h",
+     "amount": 392.34
+    },
+    {
+     "group": "Machining",
+     "label": "Deburr",
+     "working": "0.8 min x 40 x £38.00/h",
+     "amount": 20.27
+    },
+    {
+     "group": "Inspection",
+     "label": "First article and inspection",
+     "working": "30 min + 4 parts (10% sample, rounded up) x 1.5 min = 36 min x £60.00/h",
+     "amount": 36.0
+    },
+    {
+     "group": "Finishing",
+     "label": "Hard anodise, black",
+     "working": "max(40 x £2.40 = £96.00, lot minimum £120) = £120.00 x 1.15 handling",
+     "amount": 138.0
+    },
+    {
+     "group": "Certificates",
+     "label": "Certificate of conformity",
+     "working": "per batch",
+     "amount": 15.0
+    }
+   ],
+   "cost": 825.87,
+   "margin": 0.22,
+   "gross": 1058.81,
+   "unit": 26.48,
+   "total": 1059.2,
+   "qty": 40,
+   "lead": 15
+  }
+ },
+ {
+  "id": "05",
+  "subject": "Price request KI-5508 sensor bracket",
+  "from": "Helen Okafor",
+  "fromAddr": "h.okafor@kestrelinst.example",
+  "received": "Tue 24 Nov, 08:51",
+  "body": "Hi,\n\nCould you price 25 off KI-5508 rev D please? Passivated, with a certificate of conformity.\n\nMany thanks,\nHelen Okafor\nKestrel Instruments",
+  "drawing": "KI-5508",
+  "part": "Sensor bracket",
+  "outcome": "priced",
+  "read": [
+   {
+    "k": "Customer",
+    "v": "Kestrel Instruments Ltd",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Part",
+    "v": "Sensor bracket",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Drawing",
+    "v": "KI-5508 rev D",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Material",
+    "v": "STAINLESS STEEL 303",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Finish",
+    "v": "PASSIVATE",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Quantity on drawing",
+    "v": "25",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Quantity in email",
+    "v": "25",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Type",
+    "v": "Milled",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Size",
+    "v": "60 x 40 x 12",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Through holes",
+    "v": "2",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Tapped holes",
+    "v": "2",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Reamed holes",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Pockets",
+    "v": "1",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Tightest tolerance band",
+    "v": "0.04 mm",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "3.1 material certs",
+    "v": "No",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Certificate of conformity",
+    "v": "Yes",
+    "mono": false,
+    "unread": null
+   }
+  ],
+  "reply": {
+   "to": "h.okafor@kestrelinst.example",
+   "subject": "Re: Price request KI-5508 sensor bracket",
+   "body": "Hi Helen,\n\nThanks for sending this over. Our price for 25 off KI-5508 rev D (sensor bracket) in Stainless steel 303, passivate, is £38.47 each, £961.75 for the batch, plus VAT.\n\nLead time is 15 working days from order, including a certificate of conformity.\n\nThe quote is attached and is valid for 30 days. Any questions, just reply here.\n\nThanks,\nMark Ellis\nEstimating, Corvane Precision Ltd"
+  },
+  "price": {
+   "lines": [
+    {
+     "group": "Material",
+     "label": "Stainless steel 303: plate 66 x 46 x 15 (60 x 40 + 6 each way; 12 + 2, next standard thickness)",
+     "working": "45.54 cc x 8.0 g/cc = 0.3643 kg each; x £9.50/kg x 25 x 1.05 scrap",
+     "amount": 90.85
+    },
+    {
+     "group": "Setup",
+     "label": "Mill setups (2)",
+     "working": "2 x 60 min x £62.00/h",
+     "amount": 124.0
+    },
+    {
+     "group": "Machining",
+     "label": "Mill cycle",
+     "working": "(load 2 + profile 2.00 + facing 0.24 + 1 pockets 3 + 2 thru 0.8 + 2 tapped 1.4 + 0 reamed 0 = 9.44 min) x 1.4 (303) x 1.15 (tightest band 0.04) = 15.198 min each x 25 x £62.00/h",
+     "amount": 392.63
+    },
+    {
+     "group": "Machining",
+     "label": "Deburr",
+     "working": "0.8 min x 25 x £38.00/h",
+     "amount": 12.67
+    },
+    {
+     "group": "Inspection",
+     "label": "First article and inspection",
+     "working": "30 min + 3 parts (10% sample, rounded up) x 1.5 min = 34.5 min x £60.00/h",
+     "amount": 34.5
+    },
+    {
+     "group": "Finishing",
+     "label": "Passivate",
+     "working": "max(25 x £0.60 = £15.00, lot minimum £70) = £70.00 x 1.15 handling",
+     "amount": 80.5
+    },
+    {
+     "group": "Certificates",
+     "label": "Certificate of conformity",
+     "working": "per batch",
+     "amount": 15.0
+    }
+   ],
+   "cost": 750.14,
+   "margin": 0.22,
+   "gross": 961.72,
+   "unit": 38.47,
+   "total": 961.75,
+   "qty": 25,
+   "lead": 15
+  }
+ },
+ {
+  "id": "06",
+  "subject": "Manifold TFC-3340 rev B",
+  "from": "Dan Ewart",
+  "fromAddr": "d.ewart@tollandfluid.example",
+  "received": "Tue 24 Nov, 13:07",
+  "body": "Hi,\n\nScan of the manifold drawing attached, sorry about the quality, our plotter is down. 10 off to start, 3.1 certs and CoC please.\n\nDan",
+  "drawing": "TFC-3340",
+  "part": "Manifold block",
+  "outcome": "priced",
+  "read": [
+   {
+    "k": "Customer",
+    "v": "Tolland Fluid Controls Ltd",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Part",
+    "v": "Manifold block",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Drawing",
+    "v": "TFC-3340 rev B",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Material",
+    "v": "ALUMINIUM ALLOY 6082-T6",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Finish",
+    "v": "CLEAR ANODISE",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Quantity on drawing",
+    "v": "10",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Quantity in email",
+    "v": "10",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Type",
+    "v": "Milled",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Size",
+    "v": "80 x 50 x 40",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Through holes",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Tapped holes",
+    "v": "6",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Reamed holes",
+    "v": "2",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Pockets",
+    "v": "1",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Tightest tolerance band",
+    "v": "0.02 mm",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "3.1 material certs",
+    "v": "Yes",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Certificate of conformity",
+    "v": "Yes",
+    "mono": false,
+    "unread": null
+   }
+  ],
+  "reply": {
+   "to": "d.ewart@tollandfluid.example",
+   "subject": "Re: Manifold TFC-3340 rev B",
+   "body": "Hi Dan,\n\nThanks for sending this over. Our price for 10 off TFC-3340 rev B (manifold block) in Aluminium 6082-T6, clear anodise, is £62.46 each, £624.60 for the batch, plus VAT.\n\nLead time is 18 working days from order, including 3.1 material certificates and a certificate of conformity.\n\nThe quote is attached and is valid for 30 days. Any questions, just reply here.\n\nThanks,\nMark Ellis\nEstimating, Corvane Precision Ltd"
+  },
+  "price": {
+   "lines": [
+    {
+     "group": "Material",
+     "label": "Aluminium 6082-T6: plate 86 x 56 x 45 (80 x 50 + 6 each way; 40 + 2, next standard thickness)",
+     "working": "216.72 cc x 2.7 g/cc = 0.5851 kg each; x £6.80/kg x 10 x 1.05 scrap",
+     "amount": 41.78
+    },
+    {
+     "group": "Setup",
+     "label": "Mill setups (2)",
+     "working": "2 x 60 min x £62.00/h",
+     "amount": 124.0
+    },
+    {
+     "group": "Machining",
+     "label": "Mill cycle",
+     "working": "(load 2 + profile 2.60 + facing 0.40 + 1 pockets 3 + 0 thru 0 + 6 tapped 4.2 + 2 reamed 2 = 14.20 min) x 0.7 (6082-T6) x 1.3 (tightest band 0.02) = 12.922 min each x 10 x £62.00/h",
+     "amount": 133.53
+    },
+    {
+     "group": "Machining",
+     "label": "Deburr",
+     "working": "0.8 min x 10 x £38.00/h",
+     "amount": 5.07
+    },
+    {
+     "group": "Inspection",
+     "label": "First article and inspection",
+     "working": "30 min + 10 parts (every part (tightest band 0.02)) x 1.5 min = 45 min x £60.00/h",
+     "amount": 45.0
+    },
+    {
+     "group": "Finishing",
+     "label": "Clear anodise",
+     "working": "max(10 x £0.90 = £9.00, lot minimum £85) = £85.00 x 1.15 handling",
+     "amount": 97.75
+    },
+    {
+     "group": "Certificates",
+     "label": "Certificate of conformity",
+     "working": "per batch",
+     "amount": 15.0
+    },
+    {
+     "group": "Certificates",
+     "label": "Material certificates 3.1",
+     "working": "per batch",
+     "amount": 25.0
+    }
+   ],
+   "cost": 487.12,
+   "margin": 0.22,
+   "gross": 624.52,
+   "unit": 62.46,
+   "total": 624.6,
+   "qty": 10,
+   "lead": 18
+  }
+ },
+ {
+  "id": "07",
+  "subject": "Enquiry: nozzle HM-118-07",
+  "from": "Tom Lister",
+  "fromAddr": "tom.lister@harburymarine.example",
+  "received": "Tue 24 Nov, 16:33",
+  "body": "Hi there,\n\nNew enquiry for you, nozzle drawing attached. Please quote quantities as per the drawing.\n\nCheers,\nTom Lister\nHarbury Marine",
+  "drawing": "HM-118-07",
+  "part": "Nozzle",
+  "outcome": "query",
+  "read": [
+   {
+    "k": "Customer",
+    "v": "Harbury Marine Ltd",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Part",
+    "v": "Nozzle",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Drawing",
+    "v": "HM-118-07 rev A",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Material",
+    "v": "BRASS CZ121",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Finish",
+    "v": "None",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Quantity on drawing",
+    "v": "Can't read",
+    "mono": false,
+    "unread": "The QTY box in the title block is covered by a black smudge, so the number can't be read."
+   },
+   {
+    "k": "Quantity in email",
+    "v": "Not given",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Type",
+    "v": "Turned",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Size",
+    "v": "Ø25 x 45 long",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Diameters",
+    "v": "2",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "External threads",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Internal threads",
+    "v": "1",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Bores",
+    "v": "1",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Grooves",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Cross holes",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Tightest tolerance band",
+    "v": "0.1 mm",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "3.1 material certs",
+    "v": "No",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Certificate of conformity",
+    "v": "No",
+    "mono": false,
+    "unread": null
+   }
+  ],
+  "reply": {
+   "to": "tom.lister@harburymarine.example",
+   "subject": "Re: Enquiry: nozzle HM-118-07",
+   "body": "Hi Tom,\n\nThanks for the drawing for HM-118-07. Before we can price it, could you confirm the following?\n\n- How many you need. The quantity on our copy of the drawing can't be read.\n\nAs soon as we have that we'll send the quote over.\n\nThanks,\nMark Ellis\nEstimating, Corvane Precision Ltd"
+  }
+ },
+ {
+  "id": "08",
+  "subject": "RFQ KI-5521 guide block",
+  "from": "Helen Okafor",
+  "fromAddr": "h.okafor@kestrelinst.example",
+  "received": "Wed 25 Nov, 09:18",
+  "body": "Hi Corvane,\n\nOne more from us: 30 off KI-5521, PEEK. Drawing attached.\n\nThanks,\nHelen",
+  "drawing": "KI-5521",
+  "part": "Guide block",
+  "outcome": "hold",
+  "read": [
+   {
+    "k": "Customer",
+    "v": "Kestrel Instruments Ltd",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Part",
+    "v": "Guide block",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Drawing",
+    "v": "KI-5521 rev A",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Material",
+    "v": "PEEK 450G",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Finish",
+    "v": "None",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Quantity on drawing",
+    "v": "30",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Quantity in email",
+    "v": "30",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Type",
+    "v": "Milled",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Size",
+    "v": "50 x 30 x 20",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Through holes",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Tapped holes",
+    "v": "2",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Reamed holes",
+    "v": "2",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Pockets",
+    "v": "0",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "Tightest tolerance band",
+    "v": "0.04 mm",
+    "mono": true,
+    "unread": null
+   },
+   {
+    "k": "3.1 material certs",
+    "v": "No",
+    "mono": false,
+    "unread": null
+   },
+   {
+    "k": "Certificate of conformity",
+    "v": "No",
+    "mono": false,
+    "unread": null
+   }
+  ],
+  "reply": null
+ }
+]
