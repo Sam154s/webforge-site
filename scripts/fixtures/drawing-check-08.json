@@ -1,0 +1,76 @@
+{
+ "is_drawing": true,
+ "not_drawing_reason": null,
+ "part": {
+  "customer": "Kestrel Instruments Ltd",
+  "part_name": "GUIDE BLOCK",
+  "drawing_number": "KI-5521",
+  "revision": "A",
+  "material": "PEEK 450G",
+  "finish": "NONE",
+  "quantity": "30",
+  "size_envelope": "50 x 30 x 20 mm",
+  "units": "mm"
+ },
+ "kind": "milled",
+ "special_processes": [],
+ "general_tolerance": "Linear ±0.1 (band 0.2 mm), angular ±0.5° (note 2)",
+ "tightest_tolerances": [
+  {
+   "feature": "Distance between the two Ø6 hole centres",
+   "callout": "30 ±0.02",
+   "band_mm": 0.04,
+   "where": "Top view, dimension above the part"
+  },
+  {
+   "feature": "2x Ø6 reamed holes",
+   "callout": "Ø6 H7 REAM THRU",
+   "band_mm": null,
+   "where": "Top view, hole callout"
+  }
+ ],
+ "gdt": {
+  "count": 0,
+  "types": []
+ },
+ "surface_finish": [],
+ "threads": [
+  {
+   "spec": "M4x0.7, tap 8 deep",
+   "count": 2,
+   "where": "Top view, small holes, callout 2x M4x0.7 TAP 8 DEEP"
+  }
+ ],
+ "inspection": [],
+ "certificates": [],
+ "flow_down_notes": [
+  {
+   "note": "Remove all sharp edges 0.2 x 45°",
+   "where": "Note 3"
+  }
+ ],
+ "against_shop": [
+  {
+   "kind": "material",
+   "item": "PEEK 450G",
+   "drawing_says": "Material PEEK 450G",
+   "shop_has": "PEEK is not in the stocked materials list",
+   "impact": "Material must be bought in. Allow for material cost and lead time.",
+   "question": null
+  }
+ ],
+ "missing": [
+  {
+   "item": "Position of the two Ø6 H7 holes in the 30 mm direction",
+   "where": "Top view",
+   "why": "Only the spacing between the holes is given, so their position from the part edges is not defined.",
+   "question": "Could you please confirm the position of the two Ø6 holes from the edges of the block in the 30 mm direction?"
+  },
+  {
+   "item": "Position of the two M4x0.7 tapped holes",
+   "where": "Top view, small holes",
+   "why": "No dimensions locate these holes, so the machining set up and checking cannot be quoted reliably.",
+   "question": "Could you please give the position dimensions for the two M4x0.7 tapped holes?"
+  }
+ ]
+}

@@ -1,0 +1,204 @@
+/* Drawing check: the homepage sheet (stone, ink, one lime accent), ink keylines, body face throughout.
+   Figures and the instruction are set in the body face, not DM Mono: its slashed zero reads as a diameter sign (Ø). */
+.dc .dc-h1 { max-width: 16ch; font-size: clamp(2.4rem, 6.4vw, 5.4rem); }
+.dc .dc-hero { padding-bottom: clamp(28px, 4vw, 48px); }
+.dc-trust { margin: 16px 0 0; max-width: 58ch; font-size: 15px; line-height: 1.5; color: var(--dim); }
+.dc .dc-frame { padding-top: 0; }
+.dc .dc-frame + .dc-frame { padding-top: clamp(56px, 8vw, 110px); }
+.dc button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+.dc button:disabled { cursor: default; opacity: .45; }
+.dc-h2 { margin: 0; font-family: var(--font-display); font-weight: 800; font-stretch: 90%; font-size: clamp(1.8rem, 3.4vw, 2.8rem); letter-spacing: -.03em; line-height: 1.02; }
+.dc-intro { margin: 10px 0 0; max-width: 64ch; font-size: 15.5px; line-height: 1.5; color: var(--dim); }
+
+/* A numbered balloon, as on a drawing. */
+.dc-num { flex: none; display: inline-grid; place-items: center; width: 26px; height: 26px; border: 1.5px solid var(--ink); border-radius: 50%; background: var(--sheet); font-family: var(--font-sans), system-ui, sans-serif; font-size: 13px; font-weight: 700; line-height: 1; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+
+/* Buttons. */
+.dc .dc-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 20px; border: 1.5px solid var(--ink); border-radius: 999px; background: var(--ink); color: var(--stone); font-size: 15px; font-weight: 700; white-space: nowrap; transition: transform .2s; }
+.dc .dc-btn:not(:disabled):hover { transform: translateY(-1px); }
+.dc .dc-btn.alt { background: transparent; color: var(--ink); font-weight: 600; }
+.dc .dc-btn.sm { min-height: 40px; padding: 0 14px; font-size: 14px; }
+.dc .dc-link { min-height: 44px; font-size: 14.5px; text-decoration: underline; text-underline-offset: 3px; color: var(--ink); }
+
+/* Cards: the AI account, the shop, the run. */
+.dc-tool { display: grid; gap: 20px; }
+.dc-setup { display: grid; gap: 20px; align-items: start; }
+.dc-card { min-width: 0; margin: 0; padding: clamp(18px, 2.4vw, 28px); border: 1.5px solid var(--ink); border-radius: 16px; background: var(--paper); }
+.dc-card-h { display: flex; align-items: center; gap: 12px; margin: 0; font-family: var(--font-display); font-size: 1.45rem; font-weight: 800; font-stretch: 90%; letter-spacing: -.02em; line-height: 1.1; }
+.dc-card-p { margin: 10px 0 0; font-size: 15px; line-height: 1.5; color: var(--dim); }
+.dc-card-act { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin-top: 18px; }
+.dc-saved { margin: 0; font-size: 14px; color: var(--dim); }
+.dc-help { margin: 10px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--dim); }
+.dc-example { margin: 14px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--lime); font-size: 14px; font-weight: 600; }
+
+.dc-seg { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; padding: 0; border: 0; }
+.dc-seg label { position: relative; display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--sheet); font-size: 14.5px; font-weight: 600; cursor: pointer; }
+.dc-seg label.on { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.dc-seg input { position: absolute; opacity: 0; pointer-events: none; }
+.dc-seg label:has(input:focus-visible) { outline: 2px solid var(--signal); outline-offset: 3px; }
+
+.dc-field { display: grid; gap: 6px; margin-top: 16px; min-width: 0; }
+.dc-field > span, .dc-field legend { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 14px; font-weight: 600; }
+.dc-field > span a { font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+.dc-field em { font-style: normal; font-weight: 400; color: var(--dim); }
+.dc-field input, .dc-field textarea { width: 100%; min-height: 44px; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; font: inherit; font-size: 15px; line-height: 1.45; color: var(--ink); font-variant-numeric: tabular-nums; }
+.dc-field textarea { resize: vertical; }
+.dc-field input:focus, .dc-field textarea:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.dc-keyrow { display: flex; gap: 8px; }
+.dc-keyrow input { flex: 1; min-width: 0; }
+.dc-shop { display: grid; gap: 0 18px; }
+.dc-mm { margin: 16px 0 0; padding: 0; border: 0; }
+.dc-mm legend { margin-bottom: 6px; padding: 0; }
+.dc-mm > div { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.dc-mm label { display: grid; gap: 4px; font-size: 13px; color: var(--dim); }
+@media (min-width: 700px) { .dc-shop { grid-template-columns: repeat(2, minmax(0, 1fr)); } .dc-shop .wide { grid-column: 1 / -1; } }
+@media (min-width: 1000px) {
+  .dc-setup { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 24px; }
+  .dc-shop .dc-mm { grid-column: auto; }
+  .dc-shop .dc-field.wide:first-child { grid-column: 1 / -1; }
+}
+
+/* The drop zone. */
+.dc-drop { display: grid; place-items: center; gap: 6px; margin-top: 18px; min-height: 180px; padding: 28px 20px; border: 1.5px solid var(--ink); border-radius: 14px; background: var(--sheet); text-align: center; cursor: pointer; transition: background .2s; }
+.dc-drop:hover, .dc-drop.over { background: #fff; }
+.dc-drop.over { box-shadow: inset 0 0 0 3px var(--lime); }
+.dc-drop:has(input:focus-visible) { outline: 2px solid var(--signal); outline-offset: 3px; }
+.dc-drop-h { font-family: var(--font-display); font-size: clamp(1.3rem, 2.4vw, 1.8rem); font-weight: 700; letter-spacing: -.02em; overflow-wrap: anywhere; }
+.dc-drop-p { font-size: 14.5px; color: var(--dim); }
+.dc-busy { margin: 16px 0 0; font-size: 15px; }
+.dc-bar { position: relative; display: block; height: 2px; margin-top: 10px; overflow: hidden; background: var(--line); }
+.dc-bar::after { content: ""; position: absolute; top: 0; bottom: 0; width: 30%; background: var(--ink); animation: dc-slide 1.6s cubic-bezier(.45, 0, .55, 1) infinite; }
+@keyframes dc-slide { from { left: -30%; } to { left: 100%; } }
+@media (prefers-reduced-motion: reduce) { .dc-bar::after { animation: none; left: 0; width: 100%; opacity: .3; } }
+.dc-error { margin: 16px 0 0; padding: 12px 14px; border: 1.5px solid var(--ink); border-left-width: 5px; border-radius: 10px; background: #fff; font-size: 15px; line-height: 1.45; }
+
+/* No key: the copy and paste instruction. */
+.dc-steps { list-style: none; margin: 16px 0 0; padding: 0; border-top: 1.5px solid var(--ink); }
+.dc-steps li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15.5px; line-height: 1.45; color: var(--dim); }
+.dc-steps b { color: var(--ink); }
+.dc-steps a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.dc-prompt { margin-top: 18px; border: 1.5px solid var(--ink); border-radius: 14px; background: #fff; overflow: hidden; }
+.dc-prompt-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 12px; border-bottom: 1.5px solid var(--ink); background: var(--sheet); }
+.dc-prompt-text { margin: 0; max-height: 24rem; overflow: auto; padding: 16px; font-family: var(--font-sans), system-ui, sans-serif; font-size: 13.5px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.dc-fallback + .dc-link { margin-top: 8px; }
+
+/* The one-page sheet. */
+.dc-result { scroll-margin-top: 80px; }
+.dc-sheet { min-width: 0; border: 1.5px solid var(--ink); border-radius: 16px; background: var(--sheet); overflow: hidden; font-variant-numeric: tabular-nums; }
+.dc-sheet-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 14px 24px; padding: 18px clamp(16px, 2.4vw, 28px); border-bottom: 1.5px solid var(--ink); background: var(--paper); }
+.dc-sheet-k { margin: 0; font-size: 13px; font-weight: 600; color: var(--dim); }
+.dc-sheet-h h3 { margin: 2px 0 0; font-family: var(--font-display); font-size: clamp(1.5rem, 2.6vw, 2.1rem); font-weight: 800; font-stretch: 90%; letter-spacing: -.03em; line-height: 1.05; overflow-wrap: anywhere; }
+.dc-sheet-h h3 span { font-weight: 500; color: var(--dim); }
+.dc-sheet-sub { margin: 4px 0 0; font-size: 14.5px; color: var(--dim); }
+.dc-sheet-act { display: flex; flex-wrap: wrap; gap: 8px; }
+.dc-sec { padding: 4px clamp(16px, 2.4vw, 28px) 18px; }
+.dc-sec + .dc-sec { border-top: 1px solid var(--line); }
+.dc-ah { display: flex; align-items: center; gap: 10px; margin: 16px 0 12px; font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; letter-spacing: -.02em; }
+.dc-none { color: var(--dim); }
+p.dc-none { margin: 0; font-size: 15px; }
+.dc-where { display: inline; font-size: 13px; color: var(--dim); white-space: normal; }
+.dc-where::before { content: "("; } .dc-where::after { content: ")"; }
+
+/* 1. Laid out like a title block: label over value, keylined cells. */
+.dc-tb { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; border: 1.5px solid var(--ink); border-radius: 10px; overflow: hidden; background: #fff; }
+.dc-tb > div { min-width: 0; padding: 8px 12px 10px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.dc-tb > div:nth-child(2n) { border-right: 0; }
+.dc-tb > div:nth-last-child(-n+2) { border-bottom: 0; }
+.dc-tb dt { font-size: 12px; font-weight: 600; color: var(--dim); }
+.dc-tb dd { margin: 2px 0 0; font-size: 15px; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; }
+.dc-tb .un dd { font-weight: 500; color: var(--dim); }
+@media (min-width: 760px) {
+  .dc-tb { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .dc-tb > div:nth-child(2n) { border-right: 1px solid var(--line); }
+  .dc-tb > div:nth-child(4n) { border-right: 0; }
+  .dc-tb > div:nth-last-child(-n+4) { border-bottom: 0; }
+}
+
+/* 2. Label and value rows. */
+.dc-list { margin: 0; }
+.dc-row { display: grid; gap: 2px 20px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 15px; line-height: 1.45; }
+.dc-row:last-child { border-bottom: 0; }
+.dc-row dt { font-weight: 600; }
+.dc-row dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.dc-row ul { margin: 0; padding: 0; list-style: none; }
+.dc-row li + li { margin-top: 4px; }
+@media (min-width: 760px) { .dc-row { grid-template-columns: 12rem minmax(0, 1fr); } }
+.dc-tol { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.dc-tol th { padding: 0 10px 4px 0; text-align: left; font-size: 12.5px; font-weight: 600; color: var(--dim); border-bottom: 1px solid var(--line); }
+.dc-tol td { padding: 5px 10px 5px 0; vertical-align: top; border-bottom: 1px solid var(--line); }
+.dc-tol tr:last-child td { border-bottom: 0; }
+.dc-tol td:nth-child(2), .dc-tol td:nth-child(3) { white-space: nowrap; }
+.dc-tol td:nth-child(3) { font-weight: 700; }
+
+/* 3 and 4. Flags. */
+.dc-flags { margin: 0; padding: 0 0 0 22px; }
+.dc-flags li { padding: 6px 0 10px 4px; font-size: 15px; line-height: 1.45; }
+.dc-flags li + li { border-top: 1px solid var(--line); padding-top: 10px; }
+.dc-flags b { font-weight: 700; }
+.dc-vs { display: grid; gap: 2px; margin-top: 4px; font-size: 14px; color: var(--dim); }
+.dc-impact { display: block; margin-top: 4px; }
+
+/* 5. The email. */
+.dc-mail { padding: 14px 16px; border: 1.5px solid var(--ink); border-radius: 10px; background: #fff; }
+.dc-meta { margin: 0; padding-bottom: 8px; border-bottom: 1px solid var(--line); font-size: 14.5px; font-weight: 600; overflow-wrap: anywhere; }
+.dc-meta span { margin-right: 8px; font-weight: 400; color: var(--dim); }
+.dc-mailtxt { margin: 12px 0 0; font-size: 15px; line-height: 1.55; white-space: pre-line; overflow-wrap: anywhere; }
+.dc-mail .dc-btn { margin-top: 14px; }
+.dc-foot { margin: 0; padding: 14px clamp(16px, 2.4vw, 28px); border-top: 1.5px solid var(--ink); background: var(--paper); font-size: 13.5px; color: var(--dim); }
+
+/* What you get. */
+.dc-tabs { display: grid; margin: 24px 0 20px; border-top: 1.5px solid var(--ink); }
+.dc-tabs button { position: relative; display: grid; gap: 2px; min-height: 44px; padding: 14px 0 14px 18px; text-align: left; border-bottom: 1px solid var(--line); }
+.dc-tabs button span { font-size: 14.5px; color: var(--dim); }
+.dc-tabs b { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; letter-spacing: -.02em; }
+.dc-tabs button[aria-selected=true]::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 4px; border-radius: 2px; background: var(--ink); }
+.dc-tabs button[aria-selected=false] b { color: var(--dim); }
+.dc-tabs button:hover b { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; }
+@media (min-width: 760px) { .dc-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; border-bottom: 1px solid var(--line); } .dc-tabs button { border-bottom: 0; } }
+.dc-ex-grid { display: grid; gap: 16px; align-items: start; }
+.dc-panel { min-width: 0; margin: 0; border: 1.5px solid var(--ink); border-radius: 16px; background: #fff; overflow: hidden; }
+.dc-ph { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 16px; margin: 0; padding: 10px 18px; border-bottom: 1.5px solid var(--ink); background: var(--sheet); font-size: 14px; font-weight: 600; }
+.dc-ph a { display: inline-flex; align-items: center; min-height: 32px; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+.dc-draw img { display: block; width: 100%; height: auto; }
+@media (min-width: 1100px) {
+  .dc-ex-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
+  .dc-draw { position: sticky; top: 88px; }
+  .dc-ex-grid .dc-row { grid-template-columns: 10rem minmax(0, 1fr); }
+}
+
+/* The close. */
+.dc-pitch { margin: 0 0 clamp(36px, 5vw, 56px); max-width: 30ch; font-family: var(--font-display); font-weight: 600; font-size: clamp(1.4rem, 2.6vw, 2.1rem); letter-spacing: -.02em; line-height: 1.2; color: var(--lime); text-wrap: balance; }
+.dc .dc-end-h { max-width: 18ch; font-size: clamp(2.4rem, 6vw, 5.4rem); }
+.dc-end .end-cta p a { font-size: 1rem; }
+
+/* Print: just the sheet. */
+@media print {
+  header, footer, .dc-noprint, .sb::before { display: none !important; }
+  body { background: #fff; }
+  .dc .dc-frame { padding: 0; }
+  .dc-sheet { border: 0; border-radius: 0; background: #fff; }
+  .dc-sheet-h, .dc-foot { background: #fff; }
+  .dc-sec { break-inside: avoid; }
+}
+
+/* The shop card folds away once it's set up. */
+.dc-shopcard > summary { list-style: none; cursor: pointer; }
+.dc-shopcard > summary::-webkit-details-marker { display: none; }
+.dc-shopcard > summary:focus-visible { outline: 2px solid var(--signal); outline-offset: 6px; border-radius: 8px; }
+.dc-edit { margin-left: auto; padding: 6px 14px; border: 1.5px solid var(--ink); border-radius: 999px; font-family: var(--font-sans), system-ui, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0; }
+.dc-shopcard[open] .dc-edit { visibility: hidden; }
+.dc-shopsum { margin: 10px 0 0; font-size: 15px; line-height: 1.45; font-variant-numeric: tabular-nums; }
+.dc-shopcard[open] .dc-shopsum { display: none; }
+.dc-shop { align-items: start; }
+.dc-mm label { align-content: start; }
+@media (min-width: 1000px) { .dc-setup { grid-template-columns: repeat(2, minmax(0, 1fr)); } .dc-setup:has(.dc-shopcard[open]) { grid-template-columns: 1fr; } }
+.dc-flags { list-style: decimal; }
+.dc-flags li::marker { font-weight: 700; }
+/* On a phone each tolerance is a small block: the feature, then callout and band. */
+@media (max-width: 599px) {
+  .dc-tol thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .dc-tol tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+  .dc-tol tr:last-child { border-bottom: 0; }
+  .dc-tol td { padding: 0; border: 0; }
+  .dc-tol td:first-child { grid-column: 1 / -1; }
+}

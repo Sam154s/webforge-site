@@ -7,7 +7,8 @@
     "prebuild": "node scripts/check-placeholders.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:drawing-check": "node --no-warnings --import ./scripts/ts-hook.mjs --test scripts/drawing-check.test.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
