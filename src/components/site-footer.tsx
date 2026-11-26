@@ -2,7 +2,7 @@ import Link from "next/link";
 import { EMAIL } from "@/lib/site";
 import { COMPANY } from "@/lib/company";
 
-const READ = [["/pricing", "Pricing"], ["/about", "About"], ["/examples", "Examples"]];
+const READ = [["/pricing", "Pricing"], ["/about", "About"], ["/examples", "Examples"], ["/quote", "Quoting calculator"]];
 
 // Company facts appear only when they are set (see lib/company.ts). Nothing is invented here.
 export function SiteFooter() {
