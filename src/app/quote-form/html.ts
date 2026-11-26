@@ -103,6 +103,8 @@ export function renderRoot(s: Setup): string {
   const title = tidy(s.shop.title) || "Request a quote";
   const intro = tidy(s.shop.intro);
   const config = formConfig(s);
+  const rd = s.replies?.replyDays;
+  const replyLine = typeof rd === "number" && rd >= 1 ? `We usually reply within ${Math.round(rd)} working day${Math.round(rd) === 1 ? "" : "s"}.` : "";
 
   return `<div class="qf" style="--accent:${accent};--on-accent:${textOn(accent)}">
 <div class="qf-sheet">
@@ -128,7 +130,7 @@ ${s.blocks.map((b, i) => block(b, i + 1)).join("\n")}
 <p class="qf-note" id="qf-note">${esc(NOTE)}</p>
 <p class="qf-long" id="qf-long" hidden>Your request is too long to go in an email link. Press Copy request, then paste it into the email.</p>
 <div class="qf-act"><a class="qf-btn" id="qf-open" href="#">Open my email app</a><button class="qf-btn alt" id="qf-copy" type="button">Copy request</button></div>
-<p class="qf-to">Email app not opening? Copy the request and email it to <b>${to}</b>.</p>
+${replyLine ? `<p class="qf-reply" id="qf-reply">${esc(replyLine)}</p>\n` : ""}<p class="qf-to">Email app not opening? Copy the request and email it to <b>${to}</b>.</p>
 <p class="qf-copied" id="qf-copied" aria-live="polite"></p>
 <details class="qf-see"><summary>See your request</summary><pre class="qf-text" id="qf-text" tabindex="0"></pre></details>
 </section>
@@ -333,6 +335,7 @@ textarea.qf-input{resize:vertical;min-height:120px}
 .qf-note{margin:12px 0 0;font-size:1.05rem;font-weight:600}
 .qf-long{margin:10px 0 0;padding:10px 12px;border-left:4px solid var(--ink);background:var(--paper);border-radius:0 6px 6px 0;font-weight:600}
 .qf-act{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.qf-reply{margin:16px 0 0;padding:10px 12px;border-left:4px solid var(--ink);background:var(--paper);border-radius:0 6px 6px 0;font-weight:600}
 .qf-to{margin:14px 0 0;font-size:.95rem;color:var(--dim);overflow-wrap:anywhere}
 .qf-to b{color:var(--ink)}
 .qf-copied{margin:6px 0 0;min-height:1.5em;font-size:.95rem;font-weight:600}

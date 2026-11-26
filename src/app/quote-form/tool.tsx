@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { guide, guideFileName, guideHtml, END_LINE, type Val } from "./guides";
 import { buildHtml, fileName, renderRoot } from "./html";
+import { days, PLACEHOLDERS, platformName, PLATFORMS, problems, sample } from "./replies";
 import {
   DEFAULT_SETUP, isEmail, LIMITS, newBlock, readSetup, setupFile, SETUP_KIND, slug, TYPES, typeName,
-  type Block, type BlockType, type Setup, type Shop,
+  type Block, type BlockType, type Replies, type Setup, type Shop,
 } from "./setup";
 
 // Everything on this page runs in the browser. The setup lives in this browser's localStorage and in files the shop
@@ -258,25 +260,263 @@ function Blocks({ blocks, setBlocks }: { blocks: Block[]; setBlocks: (b: Block[]
   );
 }
 
-// ---------------------------------------------------------------- 3. download
+// ---------------------------------------------------------------- 3. automatic replies
+
+type Field = "thanksSubject" | "thanksBody" | "chaseSubject" | "chaseBody";
+
+function Mail({ label, value, field, rows, bad, set, onFocus, area }: {
+  label: string; value: string; field: Field; rows?: number; bad?: string; set: (f: Field, v: string) => void;
+  onFocus: (f: Field, el: HTMLInputElement | HTMLTextAreaElement) => void; area?: boolean;
+}) {
+  const id = `qb-${field}`;
+  const common = {
+    id, value, "aria-invalid": bad ? true : undefined, "aria-describedby": `${id}-e`, "aria-labelledby": `${id}-l`,
+    onFocus: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => onFocus(field, e.target),
+    onSelect: (e: React.SyntheticEvent<HTMLInputElement | HTMLTextAreaElement>) => onFocus(field, e.currentTarget),
+  };
+  return (
+    <label className="qb-field">
+      <span id={`${id}-l`}>{label}</span>
+      {area
+        ? <textarea {...common} rows={rows ?? 7} maxLength={LIMITS.mailBody} onChange={(e) => set(field, e.target.value)} />
+        : <input {...common} maxLength={LIMITS.subject} onChange={(e) => set(field, e.target.value)} />}
+      <em id={`${id}-e`} className="qb-bad" aria-live="polite">{bad ?? ""}</em>
+    </label>
+  );
+}
+
+function Days({ label, value, range, set, unit }: { label: string; value: number; range: number[]; set: (n: number) => void; unit: string }) {
+  const [draft, setDraft] = useState<string | null>(null);
+  return (
+    <label className="qb-field qb-days">
+      <span>{label}</span>
+      <span className="qb-days-in">
+        <input
+          type="number" inputMode="numeric" min={range[0]} max={range[1]} value={draft ?? String(value)}
+          onChange={(e) => { setDraft(e.target.value); const n = parseInt(e.target.value, 10); if (n >= range[0] && n <= range[1]) set(n); }}
+          onBlur={() => setDraft(null)}
+        />
+        <i>{unit}</i>
+      </span>
+    </label>
+  );
+}
+
+function Sample({ subject, body }: { subject: string; body: string }) {
+  return (
+    <div className="qb-mail" aria-label="As your customer sees it">
+      <p className="qb-mail-h">As your customer sees it</p>
+      <p className="qb-mail-s"><span>Subject</span>{subject}</p>
+      <pre className="qb-mail-b">{body}</pre>
+    </div>
+  );
+}
+
+function RepliesCard({ setup, set }: { setup: Setup; set: (r: Replies) => void }) {
+  const r = setup.replies;
+  const bad = problems(r);
+  const last = useRef<{ field: Field; el: HTMLInputElement | HTMLTextAreaElement } | null>(null);
+  const [said, setSaid] = useState("");
+  const put = (f: Field, v: string) => set({ ...r, [f]: v });
+
+  function insert(key: string) {
+    const at = last.current;
+    const token = `{${key}}`;
+    if (!at) { setSaid(`Click in a subject or message first, then add ${token}.`); return; }
+    const el = at.el;
+    const v = r[at.field];
+    const a = el.selectionStart ?? v.length;
+    const z = el.selectionEnd ?? v.length;
+    put(at.field, v.slice(0, a) + token + v.slice(z));
+    setSaid(`${token} added.`);
+    window.requestAnimationFrame(() => { el.focus(); el.setSelectionRange(a + token.length, a + token.length); });
+  }
+
+  const thanks = sample(setup, "thanks");
+  const chase = sample(setup, "chase");
+  const canAuto = r.platform !== "other";
+
+  return (
+    <section className="qb-card qb-replies" aria-labelledby="qb-replies-h">
+      <h3 id="qb-replies-h" className="qb-card-h"><Num n={3} />Automatic replies</h3>
+      <p className="qb-card-p">A thank-you the moment a request lands, and a chase if a quote goes quiet. It runs in your own email. We never see it.</p>
+
+      <fieldset className="qb-seg qb-plat">
+        <legend>Your email</legend>
+        {PLATFORMS.map((p) => (
+          <label key={p.id} className={r.platform === p.id ? "on" : undefined}>
+            <input type="radio" name="qb-platform" checked={r.platform === p.id} onChange={() => set({ ...r, platform: p.id })} />{p.name}
+          </label>
+        ))}
+      </fieldset>
+
+      <div className="qb-sub">
+        <h4 className="qb-sub-h">Thank-you reply</h4>
+        <Mail label="Subject" field="thanksSubject" value={r.thanksSubject} bad={bad.thanksSubject} set={put} onFocus={(field, el) => { last.current = { field, el }; }} />
+        <Mail label="Message" field="thanksBody" value={r.thanksBody} bad={bad.thanksBody} set={put} onFocus={(field, el) => { last.current = { field, el }; }} area />
+        <div className="qb-ph" role="group" aria-labelledby="qb-ph-h">
+          <p id="qb-ph-h" className="qb-add-h">Placeholders <em>Click to add where your cursor is</em></p>
+          <div className="qb-add-row">
+            {PLACEHOLDERS.map((p) => (
+              <button key={p.key} type="button" className="qb-tag" onClick={() => insert(p.key)} onMouseDown={(e) => e.preventDefault()}>
+                <code>{`{${p.key}}`}</code><span>{p.key === "reply_days" ? days(r.replyDays) : p.means}</span>
+              </button>
+            ))}
+          </div>
+          <p className="qb-said-p" aria-live="polite">{said}</p>
+          {r.platform !== "gmail" && (
+            <p className="qb-help">
+              {r.platform === "outlook"
+                ? "Outlook fills in the part and quantity. It can’t read the name reliably, so {name} becomes “there”."
+                : "An autoresponder sends the same words to everyone, so the placeholders become plain words like “there” and “your part”."}
+            </p>
+          )}
+        </div>
+        <Days label="We usually reply within" value={r.replyDays} range={LIMITS.replyDays} unit="working days" set={(replyDays) => set({ ...r, replyDays })} />
+        <p className="qb-help">Also shown to your customer after they send the form.</p>
+        <Sample {...thanks} />
+      </div>
+
+      <div className="qb-sub">
+        <h4 className="qb-sub-h">Follow-up</h4>
+        <label className="qb-check"><input type="checkbox" checked={r.follow} onChange={(e) => set({ ...r, follow: e.target.checked })} /><span>Chase quotes that go quiet</span></label>
+        {r.follow && (
+          <>
+            <Days label="Days after you send your quote" value={r.followDays} range={LIMITS.followDays} unit="days" set={(followDays) => set({ ...r, followDays })} />
+            {canAuto ? (
+              <fieldset className="qb-seg">
+                <legend>If they haven&rsquo;t replied</legend>
+                {([["auto", "Send it automatically"], ["remind", "Remind me to chase"]] as const).map(([v, l]) => (
+                  <label key={v} className={r.followMode === v ? "on" : undefined}>
+                    <input type="radio" name="qb-mode" checked={r.followMode === v} onChange={() => set({ ...r, followMode: v })} />{l}
+                  </label>
+                ))}
+              </fieldset>
+            ) : (
+              <p className="qb-help">With other email you get a reminder and the chase ready to paste. Sending it automatically needs Outlook or Gmail.</p>
+            )}
+            <Mail label="Subject" field="chaseSubject" value={r.chaseSubject} bad={bad.chaseSubject} set={put} onFocus={(field, el) => { last.current = { field, el }; }} />
+            <Mail label="Message" field="chaseBody" value={r.chaseBody} bad={bad.chaseBody} set={put} onFocus={(field, el) => { last.current = { field, el }; }} rows={5} area />
+            <Sample {...chase} />
+          </>
+        )}
+      </div>
+    </section>
+  );
+}
+
+// ---------------------------------------------------------------- the guide, on the page
+
+function inlineJsx(text: string) {
+  const out: React.ReactNode[] = [];
+  const re = /\[([^\]]+)\]\((https:\/\/[^\s)]+)\)|\*([^*]+)\*/g;
+  let at = 0;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text))) {
+    if (m.index > at) out.push(text.slice(at, m.index));
+    out.push(m[1] ? <a key={m.index} href={m[2]} target="_blank" rel="noopener noreferrer">{m[1]}</a> : <b key={m.index}>{m[3]}</b>);
+    at = m.index + m[0].length;
+  }
+  if (at < text.length) out.push(text.slice(at));
+  return out;
+}
+
+function Value({ v, id }: { v: Val; id: string }) {
+  const [state, setState] = useState<"" | "ok" | "sel">("");
+  const pre = useRef<HTMLPreElement>(null);
+  function copy() {
+    const done = (s: "ok" | "sel") => { setState(s); window.setTimeout(() => setState(""), 1800); };
+    const select = () => {
+      const sel = window.getSelection();
+      if (sel && pre.current) { const rg = document.createRange(); rg.selectNodeContents(pre.current); sel.removeAllRanges(); sel.addRange(rg); }
+      done("sel");
+    };
+    if (navigator.clipboard?.writeText) navigator.clipboard.writeText(v.value).then(() => done("ok"), select);
+    else select();
+  }
+  return (
+    <div className="qb-val">
+      <div className="qb-val-h">
+        <span id={`${id}-l`}>{v.label}</span>
+        <button type="button" className={`qb-copy${state === "ok" ? " ok" : ""}`} onClick={copy} aria-describedby={`${id}-l`}>{state === "ok" ? "Copied" : state === "sel" ? "Press Ctrl+C" : "Copy"}</button>
+      </div>
+      <pre ref={pre} className={`qb-val-v${v.code ? " code" : ""}${v.big ? " big" : ""}`} tabIndex={0}>{v.value}</pre>
+    </div>
+  );
+}
+
+function GuideView({ setup, bad }: { setup: Setup; bad: boolean }) {
+  const g = useMemo(() => guide(setup), [setup]);
+  return (
+    <section className="qb-card qb-guide" aria-labelledby="qb-guide-h" id="qb-guide">
+      <div className="qb-guide-bar">
+        <h3 id="qb-guide-h" className="qb-card-h"><Num n="G" />Your setup guide</h3>
+        <dl className="qb-guide-tb"><div><dt>Email</dt><dd>{platformName(setup.replies.platform)}</dd></div></dl>
+      </div>
+      <p className="qb-card-p">{g.lede} The same steps come in the guide file, ready to print.</p>
+      {bad && <p className="qb-error" role="alert">Fix the wording marked in Automatic replies first. The guide uses it as it stands.</p>}
+      {g.parts.map((p, pi) => (
+        <div key={p.h} className="qb-gpart">
+          <h4 className="qb-gpart-h">{p.h}</h4>
+          {p.p && <p className="qb-help">{p.p}</p>}
+          <ol className="qb-gsteps">
+            {p.steps.map((st, i) => (
+              <li key={i}>
+                <Num n={i + 1} />
+                <div className="qb-gstep">
+                  <p>{inlineJsx(st.text)}</p>
+                  {(st.vals ?? []).map((v, vi) => <Value key={vi} v={v} id={`qb-v${pi}-${i}-${vi}`} />)}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+      <aside className="qb-facts">
+        <p className="qb-add-h">Good to know</p>
+        <ul>{g.facts.map((f) => <li key={f}>{f}</li>)}</ul>
+      </aside>
+      <p className="qb-help qb-gend">{END_LINE} <a href="/start">Talk to us</a></p>
+    </section>
+  );
+}
+
+// ---------------------------------------------------------------- 4. download
 
 function Download({ setup, load, reset, emailRef }: { setup: Setup; load: (s: Setup) => void; reset: () => void; emailRef: React.RefObject<HTMLInputElement> }) {
   const fileIn = useRef<HTMLInputElement>(null);
   const [note, setNote] = useState("");
   const [bad, setBad] = useState(false);
 
-  function download() {
+  function ready() {
     const email = setup.shop.email.trim();
     if (!isEmail(email)) {
       setBad(true);
       setNote(email ? "Check the email address in Your shop first." : "Add the email address requests go to first.");
       emailRef.current?.focus();
-      return;
+      return false;
     }
-    if (!setup.blocks.length) { setBad(true); setNote("Add at least one block first."); return; }
+    if (!setup.blocks.length) { setBad(true); setNote("Add at least one block first."); return false; }
+    return true;
+  }
+  function download() {
+    if (!ready()) return;
     setBad(false);
     save(fileName(setup), buildHtml(setup), "text/html");
     setNote(`Downloaded ${fileName(setup)}.`);
+  }
+  function downloadGuide() {
+    if (!ready()) return;
+    const wrong = Object.keys(problems(setup.replies));
+    if (wrong.length) {
+      setBad(true);
+      setNote("Fix the wording marked in Automatic replies first.");
+      document.getElementById(`qb-${wrong[0]}`)?.focus();
+      return;
+    }
+    setBad(false);
+    save(guideFileName(setup), guideHtml(setup), "text/html");
+    setNote(`Downloaded ${guideFileName(setup)}.`);
   }
   async function open(f: File | undefined) {
     if (fileIn.current) fileIn.current.value = "";
@@ -291,16 +531,18 @@ function Download({ setup, load, reset, emailRef }: { setup: Setup; load: (s: Se
 
   return (
     <section className="qb-card qb-dl" aria-labelledby="qb-dl-h">
-      <h3 id="qb-dl-h" className="qb-card-h"><Num n={3} />Download</h3>
-      <p className="qb-card-p">One HTML file. It&rsquo;s yours.</p>
+      <h3 id="qb-dl-h" className="qb-card-h"><Num n={4} />Download</h3>
+      <p className="qb-card-p">Your form and your setup guide, two HTML files. They&rsquo;re yours.</p>
       <div className="qb-act">
         <button type="button" className="qb-btn" onClick={download}>Download your form</button>
+        <button type="button" className="qb-btn alt" onClick={downloadGuide}>Download setup guide</button>
         <p className={bad ? "qb-saved qb-bad" : "qb-saved"} role={bad ? "alert" : "status"}>{note}</p>
       </div>
       <ol className="qb-steps">
         <li><Num n="A" /><span>Upload it to your website as a page.</span></li>
         <li><Num n="B" /><span>No website? Drag it onto <a href="https://app.netlify.com/drop" target="_blank" rel="noopener noreferrer">Netlify Drop</a> for a free link.</span></li>
         <li><Num n="C" /><span>Link to it from your site or your email signature.</span></li>
+        <li><Num n="D" /><span>Follow the setup guide to switch on automatic replies in {platformName(setup.replies.platform)}. It&rsquo;s <a href="#qb-guide">below</a> too.</span></li>
       </ol>
       <div className="qb-act qb-files">
         <button type="button" className="qb-btn alt sm" onClick={() => save(`quote-form-setup${setup.shop.name.trim() ? `-${slug(setup.shop.name)}` : ""}.json`, setupFile(setup), "application/json")}>Save setup</button>
@@ -371,19 +613,24 @@ export function Tool() {
   }, []);
   useEffect(() => { if (ready) store.set(setup); }, [setup, ready]);
 
+  // The guide sits outside the grid so the pinned preview stops above it.
   return (
-    <div className="qb-tool" data-ready={ready || undefined}>
-      <div className="qb-a"><ShopCard key={`s${gen}${ready}`} shop={setup.shop} set={(shop) => setSetup({ ...setup, shop })} emailRef={emailRef} /></div>
-      <div className="qb-b"><Blocks key={`b${gen}${ready}`} blocks={setup.blocks} setBlocks={(blocks) => setSetup({ ...setup, blocks })} /></div>
-      <div className="qb-p"><Preview setup={setup} ready={ready} /></div>
-      <div className="qb-d">
-        <Download
-          setup={setup}
-          emailRef={emailRef}
-          load={(s) => { setSetup(s); setGen(gen + 1); }}
-          reset={() => { setSetup({ ...setup, blocks: DEFAULT_SETUP.blocks }); setGen(gen + 1); }}
-        />
+    <>
+      <div className="qb-tool" data-ready={ready || undefined}>
+        <div className="qb-a"><ShopCard key={`s${gen}${ready}`} shop={setup.shop} set={(shop) => setSetup({ ...setup, shop })} emailRef={emailRef} /></div>
+        <div className="qb-b"><Blocks key={`b${gen}${ready}`} blocks={setup.blocks} setBlocks={(blocks) => setSetup({ ...setup, blocks })} /></div>
+        <div className="qb-r"><RepliesCard key={`r${gen}${ready}`} setup={setup} set={(replies) => setSetup({ ...setup, replies })} /></div>
+        <div className="qb-p"><Preview setup={setup} ready={ready} /></div>
+        <div className="qb-d">
+          <Download
+            setup={setup}
+            emailRef={emailRef}
+            load={(s) => { setSetup(s); setGen(gen + 1); }}
+            reset={() => { setSetup({ ...setup, blocks: DEFAULT_SETUP.blocks }); setGen(gen + 1); }}
+          />
+        </div>
       </div>
-    </div>
+      <div className="qb-g"><GuideView setup={setup} bad={Object.keys(problems(setup.replies)).length > 0} /></div>
+    </>
   );
 }

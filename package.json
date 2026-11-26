@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:quote-form": "node --no-warnings --import ./scripts/ts-hook.mjs --test scripts/quote-form.test.mjs"
+    "test:quote-form": "node --no-warnings --import ./scripts/ts-hook.mjs --test scripts/quote-form.test.mjs scripts/quote-form-replies.test.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

@@ -29,7 +29,23 @@ export type Shop = {
   credit: boolean;
 };
 
-export type Setup = { shop: Shop; blocks: Block[] };
+export type Platform = "outlook" | "gmail" | "other";
+export type FollowMode = "auto" | "remind";
+
+// Automatic replies: the wording and settings that go into the shop's own email. Nothing here reaches us.
+export type Replies = {
+  platform: Platform;
+  replyDays: number; // "We usually reply within N working days", also shown on the form
+  thanksSubject: string;
+  thanksBody: string;
+  follow: boolean;
+  followDays: number; // days after the shop sends its quote
+  followMode: FollowMode;
+  chaseSubject: string;
+  chaseBody: string;
+};
+
+export type Setup = { shop: Shop; blocks: Block[]; replies: Replies };
 
 export const TYPES: { type: BlockType; name: string; label: string }[] = [
   { type: "dims", name: "Dimensions", label: "Main sizes" },
@@ -43,7 +59,7 @@ export const TYPES: { type: BlockType; name: string; label: string }[] = [
 ];
 export const typeName = (t: BlockType) => TYPES.find((x) => x.type === t)?.name ?? t;
 
-export const LIMITS = { label: 120, help: 300, option: 120, options: 60, fields: 8, blocks: 60, name: 120, title: 120, intro: 400, logoBytes: 400_000 };
+export const LIMITS = { subject: 150, mailBody: 2000, replyDays: [1, 20], followDays: [1, 28], label: 120, help: 300, option: 120, options: 60, fields: 8, blocks: 60, name: 120, title: 120, intro: 400, logoBytes: 400_000 };
 
 export const DEFAULT_SHOP: Shop = {
   name: "",
@@ -73,7 +89,19 @@ export const DEFAULT_BLOCKS: Block[] = [
   b("drawing", "drawing", "Drawing", { help: "Attach your drawing to the email before you send it. PDF, STEP or DXF is best." }),
 ];
 
-export const DEFAULT_SETUP: Setup = { shop: DEFAULT_SHOP, blocks: DEFAULT_BLOCKS };
+export const DEFAULT_REPLIES: Replies = {
+  platform: "outlook",
+  replyDays: 3,
+  thanksSubject: "Thanks, we've got your request for {part}",
+  thanksBody: "Hi {name},\n\nThanks for your quote request for {part}. It's with us now.\n\nWe usually reply within {reply_days}. If you haven't sent the drawing yet, just reply to this email with it attached.\n\n{shop}",
+  follow: true,
+  followDays: 5,
+  followMode: "auto",
+  chaseSubject: "Just checking you got our quote for {part}",
+  chaseBody: "Hi {name},\n\nJust checking you got our quote for {part}. Happy to answer any questions or price a different quantity.\n\n{shop}",
+};
+
+export const DEFAULT_SETUP: Setup = { shop: DEFAULT_SHOP, blocks: DEFAULT_BLOCKS, replies: DEFAULT_REPLIES };
 
 let seq = 0;
 export function newId(taken: Set<string>): string {
@@ -142,6 +170,30 @@ export function readBlock(v: unknown, taken: Set<string>): Block | null {
   return out;
 }
 
+// Keeps line breaks (an email body), drops control characters, at most one blank line in a row.
+export const textBlock = (v: unknown, max: number) => (typeof v === "string"
+  ? v.replace(/\r\n?/g, "\n").replace(/[\u0000-\u0008\u000b-\u001f\u007f]/g, "").replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim().slice(0, max)
+  : "");
+const int = (v: unknown, [lo, hi]: number[], d: number) => (typeof v === "number" && Number.isFinite(v) ? Math.min(hi, Math.max(lo, Math.round(v))) : d);
+
+// Setups saved before automatic replies existed have no replies: they get the defaults.
+export function readReplies(v: unknown): Replies {
+  const o = (v && typeof v === "object" ? v : {}) as Record<string, unknown>;
+  const d = DEFAULT_REPLIES;
+  const has = (k: string) => typeof o[k] === "string";
+  return {
+    platform: o.platform === "gmail" || o.platform === "other" ? o.platform : "outlook",
+    replyDays: int(o.replyDays, LIMITS.replyDays, d.replyDays),
+    thanksSubject: has("thanksSubject") ? str(o.thanksSubject, LIMITS.subject) : d.thanksSubject,
+    thanksBody: has("thanksBody") ? textBlock(o.thanksBody, LIMITS.mailBody) : d.thanksBody,
+    follow: o.follow === undefined ? d.follow : o.follow === true,
+    followDays: int(o.followDays, LIMITS.followDays, d.followDays),
+    followMode: o.followMode === "remind" ? "remind" : "auto",
+    chaseSubject: has("chaseSubject") ? str(o.chaseSubject, LIMITS.subject) : d.chaseSubject,
+    chaseBody: has("chaseBody") ? textBlock(o.chaseBody, LIMITS.mailBody) : d.chaseBody,
+  };
+}
+
 export function readSetup(v: unknown): Setup | null {
   if (!v || typeof v !== "object") return null;
   const o = v as Record<string, unknown>;
@@ -151,11 +203,11 @@ export function readSetup(v: unknown): Setup | null {
   // Only one block names the part in the subject.
   let seen = false;
   for (const bl of blocks) if (bl.subject) { if (seen) delete bl.subject; seen = true; }
-  return { shop: readShop(o.shop), blocks };
+  return { shop: readShop(o.shop), blocks, replies: readReplies(o.replies) };
 }
 
 export const SETUP_KIND = "webflow-outreach-quote-form";
-export const setupFile = (s: Setup) => JSON.stringify({ kind: SETUP_KIND, version: 1, ...s }, null, 2);
+export const setupFile = (s: Setup) => JSON.stringify({ kind: SETUP_KIND, version: 2, ...s }, null, 2);
 
 export function slug(s: string) {
   return s.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40);
